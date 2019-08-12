@@ -1,0 +1,83 @@
+﻿@model PortfolioMVC5v3.Models.Technology
+
+@{
+    ViewBag.Title = "Karta technologi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section AdditionalCss
+{
+}
+
+@Html.HiddenFor(m => m.TechnologyId)
+
+<div class="row h-100">
+    <div class="col-12">
+        <div class="card" style="height: 90%">
+            <div class="card-body d-flex flex-column">
+                <h2 class="card-title">Karta technologi</h2>
+
+                <div class="row mt-3">
+                    <div class="col-12 mb-2">
+                        <h5>Opcje główne:</h5>
+                    </div>
+
+                    <div class="col-6 pl-4">
+                        <div class="form-group">
+                            <label for="Name">Nazwa</label>
+                            <input type="text" class="k-textbox w-100" name="Name" id="Name" placeholder="Nazwa" value="@Model.Name" />
+                            <small id="NameHint" class="form-text text-muted">Pełna nazwa technologii</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="KnowledgeLevel">Poziom znajomości</label>
+                            <input id="KnowledgeLevel" value="@Model.KnowledgeLevel" style="width: 100%;" />
+                            <small id="KnowledgeLevelHint" class="form-text text-muted">Poziom znajomości technologii</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12 mb-2">
+                        <h5>Opcje dodatkowe:</h5>
+                    </div>
+                    <div class="col-12 pl-4">
+                        <table>
+                            <tr>
+                                <th class="py-2"><input id="ShowInCv" /></th>
+                                <th class="py-2"><label for="ShowInCv" class="ml-3 pt-2">Pokazuj w CV</label></th>
+                            </tr>
+                            <tr>
+                                <td><input id="ShowInAboutMePage" /></td>
+                                <td><label for="ShowInAboutMePage" class="ml-3 pt-2">Pokazuj na stronie "O mnie"</label></td>
+                            </tr>
+                        </table>
+                    </div>
+              
+                </div>
+
+                <div class="row mt-auto">
+                    <div class="col">
+                        <button type="button" name="SaveBtn" id="SaveBtn" class="btn btn-success float-right">
+                            <i class="fas fa-save mr-2"></i> Zapisz zmiany
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        var showInCv = @Html.Raw(Json.Encode(@Model.ShowInCv));
+        var showInAboutMePage = @Html.Raw(Json.Encode(@Model.ShowInAboutMePage));
+    </script>
+
+    <script src="~/Scripts/admin/Technologies/Card.js"></script>
+}

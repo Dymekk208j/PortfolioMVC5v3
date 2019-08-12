@@ -1,0 +1,53 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Technology>
+
+@{
+    ViewBag.Title = "Technologie";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .k-header .k-link {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
+}
+
+
+<div class="row h-100">
+    <div class="col-12">
+        <div class="card" style="height: 90%">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h2 class="card-title">Technologie</h2>
+                    </div>
+                    <div class="col-6">
+                        <button id="AddTechnologyBtn" name="AddTechnologyBtn" class="btn k-primary mr-2 float-right"><i class="far fa-plus-square mr-2"></i>Dodaj nowy</button>
+                    </div>
+                </div>
+
+                <div class="row h-100">
+                    <div class="col">
+                        <div id="grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        var model = @Html.Raw(Json.Encode(@Model));
+    </script>
+
+    <script src="~/Scripts/admin/Technologies/List.js"></script>
+}

@@ -1,0 +1,53 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Achievement>
+
+@{
+    ViewBag.Title = "Osiągnięcia";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .k-header .k-link {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
+}
+
+
+<div class="row h-100">
+    <div class="col-12">
+        <div class="card" style="height: 90%">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h2 class="card-title">Osiągnięcia</h2>
+                    </div>
+                    <div class="col-6">
+                        <button id="AddAchievementBtn" name="AddAchievementBtn" class="btn k-primary mr-2 float-right"><i class="far fa-plus-square mr-2"></i>Dodaj nowe</button>
+                    </div>
+                </div>
+
+                <div class="row h-100">
+                    <div class="col">
+                        <div id="grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        var model = @Html.Raw(Json.Encode(@Model));
+    </script>
+
+    <script src="~/Scripts/admin/Achievements/List.js"></script>
+}

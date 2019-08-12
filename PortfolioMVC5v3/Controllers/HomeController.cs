@@ -1,30 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using PortfolioMVC5v3.Logic.Interfaces;
 
 namespace PortfolioMVC5v3.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly IMainPageLogic _logic;
+        public HomeController(IMainPageLogic logic)
         {
-            return View();
+            _logic = logic;
+        }
+        public async Task<ActionResult> Index()
+        {
+            var model = await _logic.GetMainPageAsync();
+
+            return View(model);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

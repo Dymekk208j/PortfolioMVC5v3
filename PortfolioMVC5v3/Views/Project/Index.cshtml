@@ -1,0 +1,65 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Project>
+
+@{
+    ViewBag.Title = "Projekty";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .slide {
+            background: linear-gradient(0deg, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), url(/assets/backgrounds/fourth-bg.png) no-repeat center center fixed !important;
+            background-size: cover;
+        }
+    </style>
+}
+
+<div class="slide">
+    <div class="content projects-content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @{
+                    int i = 0;
+                    foreach (var project in Model)
+                    {
+                        <div>
+                            <div class="row mb-5">
+                                @if (i % 2 == 0)
+                                {
+                                    <div class="col-md-2">
+                                        <div class="left-image">
+                                            <img src="../../Assets\img\technologies\Csharp.png" alt="csharp" />
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="col-md-10">
+                                    <div class="left-content @(i%2 == 0 ? "right-content" : "left-content")">
+                                        <h2>@project.Title</h2>
+                                        <p>
+                                            @project.ShortDescription
+                                        </p>
+                                        <div class="details-btn">
+                                            <a href="@Url.Action("Card", "Project", new { id = project.ProjectId})">Szczegóły</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if (i % 2 != 0)
+                                {
+                                    <div class="col-md-2">
+                                        <div class="right-image">
+                                            <img src="../../Assets\img\technologies\Cpp.png" alt="Cpp" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        i++;
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

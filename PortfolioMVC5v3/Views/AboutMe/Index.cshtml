@@ -1,0 +1,41 @@
+﻿@model PortfolioMVC5v3.Models.AboutMe
+
+@{
+    ViewBag.Title = "O mnie";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .slide {
+            background: linear-gradient(0, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)),
+                        url(../../Assets/backgrounds/third-bg.png) no-repeat center center fixed !important;
+            background-size: cover;
+        }
+    </style>
+}
+
+<div class="slide">
+    <div class="content about-content">
+        <div class="container-fluid">
+            <div class="row p-0 m-0">
+                <div class="col-md-8">
+                    <div class="left-content">
+                        <h2>@Model.Title</h2>
+                        <p>
+                            @Model.Text
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 p-0 m-0">
+                    <div class="right-content">
+                        <h2>Umiejętności</h2>
+                        <table>
+                           @Html.Action("GetSkillsPartialView")
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model PortfolioMVC5v3.Models.Project
+
+@{
+    ViewBag.Title = "Projekt";
+}
+@section AdditionalCss
+{
+    <style>
+        .slide {
+            background: linear-gradient(0deg, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), url(/assets/backgrounds/fourth-bg.png) no-repeat center center fixed !important;
+            background-size: cover;
+        }
+    </style>
+}
+<div class="slide">
+    <div class="content projects-content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>@Model.Title</h2>
+                            </div>
+
+                            <div class="col-12">
+                                <h3>
+                                    @if (Model?.Technologies?.Count > 0)
+                                    {
+                                        @: Technologie: <em>@string.Join(", ", Model.Technologies.Select(a => a.Name))</em>
+                                    }
+                                </h3>
+                            </div>
+
+                            <div class="col-12">
+                                <h4>
+                                    Github: <a href="@Model.GitHubLink">@Model.GitHubLink</a>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <p>@Model.FullDescription</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-2" style="min-height: 500px">
+                        <div class="row">
+                            <h2>Zdjęcia</h2>
+                        </div>
+
+                        <div class="row h-100">
+                            <div class="col h-100">
+                                @* <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

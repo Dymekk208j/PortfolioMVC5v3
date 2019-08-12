@@ -1,0 +1,14 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Technology>
+
+@foreach (var skill in Model)
+{
+    <tr>
+        <th class="skillName">@skill.Name</th>
+        <th class="skillLevel py-1">
+            @for (int i = 0; i < skill.KnowledgeLevel; i++)
+            {
+                <i class="@(i < skill.KnowledgeLevel ? "fas fa-star" : "far fa-star")"></i>
+            }
+        </th>
+    </tr>
+}

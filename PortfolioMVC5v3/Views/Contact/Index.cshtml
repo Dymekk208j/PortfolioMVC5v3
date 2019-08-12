@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Kontakt";
+}
+@section AdditionalCss
+{
+    <style>
+        .slide {
+            background: linear-gradient(0deg, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), url(../../Assets/backgrounds/second-bg.png) no-repeat center center fixed !important;
+            background-size: cover;
+        }
+    </style>
+}
+<div class="slide">
+    <div class="content contact-content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <form id="contact" action="" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <input name="name"
+                                       type="text"
+                                       class="form-control"
+                                       id="name"
+                                       placeholder="Imię i nazwisko"
+                                       required="" />
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset>
+                                <input name="email"
+                                       type="email"
+                                       class="form-control"
+                                       id="email"
+                                       placeholder="Adres e-mail"
+                                       required="" />
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset>
+                                <input name="subject"
+                                       type="text"
+                                       class="form-control"
+                                       id="subject"
+                                       placeholder="Temat"
+                                       required="" />
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset>
+                                <textarea name="message"
+                                          rows="6"
+                                          class="form-control"
+                                          id="message"
+                                          placeholder="Wiadomość"
+                                          required=""></textarea>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset>
+                                <button type="submit" id="form-submit" class="btn">Wyślij</button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

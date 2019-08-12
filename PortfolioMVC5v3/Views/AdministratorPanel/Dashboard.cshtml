@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>title</h2>
+
+<input id="test" />
+
+<li>Send notifications <input id="mail-switch" aria-label="Mail Switch" /></li>
+
+@section scripts
+{
+    
+    <script>
+        $(function () {
+        
+            $("#mail-switch").kendoSwitch({
+                messages: {
+                    checked: "YES",
+                    unchecked: "NO"
+                }
+            });
+
+        });
+    </script>
+}
