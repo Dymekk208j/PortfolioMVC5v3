@@ -360,6 +360,7 @@
     <Content Include="Scripts\admin\EmploymentHistory\List.js" />
     <Content Include="Scripts\admin\ExtraInformation\Card.js" />
     <Content Include="Scripts\admin\ExtraInformation\List.js" />
+    <Content Include="Scripts\admin\HomePage\Management.js" />
     <Content Include="Scripts\admin\Technologies\Card.js" />
     <Content Include="Scripts\admin\Technologies\List.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -634,6 +635,7 @@
     <Content Include="Views\Education\List.cshtml" />
     <Content Include="Views\Education\Card.cshtml" />
     <Content Include="Views\AboutMe\Management.cshtml" />
+    <Content Include="Views\Home\Management.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,17 +1,17 @@
-﻿@model PortfolioMVC5v3.Models.AboutMe
+﻿@model PortfolioMVC5v3.Models.MainPage
 
 @{
-    ViewBag.Title = "Edycja strony 'O mnie'";
+    ViewBag.Title = "Edycja strony głównej";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@Html.HiddenFor(m => m.AboutMeId)
+@Html.HiddenFor(m => m.Id)
 
 <div class="row h-100">
     <div class="col-12">
         <div class="card" style="height: 90%">
             <div class="card-body d-flex flex-column">
-                <h2 class="card-title">Edycja strony "O mnie"</h2>
+                <h2 class="card-title">Edycja strony głównej</h2>
 
                 <div class="row mt-3">
                     <div class="col-12">
@@ -36,19 +36,9 @@
                 <div class="row mt-3">
                     <div class="col-12">
                         <div class="form-group">
-                            <label for="Technologies">Technologie</label>
-                            <input id="Technologies" class="k-textbox w-100" />
-                            <small id="TechnologiesHint" class="form-text text-muted">Technologie do wyświetlenia na stronie "O mnie"</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="Text">Opis</label>
-                            <textarea id="Text" name="Text" placeholder="Opis" class="k-textbox w-100 p-2" rows="6">@Model.Text</textarea>
-                            <small id="TextHint" class="form-text text-muted">Opis wyświetlany na stronie "O mnie"</small>
+                            <label for="Description">Opis</label>
+                            <textarea id="Description" name="Description" placeholder="Opis" class="k-textbox w-100 p-2" rows="6">@Model.Description</textarea>
+                            <small id="DescriptionHint" class="form-text text-muted">Opis wyświetlany na stronie "O mnie"</small>
                         </div>
                     </div>
                 </div>
@@ -68,5 +58,5 @@
 
 @section scripts
 {
-    <script src="~/Scripts/admin/AboutMeManagement/Management.js"></script>
+    <script src="~/Scripts/admin/HomePage/Management.js"></script>
 }

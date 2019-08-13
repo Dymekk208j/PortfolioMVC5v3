@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using PortfolioMVC5v3.Logic.Interfaces;
+using PortfolioMVC5v3.Models;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using PortfolioMVC5v3.Logic.Interfaces;
 
 namespace PortfolioMVC5v3.Controllers
 {
@@ -18,5 +19,19 @@ namespace PortfolioMVC5v3.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> Management()
+        {
+            var homePageModel = await _logic.GetMainPageAsync();
+
+            return View(homePageModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Update(MainPage mainPage)
+        {
+            var result = await _logic.UpdateMainPage(mainPage);
+
+            return Json(new { success = result });
+        }
     }
 }
