@@ -136,6 +136,7 @@
     <Compile Include="Controllers\AchievementsController.cs" />
     <Compile Include="Controllers\AdministratorPanelController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\EmploymentHistoryController.cs" />
     <Compile Include="Controllers\ExtraInformationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -351,6 +352,8 @@
     <Content Include="Content\admin\Icons\weather-icons\less\css\variables-wind-names.css" />
     <Content Include="Scripts\admin\Achievements\Card.js" />
     <Content Include="Scripts\admin\Achievements\List.js" />
+    <Content Include="Scripts\admin\EmploymentHistory\Card.js" />
+    <Content Include="Scripts\admin\EmploymentHistory\List.js" />
     <Content Include="Scripts\admin\ExtraInformation\Card.js" />
     <Content Include="Scripts\admin\ExtraInformation\List.js" />
     <Content Include="Scripts\admin\Technologies\Card.js" />
@@ -622,6 +625,8 @@
     <Content Include="Views\Achievements\Card.cshtml" />
     <Content Include="Views\ExtraInformations\List.cshtml" />
     <Content Include="Views\ExtraInformations\Card.cshtml" />
+    <Content Include="Views\EmploymentHistory\List.cshtml" />
+    <Content Include="Views\EmploymentHistory\Card.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

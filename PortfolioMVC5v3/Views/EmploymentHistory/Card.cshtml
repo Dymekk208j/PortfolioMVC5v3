@@ -1,0 +1,111 @@
+﻿@model PortfolioMVC5v3.Models.EmploymentHistory
+
+@{
+    ViewBag.Title = "Karta histori zatrudnienia";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section AdditionalCss
+{
+}
+
+@Html.HiddenFor(m => m.EmploymentHistoryId)
+
+<div class="row h-100">
+    <div class="col-12">
+        <div class="card" style="height: 90%">
+            <div class="card-body d-flex flex-column">
+                <h2 class="card-title">Karta histori zatrudnienia</h2>
+
+                <div class="row mt-3">
+                    <div class="col-12 mb-2">
+                        <h5>Opcje główne:</h5>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="Position">Stanowisko</label>
+                            <input id="Position" name="Position" type="text" class="k-textbox w-100" placeholder="Stanowisko" value="@Model.Position" />
+                            <small id="PositionHint" class="form-text text-muted">Pełna nazwa zajmowanego stanowiska</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6 ">
+                        <div class="form-group">
+                            <label for="CompanyName">Nazwa firmy</label>
+                            <input id="CompanyName" name="CompanyName" type="text" class="k-textbox w-100" placeholder="Nazwa firmy" value="@Model.CompanyName" />
+                            <small id="CompanyNameHint" class="form-text text-muted">Pełna nazwa firmy</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="CityOfEmployment">Miasto</label>
+                            <input id="CityOfEmployment" name="CityOfEmployment" type="text" class="k-textbox w-100" placeholder="Miasto" value="@Model.CityOfEmployment" />
+                            <small id="CityOfEmploymentHint" class="form-text text-muted">Miasto w ktorym znajduje się siedziba firmy</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6 ">
+                        <div class="form-group">
+                            <label for="StartDate">Data od</label>
+                            <input id="StartDate" name="CompanyName" class="w-100" value="@Model.StartDate" />
+                            <small id="StartDateHint" class="form-text text-muted">Data rozpoczęcia pracy</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="EndDate">Data do</label>
+                            <input id="EndDate" name="EndDate" class="w-100" value="@Model.EndDate" />
+                            <small id="EndDateHint" class="form-text text-muted">Data zakończenia pracy</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12 mb-2">
+                        <h5>Opcje dodatkowe:</h5>
+                    </div>
+                    <div class="col-12 pl-4">
+                        <table>
+                            <tr>
+                                <th class="py-2"><input id="ShowInCv" /></th>
+                                <th class="py-2"><label for="ShowInCv" class="ml-3 pt-2">Pokazuj w CV</label></th>
+                            </tr>
+                            <tr>
+                                <th class="py-2"><input id="CurrentPlaceOfEmployment" /></th>
+                                <th class="py-2"><label for="CurrentPlaceOfEmployment" class="ml-3 pt-2">Aktualne miejsce pracy</label></th>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="row mt-auto">
+                    <div class="col">
+                        <button type="button" name="SaveBtn" id="SaveBtn" class="btn btn-success float-right">
+                            <i class="fas fa-save mr-2"></i> Zapisz zmiany
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        var showInCv = @Html.Raw(Json.Encode(@Model.ShowInCv));
+        var currentPlaceOfEmployment = @Html.Raw(Json.Encode(@Model.CurrentPlaceOfEmployment));
+    </script>
+
+    <script src="~/Scripts/admin/EmploymentHistory/Card.js"></script>
+}
