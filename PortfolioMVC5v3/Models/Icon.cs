@@ -8,6 +8,6 @@ namespace PortfolioMVC5v3.Models
 
         public string FileName { get; set; }
 
-        public Guid Guid { get; set; }
+        public string Guid { get; set; }
     }
 }

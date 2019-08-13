@@ -9,7 +9,7 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<List<Icon>> GetAllIcons();
         Task<Icon> GetIconAsync(int iconId);
         Task<bool> RemoveIconAsync(int iconId);
-        Task<bool> AddIconAsync(Icon icon);
+        Task<int> AddIconAsync(Icon icon);
         Task<bool> UpdateIconAsync(Icon icon);
     }
 }

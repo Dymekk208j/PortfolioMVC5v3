@@ -140,6 +140,7 @@
     <Compile Include="Controllers\EmploymentHistoryController.cs" />
     <Compile Include="Controllers\ExtraInformationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IconController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TechnologiesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -361,6 +362,7 @@
     <Content Include="Scripts\admin\ExtraInformation\Card.js" />
     <Content Include="Scripts\admin\ExtraInformation\List.js" />
     <Content Include="Scripts\admin\HomePage\Management.js" />
+    <Content Include="Scripts\admin\Icons\Management.js" />
     <Content Include="Scripts\admin\Technologies\Card.js" />
     <Content Include="Scripts\admin\Technologies\List.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -636,9 +638,12 @@
     <Content Include="Views\Education\Card.cshtml" />
     <Content Include="Views\AboutMe\Management.cshtml" />
     <Content Include="Views\Home\Management.cshtml" />
+    <Content Include="Views\Icon\Management.cshtml" />
+    <Content Include="Views\Icon\AddIcon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\Icons\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -108,14 +108,83 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             return false;
         }
 
-        public Task<bool> AddIconAsync(Icon icon)
+        public async Task<int> AddIconAsync(Icon icon)
         {
-            throw new System.NotImplementedException();
+            StringBuilder query = new StringBuilder();
+            query.Append("INSERT INTO ");
+            query.Append($"{TableName} ");
+
+            query.Append(" (");
+            query.Append("[FileName]");
+            query.Append(",[Guid]");
+            query.Append(") ");
+
+            query.Append(" OUTPUT INSERTED.IconId ");
+
+            query.Append(" VALUES ");
+            query.Append("(");
+            query.Append("@FileName");
+            query.Append(", @Guid");
+            query.Append(")");
+
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.QueryFirstAsync<int>(query.ToString(),
+                        new
+                        {
+                            icon.FileName,
+                            icon.Guid
+                        });
+
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return -1;
         }
 
-        public Task<bool> UpdateIconAsync(Icon icon)
+        public async Task<bool> UpdateIconAsync(Icon icon)
         {
-            throw new System.NotImplementedException();
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE ");
+            query.Append($"{TableName} ");
+
+            query.Append("SET ");
+            query.Append("[FileName] = @FileName ");
+            query.Append(",[Guid] = @Guid ");
+
+            query.Append("WHERE ");
+            query.Append("IconId = @IconId ");
+
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(),
+                        new
+                        {
+                            icon.FileName,
+                            icon.Guid,
+                            icon.IconId
+                        });
+
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
         }
     }
 }
