@@ -294,7 +294,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             return false;
         }
 
-        public async Task<bool> UpdateShowInAboutMe(Technology technology, bool show)
+        public async Task<bool> UpdateShowInAboutMe(int technologyId, bool show)
         {
             StringBuilder query = new StringBuilder();
             query.Append("UPDATE ");
@@ -310,7 +310,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.ExecuteAsync(query.ToString(), new {show, technology.TechnologyId});
+                    var result = await connection.ExecuteAsync(query.ToString(), new {show, technologyId});
                     return result > 0;
                 }
             }

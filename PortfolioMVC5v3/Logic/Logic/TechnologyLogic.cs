@@ -52,7 +52,7 @@ namespace PortfolioMVC5v3.Logic.Logic
             return _repository.RemoveTechnology(technologyId);
         }
 
-        public async Task<bool> UpdateShowInAboutMeTechnologiesAsync(List<Technology> technologiesShowInAboutMePage)
+        public async Task<bool> UpdateShowInAboutMeTechnologiesAsync(List<int> technologiesShowInAboutMePage)
         {
             try
             {
