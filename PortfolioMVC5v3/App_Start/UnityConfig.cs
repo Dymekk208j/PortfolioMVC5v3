@@ -1,6 +1,3 @@
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using PortfolioMVC5v3.Repositories.Interfaces;
 using PortfolioMVC5v3.Repositories.Repositories;
 using System.Web.Mvc;
@@ -8,6 +5,8 @@ using PortfolioMVC5v3.Logic.Interfaces;
 using Unity;
 using Unity.Mvc5;
 using PortfolioMVC5v3.Logic.Logic;
+using Unity.Injection;
+using PortfolioMVC5v3.Controllers;
 
 namespace PortfolioMVC5v3
 {
@@ -40,6 +39,7 @@ namespace PortfolioMVC5v3
             container.RegisterType<ITechnologyLogic, TechnologyLogic>();
 
             container.RegisterSingleton<IDatabaseManager, DatabaseManager>();
+            container.RegisterType<AccountController>(new InjectionConstructor());
 
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));

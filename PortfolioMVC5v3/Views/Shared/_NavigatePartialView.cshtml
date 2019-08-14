@@ -1,9 +1,10 @@
-﻿<nav>
+﻿@using Microsoft.AspNet.Identity
+<nav>
     <div class="logo">
-        <img src="../../Assets/img/logo.png" alt="" />
+        <img src="../../Assets/img/logo.png" alt=""/>
     </div>
     <div class="mini-logo">
-        <img src="../../Assets/img/mini_logo.png" alt="" />
+        <img src="../../Assets/img/mini_logo.png" alt=""/>
     </div>
 
     <ul>
@@ -22,5 +23,31 @@
         <li>
             <a href="@Url.Action("Index", "Contact")"><i class="fa fa-envelope"></i><em>Kontakt</em></a>
         </li>
+        @if (Request.IsAuthenticated)
+        {
+         
+            <li>
+                <a href="@Url.Action("Dashboard", "AdministratorPanel")"><i class="fas fa-tools"></i><em>Panel administratora</em></a>
+            </li>
+            
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <li>
+                    <a href="javascript:{}" onclick="document.getElementById('logoutForm').submit();"><i class="fas fa-power-off"></i><em>Wyloguj: @Html.Name(User.Identity.GetUserName())</em></a>
+                </li>
+            }
+        }
+        else
+        {
+            <li>
+                <a href="@Url.Action("Register", "Account")"><i class="fas fa-sign-in-alt"></i><em>Utwórz konto</em></a>
+            </li>
+            <li>
+                <a href="@Url.Action("Login", "Account")"><i class="fas fa-user-circle"></i><em>Zaloguj</em></a>
+            </li>
+
+        }
     </ul>
 </nav>

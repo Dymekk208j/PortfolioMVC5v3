@@ -1,0 +1,65 @@
+﻿@model PortfolioMVC5v3.Models.ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Logowanie";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .slide {
+            background: linear-gradient(0, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), url(/assets/backgrounds/first-bg.png) no-repeat center center fixed !important;
+            background-size: cover;
+            width: 100%;
+        }
+        label {
+            color: #fff;
+        }
+        .home-content {
+            padding-top: 10%;
+            padding-left: 10%;
+            text-align: center;
+        }
+    </style>
+}
+
+<div class="slide">
+    <div class="content home-content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "loginForm" }))
+                {
+                    <h2>Logowanie</h2>
+                    <p class="mb-5">Witaj, wprowadź swoje dane logowania.</p>
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="input-group">
+                        <label for="UserName" class="pt-1">Login</label>
+                        <input type="text" id="UserName" name="UserName" class="form-control ml-2">
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label for="Password" class="pt-1">Hasło</label>
+                        <input type="password" id="Password" name="Password" class="form-control ml-2">
+                    </div>
+
+
+                    <div class="row mb-4 mt-2">
+                        <div class="col-12 text-left">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="RememberMe" name="RememberMe">
+                                <label class="custom-control-label" for="RememberMe">Zapamiętaj mnie</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="more-btn float-left mr-0 pr-0"><a href="@Url.Action("Register","Account")">Utwórz konto</a></div>
+                    <div class="contact-btn float-right mr-0 pr-0"><a href="javascript:{}" onclick="document.getElementById('loginForm').submit();">Zaloguj</a></div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

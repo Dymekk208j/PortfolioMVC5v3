@@ -1,0 +1,85 @@
+﻿@model PortfolioMVC5v3.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewBag.Title = "Logowanie";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .slide {
+            background: linear-gradient(0, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), url(/assets/backgrounds/first-bg.png) no-repeat center center fixed !important;
+            background-size: cover;
+            width: 100%;
+        }
+
+        label {
+            color: #fff;
+        }
+
+        .home-content {
+            padding-top: 10%;
+            padding-left: 3%;
+            text-align: center;
+        }
+    </style>
+}
+
+<div class="slide">
+    <div class="content home-content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form", id = "registerForm" }))
+                {
+                    <div style="margin-left: 10%; margin-bottom: 6%;">
+                        <h2>Rejestracja</h2>
+                        <p>Witaj, zapraszam do rejestracji.</p>
+                    </div>
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div class="col-2 text-right"><label for="UserName" class="pt-1">Login</label></div>
+                        <div class="col-4"><input type="text" id="UserName" name="UserName" class="form-control"></div>
+
+                        <div class="col-2 text-right"><label for="Email" class="pt-1">Adres e-mail</label></div>
+                        <div class="col-4"><input type="email" id="Email" name="Email" class="form-control"></div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-2 text-right"><label for="FirstName" class="pt-1">Imię</label></div>
+                        <div class="col-4"><input type="text" id="FirstName" name="FirstName" class="form-control"></div>
+
+                        <div class="col-2 text-right"><label for="LastName" class="pt-1">Nazwisko</label></div>
+                        <div class="col-4"><input type="text" id="LastName" name="LastName" class="form-control"></div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-2 text-right"><label for="Password" class="pt-1">Hasło</label></div>
+                        <div class="col-4"><input type="password" id="Password" name="Password" class="form-control"></div>
+
+                        <div class="col-2 text-right"><label for="ConfirmPassword" class="pt-1">Powtórz hasło</label></div>
+                        <div class="col-4"><input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control"></div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="offset-1 col-10 text-left">
+                            <label style="color: red">
+                                @Html.ValidationSummary()
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-12 text-right">
+                            <div class="contact-btn float-right mr-0 pr-0"><a href="javascript:{}" onclick="document.getElementById('registerForm').submit();">Zarejestruj</a></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
