@@ -182,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logic\Interfaces\IAboutMeLogic.cs" />
+    <Compile Include="Logic\Interfaces\IAccountLogic.cs" />
     <Compile Include="Logic\Interfaces\IAchievementLogic.cs" />
     <Compile Include="Logic\Interfaces\IEducationLogic.cs" />
     <Compile Include="Logic\Interfaces\IEmploymentHistoryLogic.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Logic\Interfaces\IProjectLogic.cs" />
     <Compile Include="Logic\Interfaces\ITechnologyLogic.cs" />
     <Compile Include="Logic\Logic\AboutMeLogic.cs" />
+    <Compile Include="Logic\Logic\AccountLogic.cs" />
     <Compile Include="Logic\Logic\AchievementLogic.cs" />
     <Compile Include="Logic\Logic\EducationLogic.cs" />
     <Compile Include="Logic\Logic\EmploymentHistoryLogic.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IAboutMeRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IAccountRepostiory.cs" />
     <Compile Include="Repositories\Interfaces\IAchievementRepostiory.cs" />
     <Compile Include="Repositories\Interfaces\IDatabaseManager.cs" />
     <Compile Include="Repositories\Interfaces\IEducationRepostiory.cs" />
@@ -227,6 +230,7 @@
     <Compile Include="Repositories\Interfaces\IProjectRepostiory.cs" />
     <Compile Include="Repositories\Interfaces\ITechnologyRepostiory.cs" />
     <Compile Include="Repositories\Repositories\AboutMeRepository.cs" />
+    <Compile Include="Repositories\Repositories\AccountRepostiory.cs" />
     <Compile Include="Repositories\Repositories\AchievementRepostiory.cs" />
     <Compile Include="Repositories\Repositories\DatabaseManager.cs" />
     <Compile Include="Repositories\Repositories\EducationRepostiory.cs" />
@@ -241,6 +245,7 @@
     <Compile Include="Utilities\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Account.txt" />
     <Content Include="Assets\backgrounds\first-bg.png" />
     <Content Include="Assets\backgrounds\fourth-bg.png" />
     <Content Include="Assets\backgrounds\second-bg.png" />
@@ -392,6 +397,9 @@
     <Content Include="Content\admin\Icons\weather-icons\less\css\variables-time.css" />
     <Content Include="Content\admin\Icons\weather-icons\less\css\variables-wind-names.css" />
     <Content Include="Scripts\admin\AboutMeManagement\Management.js" />
+    <Content Include="Scripts\admin\Account\RoleCard.js" />
+    <Content Include="Scripts\admin\Account\RolesList.js" />
+    <Content Include="Scripts\admin\Account\List.js" />
     <Content Include="Scripts\admin\Achievements\Card.js" />
     <Content Include="Scripts\admin\Achievements\List.js" />
     <Content Include="Scripts\admin\Education\Card.js" />
@@ -682,6 +690,9 @@
     <Content Include="Views\Icon\AddIcon.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Management.cshtml" />
+    <Content Include="Views\Account\RoleManagement.cshtml" />
+    <Content Include="Views\Account\RoleCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

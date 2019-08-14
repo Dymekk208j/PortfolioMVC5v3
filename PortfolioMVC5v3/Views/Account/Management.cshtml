@@ -1,0 +1,49 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.ViewModels.AppUserViewModel>
+@{
+    ViewBag.Title = "Użytkownicy";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .k-header .k-link {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
+}
+
+
+<div class="row h-100">
+    <div class="col-12">
+        <div class="card" style="height: 90%">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h2 class="card-title">Użytkownicy</h2>
+                    </div>
+                </div>
+
+                <div class="row h-100">
+                    <div class="col">
+                        <div id="grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        var model = @Html.Raw(Json.Encode(@Model));
+    </script>
+
+    <script src="~/Scripts/admin/Account/List.js"></script>
+}

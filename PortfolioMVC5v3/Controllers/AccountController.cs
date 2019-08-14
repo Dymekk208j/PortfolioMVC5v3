@@ -1,65 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
+using PortfolioMVC5v3.Logic.Interfaces;
+using PortfolioMVC5v3.Models;
+using PortfolioMVC5v3.Models.ViewModels;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
-using PortfolioMVC5v3.Models;
-using PortfolioMVC5v3.Models.ViewModels;
 
 namespace PortfolioMVC5v3.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-//#if DEBUG
-//        [AllowAnonymous]
-//        public ActionResult TestLogin()
-//        {
-//            LoginViewModel model = new LoginViewModel() { Password = "Damian13", RememberMe = false, UserName = "Dymek" };
-
-//            var user = UserManager.Find(model.UserName, model.Password);
-//            if (user != null)
-//            {
-//                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-//                ClaimsIdentity identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-//                AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
-//            }
-
-//            return RedirectToAction("Index", "Home");
-//        }
-//#endif
-        public AccountController()
-            : this(new UserManager<AppUser>(new UserStore<AppUser>(new ApplicationDbContext())))
+        private readonly IAccountLogic _accountLogic;
+        public AccountController(IAccountLogic accountLogic)
+            : this(new UserManager<AppUser>(new UserStore<AppUser>(new ApplicationDbContext())), accountLogic)
         {
+            _accountLogic = accountLogic;
+
         }
 
-        public AccountController(UserManager<AppUser> userManager)
+        private AccountController(UserManager<AppUser> userManager, IAccountLogic accountLogic)
         {
             UserManager = userManager;
+            _accountLogic = accountLogic;
+        }
+
+        public async Task<ActionResult> Management()
+        {
+            var users = await _accountLogic.GetAllUsers();
+
+            return View(users);
+        }
+
+        public async Task<ActionResult> RoleManagement()
+        {
+            var roles = await _accountLogic.GetAllRoles();
+
+            return View(roles);
+        }
+
+        public async Task<ActionResult> RoleCard(string id)
+        {
+            IdentityRole model;
+            if (!string.IsNullOrEmpty(id) && !id.Equals("0"))
+            {
+                model = await _accountLogic.GetRole(id);
+            }
+            else model = new IdentityRole();
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> SaveRole(IdentityRole role)
+        {
+            bool result;
+            if (string.IsNullOrEmpty(role.Id) || role.Id.Equals("0"))
+            {
+                result = await _accountLogic.AddRole(role);
+            }
+            else result = await _accountLogic.UpdateRole(role);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+        public async Task<ActionResult> RemoveRole(string id)
+        {
+            bool result = await _accountLogic.RemoveRole(id);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
         }
 
         private UserManager<AppUser> UserManager { get; set; }
 
-
-        [AllowAnonymous]
-        public static string GetAuthorName(string authorId)
-        {
-            ApplicationDbContext db = new ApplicationDbContext();
-
-            AppUser author = (from x in db.Users
-                                      where x.Id == authorId
-                                      select x).FirstOrDefault();
-
-            if (author != null) return author.UserName;
-            return "";
-        }
-        //
-        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -67,8 +81,6 @@ namespace PortfolioMVC5v3.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -92,21 +104,15 @@ namespace PortfolioMVC5v3.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/Register
         [AllowAnonymous]
-        //[RequireHttps]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        //[RequireHttps]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -115,26 +121,24 @@ namespace PortfolioMVC5v3.Controllers
                 {
                     UserName = model.UserName,
                     FirstName = model.FirstName,
-                    Email = model.Email
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Blocked = false
                 };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
+                    await SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    AddErrors(result);
-                }
+
+                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -178,10 +182,8 @@ namespace PortfolioMVC5v3.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+
+            return RedirectToAction("Index", "Home");
         }
         #endregion
     }

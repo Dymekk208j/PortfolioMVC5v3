@@ -7,6 +7,9 @@ using Unity.Mvc5;
 using PortfolioMVC5v3.Logic.Logic;
 using Unity.Injection;
 using PortfolioMVC5v3.Controllers;
+using Microsoft.AspNet.Identity;
+using PortfolioMVC5v3.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PortfolioMVC5v3
 {
@@ -26,6 +29,7 @@ namespace PortfolioMVC5v3
             container.RegisterType<IMainPageRepository, MainPageRepository>();
             container.RegisterType<IProjectRepository, ProjectRepository>();
             container.RegisterType<ITechnologyRepository, TechnologyRepository>();
+            container.RegisterType<IAccountRepository, AccountRepository>();
 
             container.RegisterType<IAboutMeLogic, AboutMeLogic>();
             container.RegisterType<IAchievementLogic, AchievementLogic>();
@@ -37,9 +41,13 @@ namespace PortfolioMVC5v3
             container.RegisterType<IMainPageLogic, MainPageLogic>();
             container.RegisterType<IProjectLogic, ProjectLogic>();
             container.RegisterType<ITechnologyLogic, TechnologyLogic>();
+            container.RegisterType<IAccountLogic, AccountLogic>();
 
             container.RegisterSingleton<IDatabaseManager, DatabaseManager>();
-            container.RegisterType<AccountController>(new InjectionConstructor());
+            //container.RegisterType<AccountController>(new InjectionConstructor());
+            container.RegisterType<AccountController>(new InjectionConstructor(typeof(IAccountLogic)));
+            container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>();
+
 
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
