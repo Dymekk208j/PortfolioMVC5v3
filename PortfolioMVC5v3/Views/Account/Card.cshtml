@@ -1,0 +1,103 @@
+﻿@model PortfolioMVC5v3.Models.ViewModels.AppUserViewModel
+
+@{
+    ViewBag.Title = "Karta użytkownika";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section AdditionalCss
+{
+}
+
+@Html.HiddenFor(m => m.Id)
+
+<div class="row h-100">
+    <div class="col-12">
+        <div class="card" style="height: 90%">
+            <div class="card-body d-flex flex-column">
+                <h2 class="card-title">Karta użytkownika</h2>
+
+                <div class="row mt-3">
+                    <div class="col-12 mb-2">
+                        <h5>Opcje główne:</h5>
+                    </div>
+                    <div class="col-6 pl-4">
+                        <div class="form-group">
+                            <label for="UserName">Nazwa użytkownika</label>
+                            <input type="text" class="k-textbox w-100" name="UserName" id="UserName" placeholder="Nazwa użytkownika" value="@Model.UserName" />
+                            <small id="UserNameHint" class="form-text text-muted">Pełna nazwa użytkownika</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="Email">Adres e-mail</label>
+                            <input type="text" class="k-textbox w-100" name="Email" id="Email" placeholder="Adres e-mail" value="@Model.Email" />
+                            <small id="EmailHint" class="form-text text-muted">Adres e-mail użytkownika</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6 pl-4">
+                        <div class="form-group">
+                            <label for="FirstName">Imię</label>
+                            <input type="text" class="k-textbox w-100" name="FirstName" id="FirstName" placeholder="Imie" value="@Model.FirstName" />
+                            <small id="FirstNameHint" class="form-text text-muted">Imię użytkownika</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="LastName">Nazwisko</label>
+                            <input type="text" class="k-textbox w-100" name="LastName" id="LastName" placeholder="Nazwisko" value="@Model.LastName" />
+                            <small id="LastNameHint" class="form-text text-muted">Nazwisko użytkownika</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12 pl-4">
+                        <div class="form-group">
+                            <label for="selectedRoles">Role</label>
+                            <input name="selectedRoles" id="selectedRoles" placeholder="Role użytkownika" />
+                            <small id="selectedRolesHint" class="form-text text-muted">Role przypisane do użytkownika</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12 mb-2">
+                        <h5>Opcje dodatkowe:</h5>
+                    </div>
+                    <div class="col-12 pl-4">
+                        <table>
+                            <tr>
+                                <th class="py-2"><input id="Blocked" /></th>
+                                <th class="py-2"><label for="Blocked" class="ml-3 pt-2">Zablokowany użytkownik</label></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row mt-auto">
+                    <div class="col">
+                        <button type="button" name="SaveBtn" id="SaveBtn" class="btn btn-success float-right">
+                            <i class="fas fa-save mr-2"></i> Zapisz zmiany
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        var blocked = @Html.Raw(Json.Encode(@Model.Blocked));
+    </script>
+    <script src="~/Scripts/admin/Account/Card.js"></script>
+}

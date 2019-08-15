@@ -58,6 +58,7 @@ namespace PortfolioMVC5v3.Models.ViewModels
         public string LastName { get; set; }
 
         public string Email { get; set; }
+
         public bool Blocked { get; set; }
     }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using PortfolioMVC5v3.Logic.Interfaces;
@@ -8,13 +9,16 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace PortfolioMVC5v3.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private UserManager<AppUser> UserManager { get; set; }
         private readonly IAccountLogic _accountLogic;
+        
         public AccountController(IAccountLogic accountLogic)
             : this(new UserManager<AppUser>(new UserStore<AppUser>(new ApplicationDbContext())), accountLogic)
         {
@@ -33,6 +37,16 @@ namespace PortfolioMVC5v3.Controllers
             var users = await _accountLogic.GetAllUsers();
 
             return View(users);
+        }
+
+        public async Task<ActionResult> Card(string id)
+        {
+            var user = await _accountLogic.GetUser(id);
+
+          //  var roles = await _accountLogic.GetUserRoles(id);
+
+
+            return View(user);
         }
 
         public async Task<ActionResult> RoleManagement()
@@ -65,6 +79,7 @@ namespace PortfolioMVC5v3.Controllers
 
             return new HttpStatusCodeResult(result ? 200 : 500);
         }
+
         public async Task<ActionResult> RemoveRole(string id)
         {
             bool result = await _accountLogic.RemoveRole(id);
@@ -72,7 +87,27 @@ namespace PortfolioMVC5v3.Controllers
             return new HttpStatusCodeResult(result ? 200 : 500);
         }
 
-        private UserManager<AppUser> UserManager { get; set; }
+        public async Task<string> GetAllRoles()
+        {
+            List<IdentityRole> roles = await _accountLogic.GetAllRoles();
+
+            return JsonConvert.SerializeObject(roles);
+        }
+
+        public async Task<string> GetUserRoles(string id)
+        {
+            List<IdentityRole> userRoles = await _accountLogic.GetUserRoles(id);
+
+            return JsonConvert.SerializeObject(userRoles);
+        }
+
+        public async Task<ActionResult> UpdateUser(AppUserViewModel userViewModel, List<string> rolesIds)
+        {
+            bool result = await _accountLogic.UpdateUser(userViewModel, rolesIds);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)

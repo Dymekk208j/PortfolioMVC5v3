@@ -397,6 +397,7 @@
     <Content Include="Content\admin\Icons\weather-icons\less\css\variables-time.css" />
     <Content Include="Content\admin\Icons\weather-icons\less\css\variables-wind-names.css" />
     <Content Include="Scripts\admin\AboutMeManagement\Management.js" />
+    <Content Include="Scripts\admin\Account\Card.js" />
     <Content Include="Scripts\admin\Account\RoleCard.js" />
     <Content Include="Scripts\admin\Account\RolesList.js" />
     <Content Include="Scripts\admin\Account\List.js" />
@@ -693,6 +694,7 @@
     <Content Include="Views\Account\Management.cshtml" />
     <Content Include="Views\Account\RoleManagement.cshtml" />
     <Content Include="Views\Account\RoleCard.cshtml" />
+    <Content Include="Views\Account\Card.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
