@@ -1,38 +1,29 @@
 ﻿$(function () {
     initGrid();
 
-    $("button[name='RemoveExtraInformationBtn']").on("click",
+    $("button[name='EditProjectBtn']").on("click",
         function () {
             const id = parseInt($(this).data("id"));
-            removeExtraInformation(id);
+            editProject(id);
         });
 
-    $("button[name='EditExtraInformationBtn']").on("click",
+    $("button[name='SetAsTempProjectBtn']").on("click",
         function () {
             const id = parseInt($(this).data("id"));
-            editExtraInformation(id);
+            setAsTempProjectBtn(id);
         });
 
-    $("#AddExtraInformationBtn").on("click",
+    $("#AddProjectBtn").on("click",
         function () {
-            editExtraInformation(0);
+            editProject(0);
         });
 });
 
-window.getTypeText = function (id) {
-    const data = [
-        { text: 'Języki obce', value: 0 },
-        { text: 'Dodatkowe umiejętności', value: 1 },
-        { text: 'Zainteresowania', value: 2 }
-    ];
 
-    return data[id].text;
-};
-
-function removeExtraInformation(id) {
+function setAsTempProjectBtn(id) {
     $.ajax({
         type: "GET",
-        url: `/ExtraInformations/RemoveExtraInformation/${id}`,
+        url: `/Project/RemoveProject/${id}`,
         success: function () {
             window.Swal.fire({
                 title: 'Sukces!',
@@ -54,8 +45,8 @@ function removeExtraInformation(id) {
     });
 }
 
-function editExtraInformation(id) {
-    location.href = `/ExtraInformations/Card?id=${id}`;
+function editProject(id) {
+    location.href = `/Project/ManagementCard?id=${id}`;
 }
 
 function initGrid() {
@@ -71,17 +62,30 @@ function initGrid() {
             pageSize: 20
         },
         columns: [{
-            field: "ExtraInformationId",
+            field: "ProjectId",
             title: "Id",
             width: 50
-        }, {
-            field: "Type",
-            title: "Typ",
-            template: '#=window.getTypeText(Type)#',
-            width: 200
-        }, {
+        },
+        {
             field: "Title",
-            title: "Nazwa"
+            title: "Tytuł"
+        },
+        {
+            field: "ShortDescription",
+            title: "Krótki opis"
+        },
+        {
+
+            field: "DateTimeCreated",
+            title: "Data utworzenia",
+            template: "#= kendo.toString(kendo.parseDate(DateTimeCreated, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
+
+        },
+        {
+            field: "Commercial",
+            title: "Projekt komercyjny",
+            template: '<input type="checkbox" #= Commercial ? "checked=checked" : "" # disabled="disabled" ></input>',
+            width: 170
         },
         {
             field: "ShowInCv",
@@ -90,11 +94,11 @@ function initGrid() {
             width: 150
         },
         {
-            field: "ExtraInformationId",
+            field: "ProjectId",
             title: "Akcje",
-            template: '<button name="EditExtraInformationBtn" class="btn btn-sm btn-primary mr-2" data-id="#=ExtraInformationId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
-                '<button name="RemoveExtraInformationBtn" class="btn btn-sm btn-danger" data-id="#=ExtraInformationId#"><i class="fas fa-trash-alt mr-2"></i>Usuń</button>',
-            width: 200
+            template: '<button name="EditProjectBtn" class="btn btn-sm btn-primary mr-2" data-id="#=ProjectId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
+                '<button name="SetAsTempProjectBtn" class="btn btn-sm btn-secondary" data-id="#=ProjectId#"><i class="fas fa-ban mr-2"></i>Wycofaj do tymczasowych</button>', 
+
         }]
     });
 }

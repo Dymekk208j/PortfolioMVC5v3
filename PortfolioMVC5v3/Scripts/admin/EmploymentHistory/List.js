@@ -101,7 +101,7 @@ function initGrid() {
         {
             field: "EmploymentHistoryId",
             title: "Akcje",
-            template: '<button name="EditEmploymentHistoryBtn" class="btn btn-sm k-primary mr-2" data-id="#=EmploymentHistoryId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
+            template: '<button name="EditEmploymentHistoryBtn" class="btn btn-sm btn-primary mr-2" data-id="#=EmploymentHistoryId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
                 '<button name="RemoveEmploymentHistoryBtn" class="btn btn-sm btn-danger" data-id="#=EmploymentHistoryId#"><i class="fas fa-trash-alt mr-2"></i>Usuń</button>',
             width: 200
         }]

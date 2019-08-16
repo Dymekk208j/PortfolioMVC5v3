@@ -102,7 +102,7 @@ function initGrid() {
         {
             field: "TechnologyId",
             title: "Akcje",
-            template: '<button name="EditTechnologyBtn" class="btn btn-sm k-primary mr-2" data-id="#=TechnologyId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
+            template: '<button name="EditTechnologyBtn" class="btn btn-sm btn-primary mr-2" data-id="#=TechnologyId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
                 '<button name="RemoveTechnologyBtn" class="btn btn-sm btn-danger" data-id="#=TechnologyId#"><i class="fas fa-trash-alt mr-2"></i>Usuń</button>',
             width: 200
         }]

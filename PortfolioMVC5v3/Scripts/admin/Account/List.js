@@ -81,7 +81,7 @@ function initGrid() {
         {
             field: "Id",
             title: "Akcje",
-            template: '<button name="EditUserBtn" class="btn btn-sm k-primary mr-2" data-id="#=Id#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
+            template: '<button name="EditUserBtn" class="btn btn-sm btn-primary mr-2" data-id="#=Id#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
                 '<button name="#= Blocked ? "UnlockUserBtn" : "BlockUserBtn" #" class="btn btn-sm #= Blocked ? "btn-success" : "btn-danger" #" data-id="#=Id#"><i class="#= Blocked ? "far fa-check-circle" : "fas fa-ban" # mr-2"></i>Zablokuj</button>'
             , width: 200
         }

@@ -10,6 +10,8 @@ using PortfolioMVC5v3.Controllers;
 using Microsoft.AspNet.Identity;
 using PortfolioMVC5v3.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using AutoMapper;
+using PortfolioMVC5v3.Models.ViewModels;
 
 namespace PortfolioMVC5v3
 {
@@ -49,6 +51,15 @@ namespace PortfolioMVC5v3
             container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>();
 
 
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Project, ProjectViewModel>();
+                cfg.CreateMap<ProjectViewModel, Project>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
+            container.RegisterInstance(mapper);
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

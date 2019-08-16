@@ -21,7 +21,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
         }
 
 
-        public async Task<List<Project>> GetProjectsList()
+        public async Task<List<Project>> GetProjectsList(bool? showInCvProjects, bool? tempProjects)
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT ");
@@ -29,13 +29,29 @@ namespace PortfolioMVC5v3.Repositories.Repositories
 
             query.Append("FROM ");
             query.Append("[dbo].[Projects] ");
+            
+            if (showInCvProjects.HasValue)
+            {
+                query.Append("WHERE ");
+                query.Append("showInCv =  @showInCvProjects ");
+            }
+
+            if (tempProjects.HasValue)
+            {
+                query.Append(!query.ToString().Contains("WHERE") ? "WHERE " : "AND ");
+                query.Append("tempProject = @tempProjects ");
+            }
 
             try
             {
 
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var resultEnumerable = await connection.QueryAsync<Project>(query.ToString());
+                    var resultEnumerable = await connection.QueryAsync<Project>(query.ToString(),
+                    new{
+                        showInCvProjects,
+                        tempProjects
+                    });
 
                     return resultEnumerable.ToList();
                 }
@@ -46,7 +62,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 Logger.Log(e);
             }
 
-            return null;
+            return new List<Project>();
         }
 
         public async Task<Project> GetProject(int projectId)
@@ -76,34 +92,5 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             return null;
         }
 
-        public async Task<List<Project>> GetProjectsListToShow()
-        {
-            StringBuilder query = new StringBuilder();
-            query.Append("SELECT ");
-            query.Append(" *  ");
-
-            query.Append("FROM ");
-            query.Append("[dbo].[Projects] ");
-
-            query.Append("WHERE ");
-            query.Append("[ShowInCv] = 1");
-
-            try
-            {
-
-                using (IDbConnection connection = _manager.GetSqlConnection())
-                {
-                    var resultEnumerable = await connection.QueryAsync<Project>(query.ToString());
-
-                    return resultEnumerable.ToList();
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e);
-            }
-
-            return null;
-        }
     }
 }

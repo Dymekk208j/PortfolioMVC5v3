@@ -6,8 +6,7 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
 {
     public interface IProjectRepository
     {
-        Task<List<Project>> GetProjectsList();
+        Task<List<Project>> GetProjectsList(bool? showInCvProjects, bool? tempProjects);
         Task<Project> GetProject(int projectId);
-        Task<List<Project>> GetProjectsListToShow();
     }
 }

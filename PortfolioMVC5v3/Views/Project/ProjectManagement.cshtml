@@ -1,6 +1,7 @@
-﻿@model System.Collections.Generic.List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Project>
+
 @{
-    ViewBag.Title = "Role";
+    ViewBag.Title = "Projekty";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -24,10 +25,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <h2 class="card-title">Role</h2>
+                        <h2 class="card-title">Projekty</h2>
                     </div>
                     <div class="col-6">
-                        <button id="AddRoleBtn" name="AddRoleBtn" class="btn btn-primary mr-2 float-right"><i class="far fa-plus-square mr-2"></i>Dodaj nową role</button>
+                        <button id="AddProjectBtn" name="AddProjectBtn" class="btn btn-primary mr-2 float-right"><i class="far fa-plus-square mr-2"></i>Dodaj nowy</button>
                     </div>
                 </div>
 
@@ -48,5 +49,5 @@
         var model = @Html.Raw(Json.Encode(@Model));
     </script>
 
-    <script src="~/Scripts/admin/Account/RolesList.js"></script>
+    <script src="~/Scripts/admin/ProjectManagement/List.js"></script>
 }
