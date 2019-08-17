@@ -10,6 +10,7 @@
 }
 
 @Html.HiddenFor(m => m.ProjectId)
+@Html.HiddenFor(m => m.AuthorId)
 
 <div class="row h-100">
     <div class="col-12">
@@ -48,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row mt-2">
                     <div class="col-12 ">
                         <div class="form-group">
@@ -67,7 +68,7 @@
                             <small id="ShortDescriptionHint" class="form-text text-muted">Skrócony opis projektu wyświetlany na podsumowaniu oraz w cv</small>
                         </div>
                     </div>
-                    
+
                     <div class="col-8">
                         <div class="form-group">
                             <label for="FullDescription">Pełen opis</label>
@@ -76,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-           
+
                 <div class="row mt-2">
                     <div class="col-12 mb-2">
                         <h5>Opcje dodatkowe:</h5>
@@ -93,9 +94,9 @@
                             </tr>
                         </table>
                     </div>
-                    
+
                     <div class="col-8">
-                  
+
                     </div>
 
                 </div>
@@ -103,8 +104,41 @@
                 <div class="row mt-auto">
                     <div class="col">
                         <button type="button" name="SaveBtn" id="SaveBtn" class="btn btn-success float-right">
-                            <i class="fas fa-save mr-2"></i> Zapisz zmiany
+                            <i class="fas fa-save mr-2"></i>
+                            @if (Model.ProjectId > 0)
+                            {
+                                @: Zapisz zmiany
+                            }
+                            else
+                            {
+                                @: Utwórz projekt
+                            }
                         </button>
+
+
+
+
+                        <button type="button" name="SaveAsTempBtn" id="SaveAsTempBtn" class="btn btn-secondary float-right mr-2">
+                            <i class="fas fa-save mr-2"></i>
+                            @if (Model.ProjectId == 0)
+                            {
+                                @: Zapisz jako tymczasowy
+                            }
+                            else
+                            {
+                                if (Model.TempProject)
+                                {
+                                    @: Zapisz zmiany i dodaj do portfolio
+                                }
+                                else
+                                {
+                                    @: Zapisz zmiany i przenieś do tymczasowych
+                                }
+                            }
+                        </button>
+
+
+
                     </div>
                 </div>
 
@@ -119,6 +153,7 @@
     <script>
         var showInCv = @Html.Raw(Json.Encode(@Model.ShowInCv));
         var commercial = @Html.Raw(Json.Encode(@Model.Commercial));
+        var isTemp = @Html.Raw(Json.Encode(@Model.TempProject));
         var technologies = @Html.Raw(Json.Encode(@Model.Technologies));
     </script>
 

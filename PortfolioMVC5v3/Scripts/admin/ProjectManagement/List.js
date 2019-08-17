@@ -7,10 +7,31 @@
             editProject(id);
         });
 
-    $("button[name='SetAsTempProjectBtn']").on("click",
+    $("button[name='RemoveProjectBtn']").on("click",
         function () {
-            const id = parseInt($(this).data("id"));
-            setAsTempProjectBtn(id);
+            const projectTitle = $(this).data("project-title");
+
+            window.Swal.fire({
+                title: `Czy na pewno chcesz usunąć projekt "${projectTitle}"?`,
+                text: "Operacja ta będzie nieodwracalna i wiąże się z utratą wszystkich danych powiązanych z projektem!",
+                type: "question",
+                confirmButtonText: "Tak, usuń!",
+                cancelButtonText: "Anuluj.",
+                customClass: {
+                    confirmButton: "btn btn-lg btn-danger mx-3",
+                    cancelButton: "btn btn-lg btn-secondary mx-3"
+                },
+                buttonsStyling: false,
+                showCancelButton: true,
+                showCloseButton: true
+            }).then((e) => {
+                if (e.value === true) {
+                    const id = parseInt($(this).data("id"));
+                    RemoveProjectBtn(id);
+                }
+            });
+
+
         });
 
     $("#AddProjectBtn").on("click",
@@ -20,7 +41,7 @@
 });
 
 
-function setAsTempProjectBtn(id) {
+function RemoveProjectBtn(id) {
     $.ajax({
         type: "GET",
         url: `/Project/RemoveProject/${id}`,
@@ -97,7 +118,8 @@ function initGrid() {
             field: "ProjectId",
             title: "Akcje",
             template: '<button name="EditProjectBtn" class="btn btn-sm btn-primary mr-2" data-id="#=ProjectId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
-                '<button name="SetAsTempProjectBtn" class="btn btn-sm btn-secondary" data-id="#=ProjectId#"><i class="fas fa-ban mr-2"></i>Wycofaj do tymczasowych</button>', 
+                '<button name="RemoveProjectBtn" class="btn btn-sm btn-danger" data-id="#=ProjectId#" data-project-title="#=Title#"><i class="fas fa-trash-alt mr-2"></i>Usuń</button>',
+            width: 180
 
         }]
     });

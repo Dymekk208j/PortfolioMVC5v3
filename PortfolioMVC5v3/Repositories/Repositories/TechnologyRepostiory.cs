@@ -1,13 +1,13 @@
-﻿using PortfolioMVC5v3.Repositories.Interfaces;
-using Dapper;
+﻿using Dapper;
+using PortfolioMVC5v3.Models;
+using PortfolioMVC5v3.Repositories.Interfaces;
+using PortfolioMVC5v3.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PortfolioMVC5v3.Models;
-using PortfolioMVC5v3.Utilities;
 
 namespace PortfolioMVC5v3.Repositories.Repositories
 {
@@ -18,7 +18,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
 
         public TechnologyRepository(IDatabaseManager databaseManager)
         {
-             _manager = databaseManager;
+            _manager = databaseManager;
         }
 
 
@@ -72,7 +72,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
 
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var resultEnumerable = await connection.QueryAsync<Technology>(query.ToString(), new {projectId});
+                    var resultEnumerable = await connection.QueryAsync<Technology>(query.ToString(), new { projectId });
 
                     return resultEnumerable.ToList();
                 }
@@ -136,7 +136,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.QueryFirstAsync<Technology>(query.ToString(), new {technologyId});
+                    var result = await connection.QueryFirstAsync<Technology>(query.ToString(), new { technologyId });
 
                     return result;
                 }
@@ -310,7 +310,62 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.ExecuteAsync(query.ToString(), new {show, technologyId});
+                    var result = await connection.ExecuteAsync(query.ToString(), new { show, technologyId });
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<bool> RemoveBindingsBetweenProjectAndTechnologies(int projectId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("DELETE FROM ");
+            query.Append("TechnologyProjects ");
+
+            query.Append("WHERE ");
+            query.Append("Project_ProjectId = @projectId");
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { projectId });
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<bool> CreateBindingBetweenProjectAndTechnology(int projectId, int technologyId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("INSERT INTO ");
+            query.Append("TechnologyProjects ");
+            query.Append("( ");
+            query.Append("[Technology_TechnologyId], ");
+            query.Append("[Project_ProjectId] ");
+            query.Append(") ");
+
+            query.Append("VALUES ");
+            query.Append("( ");
+            query.Append("@technologyId, ");
+            query.Append("@projectId ");
+            query.Append(") ");
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { technologyId, projectId });
                     return result > 0;
                 }
             }

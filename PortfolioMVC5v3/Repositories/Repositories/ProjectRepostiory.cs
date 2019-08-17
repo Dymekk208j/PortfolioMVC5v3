@@ -1,23 +1,23 @@
-﻿using PortfolioMVC5v3.Repositories.Interfaces;
-using Dapper;
+﻿using Dapper;
+using PortfolioMVC5v3.Models;
+using PortfolioMVC5v3.Repositories.Interfaces;
+using PortfolioMVC5v3.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PortfolioMVC5v3.Models;
-using PortfolioMVC5v3.Utilities;
 
 namespace PortfolioMVC5v3.Repositories.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
         private readonly IDatabaseManager _manager;
-
+        private const string TableName = "Projects";
         public ProjectRepository(IDatabaseManager databaseManager)
         {
-             _manager = databaseManager;
+            _manager = databaseManager;
         }
 
 
@@ -29,7 +29,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
 
             query.Append("FROM ");
             query.Append("[dbo].[Projects] ");
-            
+
             if (showInCvProjects.HasValue)
             {
                 query.Append("WHERE ");
@@ -48,7 +48,8 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
                     var resultEnumerable = await connection.QueryAsync<Project>(query.ToString(),
-                    new{
+                    new
+                    {
                         showInCvProjects,
                         tempProjects
                     });
@@ -81,7 +82,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    return await connection.QueryFirstAsync<Project>(query.ToString(), new {projectId});
+                    return await connection.QueryFirstAsync<Project>(query.ToString(), new { projectId });
                 }
             }
             catch (Exception e)
@@ -92,5 +93,116 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             return null;
         }
 
+        public async Task<bool> UpdateProject(Project project)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE ");
+            query.Append($"{TableName} ");
+
+            query.Append("SET ");
+            query.Append("[AuthorId] = @AuthorId, ");
+            query.Append("[IconId] = @IconId, ");
+            query.Append("[Title] = @Title, ");
+            query.Append("[ShortDescription] = @ShortDescription, ");
+            query.Append("[FullDescription] = @FullDescription, ");
+            query.Append("[Commercial] = @Commercial, ");
+            query.Append("[ShowInCv] = @ShowInCv, ");
+            query.Append("[DateTimeCreated] = @DateTimeCreated, ");
+            query.Append("[TempProject] = @TempProject, ");
+            query.Append("[GitHubLink] = @GitHubLink ");
+
+            query.Append("WHERE ");
+            query.Append("[ProjectId] = @ProjectId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), project);
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<int> CreateProject(Project project)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("INSERT INTO ");
+            query.Append($"{TableName} ");
+            query.Append("(");
+            query.Append("[AuthorId], ");
+            query.Append("[IconId], ");
+            query.Append("[Title], ");
+            query.Append("[ShortDescription], ");
+            query.Append("[FullDescription], ");
+            query.Append("[Commercial], ");
+            query.Append("[ShowInCv], ");
+            query.Append("[DateTimeCreated], ");
+            query.Append("[TempProject], ");
+            query.Append("[GitHubLink]");
+            query.Append(")");
+
+            query.Append(" OUTPUT INSERTED.ProjectId ");
+
+            query.Append("VALUES");
+            query.Append("(");
+            query.Append("@AuthorId, ");
+            query.Append("@IconId, ");
+            query.Append("@Title, ");
+            query.Append("@ShortDescription, ");
+            query.Append("@FullDescription, ");
+            query.Append("@Commercial, ");
+            query.Append("@ShowInCv, ");
+            query.Append("@DateTimeCreated, ");
+            query.Append("@TempProject, ");
+            query.Append("@GitHubLink ");
+            query.Append(")");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.QueryFirstAsync<int>(query.ToString(), project);
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return 0;
+        }
+
+        public async Task<bool> RemoveProject(int projectId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("DELETE FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ProjectId] = @ProjectId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { projectId });
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
     }
 }

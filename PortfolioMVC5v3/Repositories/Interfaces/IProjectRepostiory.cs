@@ -8,5 +8,8 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
     {
         Task<List<Project>> GetProjectsList(bool? showInCvProjects, bool? tempProjects);
         Task<Project> GetProject(int projectId);
+        Task<bool> UpdateProject(Project project);
+        Task<int> CreateProject(Project project);
+        Task<bool> RemoveProject(int projectId);
     }
 }

@@ -9,5 +9,8 @@ namespace PortfolioMVC5v3.Logic.Interfaces
     {
         Task<List<Project>> GetProjectsList(bool? showInCvProjects = null, bool? tempProjects = null);
         Task<ProjectViewModel> GetProject(int projectId);
+        Task<bool> UpdateProject(ProjectViewModel projectModel);
+        Task<bool> CreateProject(ProjectViewModel projectModel);
+        Task<bool> RemoveProject(int projectId);
     }
 }

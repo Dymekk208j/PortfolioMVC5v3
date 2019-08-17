@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
 using PortfolioMVC5v3.Models.ViewModels;
 using PortfolioMVC5v3.Repositories.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PortfolioMVC5v3.Logic.Logic
 {
@@ -39,6 +39,48 @@ namespace PortfolioMVC5v3.Logic.Logic
             return projectViewModel;
         }
 
+        public async Task<bool> UpdateProject(ProjectViewModel projectModel)
+        {
+            bool removeBindingsBetweenProjectAndTechnologiesResult =
+                await _technologyLogic.RemoveBindingsBetweenProjectAndTechnologies(projectModel.ProjectId);
 
+            if (!removeBindingsBetweenProjectAndTechnologiesResult) return false;
+
+            var project = _mapper.Map<ProjectViewModel, Project>(projectModel);
+            bool updateProjectResult = await _projectRepository.UpdateProject(project);
+            if (!updateProjectResult) return false;
+
+            if (!(projectModel.Technologies?.Count > 0)) return true;
+
+            bool setBetweenProjectAndTechnologiesResult =
+                await _technologyLogic.SetBindingBetweenProjectAndTechnologiesResult(project.ProjectId,
+                    projectModel.Technologies);
+
+            return setBetweenProjectAndTechnologiesResult;
+
+        }
+
+        public async Task<bool> CreateProject(ProjectViewModel projectModel)
+        {
+            var project = _mapper.Map<ProjectViewModel, Project>(projectModel);
+            int newProjectId = await _projectRepository.CreateProject(project);
+            if (newProjectId == 0) return false;
+
+            bool setBetweenProjectAndTechnologiesResult =
+                await _technologyLogic.SetBindingBetweenProjectAndTechnologiesResult(newProjectId,
+                    projectModel.Technologies);
+
+            return setBetweenProjectAndTechnologiesResult;
+        }
+
+        public async Task<bool> RemoveProject(int projectId)
+        {
+            bool removeBindingsBetweenProjectAndTechnologiesResult =
+                await _technologyLogic.RemoveBindingsBetweenProjectAndTechnologies(projectId);
+
+            bool removeProjectResult = await _projectRepository.RemoveProject(projectId);
+
+            return removeProjectResult && removeBindingsBetweenProjectAndTechnologiesResult;
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace PortfolioMVC5v3.Utilities
     {
         public static void Log(Exception exception)
         {
-
+            var ex = exception;
         }
     }
 }

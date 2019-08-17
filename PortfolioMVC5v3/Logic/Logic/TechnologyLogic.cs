@@ -1,10 +1,11 @@
-﻿using System;
-using PortfolioMVC5v3.Logic.Interfaces;
-using PortfolioMVC5v3.Repositories.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
+using PortfolioMVC5v3.Repositories.Interfaces;
 using PortfolioMVC5v3.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PortfolioMVC5v3.Logic.Logic
 {
@@ -52,7 +53,7 @@ namespace PortfolioMVC5v3.Logic.Logic
             return _repository.RemoveTechnology(technologyId);
         }
 
-        public async Task<bool> UpdateShowInAboutMeTechnologiesAsync(List<int> technologiesShowInAboutMePage)
+        public async Task<bool> UpdateShowInAboutMeTechnologiesAsync(IEnumerable<int> technologiesShowInAboutMePage)
         {
             try
             {
@@ -63,12 +64,40 @@ namespace PortfolioMVC5v3.Logic.Logic
                     {
                         await _repository.UpdateShowInAboutMe(technology, true);
                     }
-                }else return false;
+                }
+                else return false;
             }
             catch (Exception e)
             {
                 Logger.Log(e);
                 return false;
+            }
+
+            return true;
+        }
+
+        public async Task<List<Technology>> GetTechnologiesByIds(IEnumerable<int> projectTechnologiesIds)
+        {
+            var technologies = new List<Technology>();
+            foreach (var technologyId in projectTechnologiesIds.Where(i => i > 0))
+            {
+                technologies.Add(await _repository.GetTechnology(technologyId));
+            }
+
+            return technologies;
+        }
+
+        public Task<bool> RemoveBindingsBetweenProjectAndTechnologies(int projectModelProjectId)
+        {
+            return _repository.RemoveBindingsBetweenProjectAndTechnologies(projectModelProjectId);
+        }
+
+        public async Task<bool> SetBindingBetweenProjectAndTechnologiesResult(int projectId, IEnumerable<Technology> projectTechnologies)
+        {
+            foreach (var projectModelTechnology in projectTechnologies)
+            {
+                bool partialResult = await _repository.CreateBindingBetweenProjectAndTechnology(projectId, projectModelTechnology.TechnologyId);
+                if (!partialResult) return false;
             }
 
             return true;

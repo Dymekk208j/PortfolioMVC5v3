@@ -15,5 +15,7 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<bool> RemoveTechnology(int technologyId);
         Task<bool> ClearShowInAboutMe();
         Task<bool> UpdateShowInAboutMe(int technologyId, bool show);
+        Task<bool> RemoveBindingsBetweenProjectAndTechnologies(int projectId);
+        Task<bool> CreateBindingBetweenProjectAndTechnology(int projectId, int technologyId);
     }
 }

@@ -13,6 +13,9 @@ namespace PortfolioMVC5v3.Logic.Interfaces
         Task<int> InsertTechnology(Technology technology);
         Task<bool> UpdateTechnology(Technology technology);
         Task<bool> RemoveTechnology(int technologyId);
-        Task<bool> UpdateShowInAboutMeTechnologiesAsync(List<int> technologiesShowInAboutMePage);
+        Task<bool> UpdateShowInAboutMeTechnologiesAsync(IEnumerable<int> technologiesShowInAboutMePage);
+        Task<List<Technology>> GetTechnologiesByIds(IEnumerable<int> projectTechnologiesIds);
+        Task<bool> RemoveBindingsBetweenProjectAndTechnologies(int projectModelProjectId);
+        Task<bool> SetBindingBetweenProjectAndTechnologiesResult(int projectId, IEnumerable<Technology> projectTechnologies);
     }
 }

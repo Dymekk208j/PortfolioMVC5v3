@@ -2,10 +2,21 @@
     initSwitches();
     initDatePicker();
     initMultiSelect();
-    
+
     $("#SaveBtn").on("click",
         function () {
-            save();
+            createOrUpdateProject();
+        });
+
+    $("#SaveAsTempBtn").on("click",
+        function () {
+            const projectId = parseInt($("#ProjectId").val());
+            if (projectId === 0) {
+                window.isTemp = true;
+            } else {
+                window.isTemp = !window.isTemp;
+            }
+            createOrUpdateProject();
         });
 });
 
@@ -89,17 +100,19 @@ function checkValidation() {
     return true;
 }
 
-function save() {
+function createOrUpdateProject() {
     if (checkValidation()) {
         const model = {
             ProjectId: $("#ProjectId").val(),
+            AuthorId: $("#AuthorId").val(),
             Title: $("#Title").val(),
             GitHubLink: $("#GitHubLink").val(),
             DateTimeCreated: $("#DateTimeCreated").data("kendoDatePicker").value().toJSON(),
             ShortDescription: $("#ShortDescription").val(),
             FullDescription: $("#FullDescription").val(),
             Commercial: $("#Commercial").data("kendoSwitch").value(),
-            ShowInCv: $("#ShowInCv").data("kendoSwitch").value()
+            ShowInCv: $("#ShowInCv").data("kendoSwitch").value(),
+            TempProject: window.isTemp
         };
 
         const selectedTechnologiesIds = $("#Technologies").data("kendoMultiSelect").value();
@@ -112,26 +125,34 @@ function save() {
                 projectTechnologiesIds: selectedTechnologiesIds
             },
             success: function (e) {
-                console.log(e);
+                var result = JSON.parse(e);
+                if (result.Success === true) {
+                    window.Swal.fire({
+                        title: 'Sukces!',
+                        text: 'Poprawnie zapisano!',
+                        type: 'success',
+                        heightAuto: false
+                    }).then(() => {
+                        if (result.Type === "Normal") {
+                            location.href = "/Project/ProjectManagement";
+                        } else {
+                            location.href = "/Project/TempProjectManagement";
+                        }
+                    });
+                } else {
+                    window.Swal.fire({
+                        title: 'Błąd!',
+                        text: 'Zapisywanie nie powiodło się!',
+                        type: 'error',
+                        heightAuto: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
 
-                window.Swal.fire({
-                    title: 'Sukces!',
-                    text: 'Poprawnie zapisano!',
-                    type: 'success',
-                    heightAuto: false
-                }).then(() => {
-                 //   location.href = "/EmploymentHistory/List";
-                });
             },
             error: function () {
-                window.Swal.fire({
-                    title: 'Błąd!',
-                    text: 'Zapisywanie nie powiodło się!',
-                    type: 'error',
-                    heightAuto: false
-                }).then(() => {
-                    location.reload();
-                });
+
             }
         });
 
