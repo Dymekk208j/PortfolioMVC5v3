@@ -1,13 +1,6 @@
 ﻿<li class="sidebar-item"> <a class="sidebar-link waves-effect sidebar-link" href="@Url.Action("Dashboard", "AdministratorPanel")" aria-expanded="false"><i class="fas fa-cog"></i><span class="hide-menu">Dashboard</span></a></li>
 <li class="sidebar-item"> <a class="sidebar-link waves-effect sidebar-link" href="@Url.Action("List", "Technologies")" aria-expanded="false"><i class="fas fa-chart-pie"></i><span class="hide-menu">Technologie</span></a></li>
-
-<li class="sidebar-item">
-    <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-address-card"></i><span class="hide-menu">Strony</span></a>
-    <ul aria-expanded="false" class="collapse  first-level">
-        <li class="sidebar-item"><a href="@Url.Action("Management", "AboutMe")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> O mnie</span></a></li>
-        <li class="sidebar-item"><a href="@Url.Action("Management", "Home")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Główna strona</span></a></li>
-    </ul>
-</li>
+<li class="sidebar-item"> <a class="sidebar-link waves-effect sidebar-link" href="@Url.Action("Management", "Icon")" aria-expanded="false"><i class="fas fa-images"></i><span class="hide-menu">Ikony</span></a></li>
 
 <li class="sidebar-item">
     <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-project-diagram"></i><span class="hide-menu">Projekty</span></a>
@@ -15,14 +8,6 @@
         <li class="sidebar-item"><a href="@Url.Action("ManagementCard", "Project")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Utwórz projekt</span></a></li>
         <li class="sidebar-item"><a href="@Url.Action("ProjectManagement", "Project")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Lista projektów</span></a></li>
         <li class="sidebar-item"><a href="@Url.Action("TempProjectManagement", "Project")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Tymczasowe projekty</span></a></li>
-    </ul>
-</li>
-
-<li class="sidebar-item">
-    <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu">Użytkownicy</span></a>
-    <ul aria-expanded="false" class="collapse  first-level">
-        <li class="sidebar-item"><a href="@Url.Action("Management", "Account")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Użytkownicy</span></a></li>
-        <li class="sidebar-item"><a href="@Url.Action("RoleManagement", "Account")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Role</span></a></li>
     </ul>
 </li>
 
@@ -38,11 +23,20 @@
 </li>
 
 <li class="sidebar-item">
-    <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-images"></i><span class="hide-menu">Obrazy</span></a>
+    <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-address-card"></i><span class="hide-menu">Strony</span></a>
     <ul aria-expanded="false" class="collapse  first-level">
-        <li class="sidebar-item"><a href="@Url.Action("Management", "Icon")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Ikony</span></a></li>
-        <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Zrzuty ekranu</span></a></li>
+        <li class="sidebar-item"><a href="@Url.Action("Management", "AboutMe")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> O mnie</span></a></li>
+        <li class="sidebar-item"><a href="@Url.Action("Management", "Home")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Główna strona</span></a></li>
     </ul>
 </li>
+
+<li class="sidebar-item">
+    <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu">Użytkownicy</span></a>
+    <ul aria-expanded="false" class="collapse  first-level">
+        <li class="sidebar-item"><a href="@Url.Action("Management", "Account")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Użytkownicy</span></a></li>
+        <li class="sidebar-item"><a href="@Url.Action("RoleManagement", "Account")" class="sidebar-link"><i class="fas fa-caret-right"></i><span class="hide-menu"> Role</span></a></li>
+    </ul>
+</li>
+
 
 <li class="sidebar-item"> <a class="sidebar-link waves-effect sidebar-link" href="@Url.Action("Index", "Home")" aria-expanded="false"><i class="fas fa-sign-out-alt"></i><span class="hide-menu">Powrót do portfolio</span></a></li>
