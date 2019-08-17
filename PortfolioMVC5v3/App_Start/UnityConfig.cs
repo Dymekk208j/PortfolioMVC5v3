@@ -44,9 +44,9 @@ namespace PortfolioMVC5v3
             container.RegisterType<IProjectLogic, ProjectLogic>();
             container.RegisterType<ITechnologyLogic, TechnologyLogic>();
             container.RegisterType<IAccountLogic, AccountLogic>();
+            container.RegisterType<ICvLogic, CvLogic>();
 
             container.RegisterSingleton<IDatabaseManager, DatabaseManager>();
-            //container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<AccountController>(new InjectionConstructor(typeof(IAccountLogic)));
             container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>();
 

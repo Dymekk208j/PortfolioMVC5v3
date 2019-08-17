@@ -48,7 +48,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 Logger.Log(e);
             }
 
-            return null;
+            return new List<Education>();
         }
 
         public async Task<Education> GetEducation(int educationId)
@@ -210,6 +210,38 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             }
 
             return false;
+        }
+
+        public async Task<List<Education>> GetEducationsToShowInCvAsync()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append(" *  ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 1 ");
+
+            query.Append("ORDER BY [StartDate] DESC");
+
+            try
+            {
+
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<Education>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return new List<Education>();
         }
     }
 }

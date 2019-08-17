@@ -45,7 +45,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 Logger.Log(e);
             }
 
-            return null;
+            return new List<ExtraInformation>();
         }
 
         public async Task<ExtraInformation> GetExtraInformation(int extraInformationId)
@@ -187,6 +187,35 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             }
 
             return false;
+        }
+
+        public async Task<List<ExtraInformation>> GetExtraInformationToShowInCvAsync()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append(" *  ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 1 ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<ExtraInformation>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return new List<ExtraInformation>();
         }
     }
 }

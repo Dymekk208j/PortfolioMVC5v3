@@ -213,5 +213,37 @@ namespace PortfolioMVC5v3.Repositories.Repositories
 
             return false;
         }
+
+        public async Task<List<EmploymentHistory>> GetEmploymentHistoriesToShowInCvAsync()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append(" *  ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 1 ");
+
+            query.Append("ORDER BY [StartDate] DESC");
+
+            try
+            {
+
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<EmploymentHistory>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return new List<EmploymentHistory>();
+        }
     }
 }

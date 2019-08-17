@@ -23,6 +23,11 @@ namespace PortfolioMVC5v3.Logic.Logic
             return _repository.GetAllTechnologiesListAsync();
         }
 
+        public Task<List<Technology>> GetTechnologiesToShowInCv()
+        {
+            return _repository.GetTechnologiesToShowInCv();
+        }
+
         public Task<List<Technology>> GetProjectTechnologiesListAsync(int projectId)
         {
             return _repository.GetProjectTechnologiesListAsync(projectId);

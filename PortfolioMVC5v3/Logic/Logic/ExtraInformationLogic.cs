@@ -39,5 +39,10 @@ namespace PortfolioMVC5v3.Logic.Logic
         {
             return _repository.RemoveExtraInformation(extraInformationId);
         }
+
+        public Task<List<ExtraInformation>> GetExtraInformationToShowInCvAsync()
+        {
+            return _repository.GetExtraInformationToShowInCvAsync();
+        }
     }
 }

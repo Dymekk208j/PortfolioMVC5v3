@@ -7,6 +7,7 @@ namespace PortfolioMVC5v3.Logic.Interfaces
     public interface IAchievementLogic
     {
         Task<List<Achievement>> GetAllAchievementsAsync();
+        Task<List<Achievement>> GetAchievementsToShowInCvAsync();
         Task<Achievement> GetAchievement(int achievementId);
         Task<int> InsertAchievement(Achievement achievement);
         Task<bool> UpdateAchievement(Achievement achievement);

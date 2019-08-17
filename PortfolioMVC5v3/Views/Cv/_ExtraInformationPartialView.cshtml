@@ -1,0 +1,36 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.ExtraInformation>
+
+@if (Model.Any())
+{
+    <div class="row mt-3">
+        <div class="col-3 text-left">
+            <div class="row">
+                <div class="col-12">
+                    <h6>Dodatkowe informacje</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 text-left">
+            <div class="row">
+                <div class="col-12">
+                    @if (Model?.Count(t => t.Type == 2) > 0)
+                    {
+                        @: <b>Języki obce:</b> <i>@string.Join(", ", Model.Where(t => t.Type == 2).Select(a => a.Title))</i>
+                    }
+                </div>
+                <div class="col-12">
+                    @if (Model?.Count(t => t.Type == 1) > 0)
+                    {
+                        @: <b>Dodatkowe umiejętności:</b> <i>@string.Join(", ", Model.Where(t => t.Type == 1).Select(a => a.Title))</i>
+                    }
+                </div>
+                <div class="col-12">
+                    @if (Model?.Count(t => t.Type == 0) > 0)
+                    {
+                        @: <b>Zainteresowania:</b> <i>@string.Join(", ", Model.Where(t => t.Type == 0).Select(a => a.Title))</i>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

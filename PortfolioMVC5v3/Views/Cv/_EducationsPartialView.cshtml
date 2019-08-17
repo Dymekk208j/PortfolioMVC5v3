@@ -1,0 +1,32 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Education>
+
+@if (Model.Any())
+{
+    <div class="row mt-3">
+        <div class="col-3 text-left">
+            <div class="row">
+                <div class="col-12">
+                    <h6>Wykształcenie</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 text-left">
+            <div class="row">
+                @foreach (var education in Model)
+                {
+                    <div class="col-12">
+                        <b>@($"{education.SchoolName}, {education.Department}, {education.Specialization}")</b>
+                    </div>
+                    <div class="col-12">
+                        <p>
+                            @{
+                                var endDateStr = education.CurrentPlaceOfEducation ? "Obecnie" : education.EndDate.ToShortDateString();
+                            }
+                            <i>@($"{education.StartDate.ToShortDateString()} - {endDateStr}")</i>
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

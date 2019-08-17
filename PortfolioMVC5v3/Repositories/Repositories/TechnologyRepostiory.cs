@@ -119,6 +119,39 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             return null;
         }
 
+        public async Task<List<Technology>> GetTechnologiesToShowInCv()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append("* ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 1 ");
+            
+            query.Append(" ORDER BY ");
+            query.Append("KnowledgeLevel DESC ");
+
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<Technology>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return null;
+        }
+
         public async Task<Technology> GetTechnology(int technologyId)
         {
             StringBuilder query = new StringBuilder();

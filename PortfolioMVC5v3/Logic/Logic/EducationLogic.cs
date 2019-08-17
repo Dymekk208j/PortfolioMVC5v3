@@ -39,5 +39,10 @@ namespace PortfolioMVC5v3.Logic.Logic
         {
             return _repository.RemoveEducation(educationId);
         }
+
+        public Task<List<Education>> GetEducationsToShowInCvAsync()
+        {
+            return _repository.GetEducationsToShowInCvAsync();
+        }
     }
 }

@@ -1,0 +1,115 @@
+﻿@using PortfolioMVC5v3.Models
+@model PortfolioMVC5v3.Models.ViewModels.CvViewModel
+
+@{
+    ViewBag.Title = "Cv";
+}
+@section AdditionalCss
+{
+    <style>
+        .slide {
+            background: linear-gradient(0, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), url(/assets/backgrounds/fourth-bg.png) no-repeat center center fixed !important;
+            background-size: cover;
+        }
+
+        .cv-content {
+            height: 100% !important;
+            width: 56% !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            overflow-y: auto !important;
+            /*background-color: white !important;*/
+            color: white;
+        }
+
+        .slide img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .bg-primary {
+            background-color: #27a9e3 !important;
+            min-height: 2px;
+        }
+
+        h6 {
+            color: #27a2d9;
+        }
+
+
+        /*background-color: #27a9e3;
+        border-color: #27a2d9;*/
+    </style>
+}
+<div class="slide">
+    <div class="content cv-content">
+        <div class="container-fluid py-5">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col text-left">
+                        <img src="~/Assets/img/author_image.png" alt="" />
+                    </div>
+                    <div class="col text-right">
+                        @Model.PersonalDataViewModel.Address<br />
+                        @($"{Model.PersonalDataViewModel.PostCode} {Model.PersonalDataViewModel.City}")<br />
+                        @($"{Model.ContactDataViewModel.PhoneNumber} | {Model.ContactDataViewModel.HomePageLink}")<br />
+                        @Model.ContactDataViewModel.EmailAddress<br />
+                        @Model.ContactDataViewModel.GitHubLink<br />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-left bg-primary">
+                        <h3>Damian Dziura</h3>
+                    </div>
+                </div>
+
+                @Html.Partial("_CommercialProjectsPartialView", Model.Projects.Where(p => p.Commercial))
+
+                <div class="row mt-3">
+                    <div class="col-12 text-left bg-primary">
+                    </div>
+                </div>
+
+                @Html.Partial("_NotCommercialProjectsPartialView", Model.Projects.Where(p => p.Commercial == false))
+
+                <div class="row mt-3">
+                    <div class="col-12 text-left bg-primary">
+                    </div>
+                </div>
+
+                @Html.Partial("_TechnologiesPartialView", Model.Technologies)
+
+                <div class="row mt-3">
+                    <div class="col-12 text-left bg-primary">
+                    </div>
+                </div>
+
+                @Html.Partial("_AchievementsPartialView", Model.Achievements)
+
+                <div class="row mt-3">
+                    <div class="col-12 text-left bg-primary">
+                    </div>
+                </div>
+
+                @Html.Partial("_EmploymentHistoriesPartialview", Model.EmploymentHistories)
+
+                <div class="row mt-3">
+                    <div class="col-12 text-left bg-primary">
+                    </div>
+                </div>
+
+                @Html.Partial("_EducationsPartialView", Model.Educations)
+
+                <div class="row mt-3">
+                    <div class="col-12 text-left bg-primary">
+                    </div>
+                </div>
+
+                @Html.Partial("_ExtraInformationPartialView", Model.ExtraInformation)
+                
+            </div>
+        </div>
+    </div>
+</div>
+

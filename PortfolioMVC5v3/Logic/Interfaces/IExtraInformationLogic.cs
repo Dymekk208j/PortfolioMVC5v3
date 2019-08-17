@@ -11,5 +11,6 @@ namespace PortfolioMVC5v3.Logic.Interfaces
         Task<int> InsertExtraInformation(ExtraInformation extraInformation);
         Task<bool> UpdateExtraInformation(ExtraInformation extraInformation);
         Task<bool> RemoveExtraInformation(int extraInformationId);
+        Task<List<ExtraInformation>> GetExtraInformationToShowInCvAsync();
     }
 }

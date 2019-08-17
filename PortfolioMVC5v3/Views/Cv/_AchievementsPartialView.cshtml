@@ -1,0 +1,32 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Achievement>
+
+@if (Model.Any())
+{
+    <div class="row mt-3">
+        <div class="col-3 text-left">
+            <div class="row">
+                <div class="col-12">
+                    <h6>Osiągnięcia</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 text-left">
+            <div class="row">
+                @foreach (var achievement in Model)
+                {
+                    <div class="col-12">
+                        <b>@achievement.Title</b>
+                    </div>
+                    <div class="col-12">
+                        <i>@achievement.Date.ToShortDateString()</i>
+                    </div>
+                    <div class="col-12">
+                        <p>
+                            @achievement.Description
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

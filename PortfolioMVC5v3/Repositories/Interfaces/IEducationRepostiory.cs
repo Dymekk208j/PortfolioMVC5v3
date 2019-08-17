@@ -11,5 +11,6 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<int> InsertEducation(Education education);
         Task<bool> UpdateEducation(Education education);
         Task<bool> RemoveEducation(int educationId);
+        Task<List<Education>> GetEducationsToShowInCvAsync();
     }
 }

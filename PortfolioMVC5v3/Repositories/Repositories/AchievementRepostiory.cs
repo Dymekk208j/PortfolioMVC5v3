@@ -196,5 +196,37 @@ namespace PortfolioMVC5v3.Repositories.Repositories
 
             return false;
         }
+
+        public async Task<List<Achievement>> GetAchievementsToShowInCvAsync()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append(" *  ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 1 ");
+
+            query.Append("ORDER BY [Date] DESC");
+
+            try
+            {
+
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<Achievement>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return null;
+        }
     }
 }

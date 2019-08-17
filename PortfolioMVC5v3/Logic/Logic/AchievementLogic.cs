@@ -20,6 +20,11 @@ namespace PortfolioMVC5v3.Logic.Logic
             return _repository.GetAllAchievements();
         }
 
+        public Task<List<Achievement>> GetAchievementsToShowInCvAsync()
+        {
+            return _repository.GetAchievementsToShowInCvAsync();
+        }
+
         public Task<Achievement> GetAchievement(int achievementId)
         {
             return _repository.GetAchievement(achievementId);

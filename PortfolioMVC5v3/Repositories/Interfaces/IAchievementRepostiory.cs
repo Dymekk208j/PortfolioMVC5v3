@@ -11,5 +11,6 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<int> InsertAchievement(Achievement achievement);
         Task<bool> UpdateAchievement(Achievement achievement);
         Task<bool> RemoveAchievement(int achievementId);
+        Task<List<Achievement>> GetAchievementsToShowInCvAsync();
     }
 }

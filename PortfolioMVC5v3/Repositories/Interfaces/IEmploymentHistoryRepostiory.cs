@@ -11,5 +11,6 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<int> InsertEmploymentHistory(EmploymentHistory employmentHistory);
         Task<bool> UpdateEmploymentHistory(EmploymentHistory employmentHistory);
         Task<bool> RemoveEmploymentHistory(int employmentHistoryId);
+        Task<List<EmploymentHistory>> GetEmploymentHistoriesToShowInCvAsync();
     }
 }

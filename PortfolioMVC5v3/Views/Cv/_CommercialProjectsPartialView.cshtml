@@ -1,0 +1,35 @@
+﻿@model System.Collections.Generic.IEnumerable<PortfolioMVC5v3.Models.ViewModels.ProjectViewModel>
+
+@if (Model.Any())
+{
+    <div class="row mt-3">
+        <div class="col-3 text-left">
+            <div class="row">
+                <div class="col-12">
+                    <h6>Projekty komercyjne</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 text-left">
+            @foreach (var project in Model.Where(p => p.Commercial))
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <b>@project.Title</b>
+                    </div>
+                    <div class="col-12">
+                        @if (project.Technologies?.Count > 0)
+                        {
+                            @:<i>@string.Join(", ", project.Technologies.Select(a => a.Name))</i>
+                        }
+                    </div>
+                    <div class="col-12">
+                        <p>
+                            @project.ShortDescription
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

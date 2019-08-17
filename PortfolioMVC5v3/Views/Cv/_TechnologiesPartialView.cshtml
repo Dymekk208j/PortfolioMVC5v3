@@ -1,0 +1,36 @@
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Technology>
+
+@if (Model.Any())
+{
+    <div class="row mt-3">
+        <div class="col-3 text-left">
+            <div class="row">
+                <div class="col-12">
+                    <h6>Technologie</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 text-left">
+            <div class="row">
+                <div class="col-12">
+                    @if (Model?.Count(t => t.KnowledgeLevel == 5 || t.KnowledgeLevel == 4) > 0)
+                    {
+                        @: <b>Bardzo dobra znajomość:</b> <i>@string.Join(", ", Model.Where(t => t.KnowledgeLevel == 5 || t.KnowledgeLevel == 4).Select(a => a.Name))</i>
+                    }
+                </div>
+                <div class="col-12">
+                    @if (Model?.Count(t => t.KnowledgeLevel == 3) > 0)
+                    {
+                        @: <b>Dobra znajomość:</b> <i>@string.Join(", ", Model.Where(t => t.KnowledgeLevel == 3).Select(a => a.Name))</i>
+                    }
+                </div>
+                <div class="col-12">
+                    @if (Model?.Count(t => t.KnowledgeLevel == 2 || t.KnowledgeLevel == 1) > 0)
+                    {
+                        @: <b>Znajomość podstaw:</b> <i>@string.Join(", ", Model.Where(t => t.KnowledgeLevel == 2 || t.KnowledgeLevel == 1).Select(a => a.Name))</i>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
