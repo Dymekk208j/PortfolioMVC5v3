@@ -1,4 +1,5 @@
-﻿@model PortfolioMVC5v3.Models.ViewModels.ProjectViewModel
+﻿@using PortfolioMVC5v3.Models
+@model PortfolioMVC5v3.Models.ViewModels.ProjectViewModel
 
 @{
     ViewBag.Title = "Projekt";
@@ -11,13 +12,16 @@
             background-size: cover;
         }
     </style>
+
+    @Styles.Render("~/Content/projectCardCss")
+
 }
 <div class="slide">
     <div class="content projects-content">
         <div class="container-fluid">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-9">
                         <div class="row">
                             <div class="col-12">
                                 <h2>@Model.Title</h2>
@@ -46,14 +50,34 @@
                         </div>
                     </div>
 
-                    <div class="col-2" style="min-height: 500px">
+                    <div class="col-3" style="min-height: 500px">
                         <div class="row">
                             <h2>Zdjęcia</h2>
                         </div>
 
-                        <div class="row h-100">
-                            <div class="col h-100">
-                                @* <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>*@
+                        <div class="row">
+                            <div class="col">
+                                <div class="wrap">
+
+                                    <div class="scrollbar">
+                                        <div class="handle" style="transform: translateZ(0) translateY(220px); height: 119px;">
+                                            <div class="mouserea"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="frame smart" id="smart" style="overflow: hidden;">
+                                        <ul class="items" style="transform: translateZ(0) translateY(-1111px); height: 3030px;">
+                                            @foreach (var img in Model.Images ?? new List<Image>())
+                                            {
+                                                <li>
+                                                    <a href="~/Assets/ScreenShoots/@($"{img.Guid}{img.FileName}")" data-lightbox="screenShoots">
+                                                        <img src="~/Assets/ScreenShoots/@($"{img.Guid}{img.FileName}")" alt="" class="img-fluid" />
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,3 +86,20 @@
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    <script>
+        var images = @Html.Raw(Json.Encode(@Model.Images));
+    </script>
+
+    @Scripts.Render("~/bundles/projectCardJs")
+   
+    <script>
+        lightbox.option({
+            'resizeDuration': 100,
+            'wrapAround': true,
+            'albumLabel': "Zrzut ekranu %1 z %2"
+        })
+    </script>
+}
