@@ -1,23 +1,21 @@
 ﻿@model PortfolioMVC5v3.Models.ViewModels.CvViewModel
-
 @{
-    ViewBag.Title = "Cv";
+    Layout = "";
 }
-@section AdditionalCss
-    {
+<html>
+<head>
+    <title>Damian Dziura Portfolio</title>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <style>
-        .slide {
-            background: linear-gradient(0, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), url(/assets/backgrounds/fourth-bg.png) no-repeat center center fixed !important;
-            background-size: cover;
-        }
+
 
         .cv-content {
             height: 100% !important;
             width: 56% !important;
             top: 0 !important;
             bottom: 0 !important;
-            overflow-y: auto !important;
-            color: white;
+            color: black;
         }
 
         .slide img {
@@ -34,27 +32,17 @@
             color: #27a2d9;
         }
 
-        .myButtonClass {
-            position: absolute;
-            top: 3% !important;
-            bottom: 0 !important;
-            right: 70%;
-            height: 45px;
-            border-radius: 0;
-            background: linear-gradient(0, rgba(40, 38, 43, 0.85), rgba(40, 38, 43, 0.85)), no-repeat center center fixed !important;
-            color: white;
+        html {
+            font-family: "DejaVu Sans", "Arial", sans-serif;
+            font-size: .9em;
         }
     </style>
-}
-<button class="btn btn-secondary myButtonClass px-2 py-0" id="export-pdf" onclick="location.href = `/Cv/SaveAsPdf`"><i class="far fa-file-pdf mr-2"></i>Pobierz PDF</button>
-
+</head>
+<body>
 
     <div class="slide">
-
         <div class="content cv-content">
-
             <div class="container-fluid py-5">
-
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col text-left">
@@ -70,7 +58,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-12 text-left bg-primary">
-                            <h3>Damian Dziura</h3>
+                            <h3 style="color: white;">Damian Dziura</h3>
                         </div>
                     </div>
 
@@ -121,5 +109,34 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    @Scripts.Render("~/bundles/adminLayout")
+    <script>
+        kendo.pdf.defineFont({
+            "DejaVu Sans": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+            "DejaVu Sans|Bold": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "WebComponentsIcons": "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
+        });
+    </script>
+    <script>
+        window.kendo.drawing.drawDOM($(".cv-content"))
+            .then(function (group) {
+                return window.kendo.drawing.exportPDF(group, {
+                    paperSize: "auto",
+                    margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" },
+                });
+            })
+            .done(function (data) {
+                window.kendo.saveAs({
+                    dataURI: data,
+                    fileName: "Damian Dziura CV.pdf",
+                    proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
+                });
+                location.href = `/Cv/Index`;
+            });
+    </script>
+</body>
+</html>

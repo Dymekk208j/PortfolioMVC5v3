@@ -17,7 +17,6 @@ namespace PortfolioMVC5v3.Logic.Logic
         private readonly IEmploymentHistoryLogic _employmentHistoryLogic;
         private readonly IEducationLogic _educationLogic;
 
-
         public CvLogic(IMapper mapper, IProjectLogic projectLogic, ITechnologyLogic technologyLogic, IAchievementLogic achievementLogic, IExtraInformationLogic extraInformationLogic, IEducationLogic educationLogic, IEmploymentHistoryLogic employmentHistoryLogic)
         {
             _mapper = mapper;
@@ -51,7 +50,7 @@ namespace PortfolioMVC5v3.Logic.Logic
                 PersonalDataViewModel =
                     new PersonalDataViewModel()
                     {
-                        Address = "1 maja 1/3",
+                        Address = "1 Maja 1/3",
                         City = "Koszalin",
                         PostCode = "75-800",
                         FirstName = "Damian",
@@ -61,9 +60,9 @@ namespace PortfolioMVC5v3.Logic.Logic
                 ContactDataViewModel = new ContactDataViewModel()
                 {
                     EmailAddress = "Kontakt@DamianDziura.pl",
-                    GitHubLink = "Http://Github.com",
+                    GitHubLink = "https://github.com/Dymekk208j",
                     HomePageLink = "www.DamianDziura.pl",
-                    PhoneNumber = "+48 510 075 067"
+                    PhoneNumber = "+48 510-075-067"
                 },
                 Projects = await GetProjectsViewModel(),
                 Technologies = await _technologyLogic.GetTechnologiesToShowInCv(),
@@ -71,7 +70,6 @@ namespace PortfolioMVC5v3.Logic.Logic
                 EmploymentHistories = await _employmentHistoryLogic.GetEmploymentHistoriesToShowInCvAsync(),
                 ExtraInformation = await _extraInformationLogic.GetExtraInformationToShowInCvAsync(),
                 Educations = await _educationLogic.GetEducationsToShowInCvAsync()
-                
             };
 
             return cvViewModel;

@@ -19,5 +19,12 @@ namespace PortfolioMVC5v3.Controllers
 
             return View(cvViewModel);
         }
+
+        public async Task<ActionResult> SaveAsPdf()
+        {
+            var cvViewModel = await _cvLogic.GetCvViewModel();
+
+            return View(cvViewModel);
+        }
     }
 }

@@ -733,6 +733,7 @@
     <Content Include="Views\Cv\_EmploymentHistoriesPartialview.cshtml" />
     <Content Include="Views\Cv\_EducationsPartialView.cshtml" />
     <Content Include="Views\Cv\_ExtraInformationPartialView.cshtml" />
+    <Content Include="Views\Cv\SaveAsPdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
