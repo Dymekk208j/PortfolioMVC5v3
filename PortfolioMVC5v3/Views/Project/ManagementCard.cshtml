@@ -7,6 +7,7 @@
 
 @section AdditionalCss
 {
+    <link href="~/Content/file-upload-with-preview.min.css" rel="stylesheet" />
 }
 
 @Html.HiddenFor(m => m.ProjectId)
@@ -23,16 +24,14 @@
                         <h5>Opcje główne:</h5>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="Title">Tytuł</label>
                             <input id="Title" name="Title" type="text" class="k-textbox w-100" placeholder="Tytuł" value="@Model.Title" />
                             <small id="TitleHint" class="form-text text-muted">Pełen tytuł projektu</small>
                         </div>
                     </div>
-                </div>
 
-                <div class="row mt-2">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="GitHubLink">Link github</label>
@@ -40,7 +39,16 @@
                             <small id="GitHubLinkHint" class="form-text text-muted">Link do projektu na github</small>
                         </div>
                     </div>
+                </div>
 
+                <div class="row mt-2">
+                    <div class="col-6 ">
+                        <div class="form-group">
+                            <label for="Technologies">Technologie</label>
+                            <input id="Technologies" name="Technologies" />
+                            <small id="TechnologiesHint" class="form-text text-muted">Technologie wykorzystane w projekcie</small>
+                        </div>
+                    </div>
                     <div class="col-6 ">
                         <div class="form-group">
                             <label for="DateTimeCreated">Data utworzenia</label>
@@ -51,39 +59,23 @@
                 </div>
 
                 <div class="row mt-2">
-                    <div class="col-12 ">
-                        <div class="form-group">
-                            <label for="Technologies">Technologie</label>
-                            <input id="Technologies" name="Technologies" />
-                            <small id="TechnologiesHint" class="form-text text-muted">Technologie wykorzystane w projekcie</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col-4 ">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="ShortDescription">Krótki opis</label>
-                            <textarea id="ShortDescription" name="ShortDescription" class="k-textbox w-100 p-2" rows="4">@Model.ShortDescription</textarea>
+                            <textarea id="ShortDescription" name="ShortDescription" class="k-textbox w-100 p-2" rows="6">@Model.ShortDescription</textarea>
                             <small id="ShortDescriptionHint" class="form-text text-muted">Skrócony opis projektu wyświetlany na podsumowaniu oraz w cv</small>
                         </div>
-                    </div>
-
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label for="FullDescription">Pełen opis</label>
-                            <textarea id="FullDescription" name="FullDescription" class="k-textbox w-100 p-2" rows="4">@Model.FullDescription</textarea>
-                            <small id="FullDescriptionHint" class="form-text text-muted">Pełen opis projektu wyświetlany na karcie projektu</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col-12 mb-2">
                         <h5>Opcje dodatkowe:</h5>
-                    </div>
-                    <div class="col-4 pl-4">
+
                         <table>
+                            <tr>
+                                <th class="py-2">
+                                    <button type="button" id="AddScreenShots" class="btn btn-primary" data-toggle="modal" data-target="#ScreenShotsModal">
+                                        <i class="far fa-window-restore mr-2"></i>Otwórz
+                                    </button>
+                                </th>
+                                <th class="py-2"><label for="AddScreenShots" class="ml-3 pt-2">Dodaj zrzuty ekranu</label></th>
+                            </tr>
                             <tr>
                                 <th class="py-2"><input id="ShowInCv" /></th>
                                 <th class="py-2"><label for="ShowInCv" class="ml-3 pt-2">Pokazuj w CV</label></th>
@@ -95,10 +87,13 @@
                         </table>
                     </div>
 
-                    <div class="col-8">
-
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="FullDescription">Pełen opis</label>
+                            <textarea id="FullDescription" name="FullDescription" class="k-textbox w-100 p-2" rows="18">@Model.FullDescription</textarea>
+                            <small id="FullDescriptionHint" class="form-text text-muted">Pełen opis projektu wyświetlany na karcie projektu</small>
+                        </div>
                     </div>
-
                 </div>
 
                 <div class="row mt-auto">
@@ -114,9 +109,6 @@
                                 @: Utwórz projekt
                             }
                         </button>
-
-
-
 
                         <button type="button" name="SaveAsTempBtn" id="SaveAsTempBtn" class="btn btn-secondary float-right mr-2">
                             <i class="fas fa-save mr-2"></i>
@@ -147,15 +139,69 @@
     </div>
 </div>
 
+<div class="modal" id="ScreenShotsModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="min-height: 500px">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Zrzuty ekranu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="custom-file-container" data-upload-id="myUniqueUploadId">
+                    <button class="btn btn-sm btn-danger custom-file-container__image-clear">Wyczyść pliki</button>
+
+                    <label class="custom-file-container__custom-file mb-2">
+                        <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" multiple aria-label="Wybierz plik">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
+                    </label>
+
+                    <label>Podgląd plików:</label>
+                    <div class="custom-file-container__image-preview py-0 my-0"></div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Zamknij</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @section scripts
 {
+    <script src="~/Scripts/file-upload-with-preview.min.js"></script>
+
     <script>
+
         var showInCv = @Html.Raw(Json.Encode(@Model.ShowInCv));
         var commercial = @Html.Raw(Json.Encode(@Model.Commercial));
         var isTemp = @Html.Raw(Json.Encode(@Model.TempProject));
         var technologies = @Html.Raw(Json.Encode(@Model.Technologies));
+
+        var images = @Html.Raw(Json.Encode(@Model.Images));
+        var imagesArray = [];
+        images.forEach((i) => {
+            window.imagesArray.push(`\\Assets\\ScreenShoots\\${i.Guid}${i.FileName}`);
+        });
     </script>
 
+    <script>
+        var upload = new FileUploadWithPreview('myUniqueUploadId', {
+            showDeleteButtonOnImages: true,
+            text: {
+                chooseFile: '',
+                browse: 'Wybierz pliki',
+                selectedCount: 'wybrane pliki'
+            },
+            presetFiles: window.imagesArray
+        })
+    </script>
     <script src="~/Scripts/admin/ProjectManagement/Card.js"></script>
 }

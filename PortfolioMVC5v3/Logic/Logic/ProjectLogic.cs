@@ -35,7 +35,7 @@ namespace PortfolioMVC5v3.Logic.Logic
             var projectViewModel = _mapper.Map<Project, ProjectViewModel>(project);
 
             projectViewModel.Technologies = await _technologyLogic.GetProjectTechnologiesListAsync(project.ProjectId);
-
+            projectViewModel.Images = await _projectRepository.GetProjectScreenShoots(projectId);
             return projectViewModel;
         }
 
@@ -56,7 +56,26 @@ namespace PortfolioMVC5v3.Logic.Logic
                 await _technologyLogic.SetBindingBetweenProjectAndTechnologiesResult(project.ProjectId,
                     projectModel.Technologies);
 
-            return setBetweenProjectAndTechnologiesResult;
+            if (!setBetweenProjectAndTechnologiesResult) return false;
+
+
+            if (projectModel.Images?.Count > 0)
+            {
+                bool removeImagesResult = await _projectRepository.RemoveScreenShoots(projectModel.ProjectId);
+                if (!removeImagesResult) return false;
+
+                bool imagesResult = true;
+                foreach (var projectModelImage in projectModel.Images)
+                {
+                    projectModelImage.ProjectId = projectModel.ProjectId;
+                    bool partialResult = await _projectRepository.AddScreenShoot(projectModelImage);
+                    if (!partialResult) imagesResult = false;
+                }
+
+                if (!imagesResult) return false;
+            }
+
+            return true;
 
         }
 
@@ -65,6 +84,19 @@ namespace PortfolioMVC5v3.Logic.Logic
             var project = _mapper.Map<ProjectViewModel, Project>(projectModel);
             int newProjectId = await _projectRepository.CreateProject(project);
             if (newProjectId == 0) return false;
+
+            if (projectModel.Images.Count > 0)
+            {
+                bool imagesResult = true;
+                foreach (var projectModelImage in projectModel.Images)
+                {
+                    projectModelImage.ProjectId = newProjectId;
+                    bool partialResult = await _projectRepository.AddScreenShoot(projectModelImage);
+                    if (!partialResult) imagesResult = false;
+                }
+
+                if (!imagesResult) return false;
+            }
 
             bool setBetweenProjectAndTechnologiesResult =
                 await _technologyLogic.SetBindingBetweenProjectAndTechnologiesResult(newProjectId,

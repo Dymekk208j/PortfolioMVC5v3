@@ -8,26 +8,15 @@
     <meta name="author" content="Damian Dziura">
     <link rel="icon" type="image/png" sizes="16x16" href="~/favicon.ico">
     <title>Damian Dziura portfolio - Panel administracyjny</title>
-    <link href="~/Content/admin/style.min.css" rel="stylesheet">
-    <link href="~/Content/fontawesome.css" rel="stylesheet" />
-    <link href="~/Content/regular.css" rel="stylesheet" />
-    <link href="~/Content/solid.css" rel="stylesheet" />
-    <link href="~/Content/brands.css" rel="stylesheet" />
 
-    <link href="~/Content/admin/kendo.common.min.css" rel="stylesheet" />
-    <link href="~/Content/admin/kendo.moonlight.mobile.min.css" rel="stylesheet" />
-    <link href="~/Content/admin/kendo.moonlight.min.css" rel="stylesheet" />
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-
-
-
+    @Styles.Render("~/Content/adminCss")
     <!-- Kendo UI combined JavaScript -->
     @RenderSection("AdditionalCss", false)
     <style>
         html, body {
             height: 100%;
         }
+
         .btn-primary {
             color: #fff;
             background-color: #27a9e3;
@@ -47,7 +36,7 @@
                 box-shadow: 0 0 0 0.2rem rgba(39, 162, 217, 0.5);
             }
 
-        .btn-primary.disabled, .btn-primary:disabled {
+            .btn-primary.disabled, .btn-primary:disabled {
                 color: #fff;
                 background-color: #27a9e3;
                 border-color: #27a2d9;
@@ -102,21 +91,8 @@
         </div>
     </div>
 
-
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/umd/popper.min.js"></script>
-    <script src="~/Scripts/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-
-    <script src="~/Scripts/waves.js"></script>
-    <script src="~/Scripts/sidebarmenu.js"></script>
-
-    <script src="~/Scripts/custom.js"></script>
-    <script src="~/Scripts/Kendo/kendo.all.min.js"></script>
-    <script src="~/Scripts/Kendo/kendo.culture.pl.min.js"></script>
-    <script src="~/Scripts/Kendo/kendo.messages.pl-PL.min.js"></script>
+    @Scripts.Render("~/bundles/adminLayout")
     <script type="text/javascript">
-        //set current to the "en-GB" culture script
         kendo.culture("pl-PL");
     </script>
     @RenderSection("scripts", required: false)

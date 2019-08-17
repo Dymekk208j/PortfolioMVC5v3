@@ -116,14 +116,38 @@ function createOrUpdateProject() {
         };
 
         const selectedTechnologiesIds = $("#Technologies").data("kendoMultiSelect").value();
+       
+        var files = upload.cachedFileArray;
+        var data = new FormData();
+
+        // Add the uploaded file to the form data collection  
+        if (files.length > 0) {
+            for (f = 0; f < files.length; f++) {
+                data.append("UploadedImage", files[f]);
+            }
+        }  
+
+        data.append("ProjectId", model.ProjectId);
+        data.append("AuthorId", model.AuthorId);
+        data.append("Title", model.Title);
+        data.append("GitHubLink", model.GitHubLink);
+        data.append("DateTimeCreated", model.DateTimeCreated);
+        data.append("ShortDescription", model.ShortDescription);
+        data.append("FullDescription", model.FullDescription);
+        data.append("Commercial", model.Commercial);
+        data.append("ShowInCv", model.ShowInCv);
+        data.append("TempProject", model.TempProject);
+
+        data.append("projectTechnologiesIds", JSON.stringify(selectedTechnologiesIds));
+
 
         $.ajax({
             type: "POST",
+            enctype: 'multipart/form-data',
             url: `/Project/CreateOrUpdateProject/`,
-            data: {
-                projectModel: model,
-                projectTechnologiesIds: selectedTechnologiesIds
-            },
+            processData: false,  // Important!
+            contentType: false,
+            data: data,
             success: function (e) {
                 var result = JSON.parse(e);
                 if (result.Success === true) {

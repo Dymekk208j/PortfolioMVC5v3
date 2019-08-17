@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using PortfolioMVC5v3.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using PortfolioMVC5v3.Models;
 
 namespace PortfolioMVC5v3.Repositories.Interfaces
 {
@@ -11,5 +11,8 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<bool> UpdateProject(Project project);
         Task<int> CreateProject(Project project);
         Task<bool> RemoveProject(int projectId);
+        Task<bool> RemoveScreenShoots(int projectId);
+        Task<bool> AddScreenShoot(Image screenShoot);
+        Task<List<Image>> GetProjectScreenShoots(int projectId);
     }
 }

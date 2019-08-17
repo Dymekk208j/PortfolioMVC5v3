@@ -5,9 +5,11 @@ using PortfolioMVC5v3.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PortfolioMVC5v3.Repositories.Repositories
 {
@@ -203,6 +205,124 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             }
 
             return false;
+        }
+
+        public async Task<bool> RemoveScreenShoots(int projectId)
+        {
+            try
+            {
+                List<Image> screenShoots = await GetProjectScreenShoots(projectId);
+                if (screenShoots.Count > 0)
+                {
+                    screenShoots.ForEach(s => RemoveScreenShootFile($"{s.Guid}{s.FileName}"));
+                }
+
+                StringBuilder query = new StringBuilder();
+                query.Append("DELETE FROM ");
+                query.Append("[Images] ");
+
+                query.Append("WHERE ");
+                query.Append("[ProjectId] = @ProjectId ");
+
+                try
+                {
+                    using (IDbConnection connection = _manager.GetSqlConnection())
+                    {
+                        var result = await connection.ExecuteAsync(query.ToString(), new { projectId });
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Log(e);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<List<Image>> GetProjectScreenShoots(int projectId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append("* ");
+
+            query.Append("FROM ");
+            query.Append("[dbo].[Images] ");
+
+            query.Append("WHERE ");
+            query.Append("[ProjectId] = @projectId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.QueryAsync<Image>(query.ToString(), new { projectId });
+                    return result.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return new List<Image>();
+        }
+
+        public async Task<bool> AddScreenShoot(Image screenShoot)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("INSERT INTO ");
+            query.Append("[Images] ");
+            query.Append("(");
+            query.Append("[FileName], ");
+            query.Append("[ProjectId], ");
+            query.Append("[Guid]");
+            query.Append(")");
+
+            query.Append(" OUTPUT INSERTED.ImageId ");
+
+            query.Append("VALUES");
+            query.Append("(");
+            query.Append("@FileName, ");
+            query.Append("@ProjectId, ");
+            query.Append("@Guid ");
+            query.Append(")");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.QueryFirstAsync<int>(query.ToString(), screenShoot);
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        private static void RemoveScreenShootFile(string filename)
+        {
+            try
+            {
+                string screenShootsPath = HttpContext.Current.Server.MapPath("~/Assets/ScreenShoots/");
+                if (File.Exists($"{screenShootsPath}{filename}"))
+                {
+                    File.Delete($"{screenShootsPath}{filename}");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
         }
     }
 }

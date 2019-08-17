@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using PortfolioMVC5v3.Logic.Interfaces;
+using PortfolioMVC5v3.Models;
 using PortfolioMVC5v3.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,6 @@ namespace PortfolioMVC5v3.Controllers
             _technologyLogic = technologyLogic;
         }
 
-        // GET: Project
         public async Task<ActionResult> Index()
         {
             var projects = await _projectLogic.GetProjectsList(showInCvProjects: true, tempProjects: false);
@@ -78,8 +78,29 @@ namespace PortfolioMVC5v3.Controllers
             return JsonConvert.SerializeObject(technologies);
         }
 
-        public async Task<string> CreateOrUpdateProject(ProjectViewModel projectModel, List<int> projectTechnologiesIds)
+        public async Task<string> CreateOrUpdateProject(ProjectViewModel projectModel)
         {
+            var httpContext = System.Web.HttpContext.Current;
+            string projectTechnologiesIdsJson = httpContext.Request.Form["projectTechnologiesIds"];
+            List<int> projectTechnologiesIds = JsonConvert.DeserializeObject<List<int>>(projectTechnologiesIdsJson);
+            if (httpContext.Request.Files.Count > 0)
+            {
+                string screenShootsPath = System.Web.HttpContext.Current.Server.MapPath("~/Assets/ScreenShoots/");
+                projectModel.Images = new List<Image>();
+
+                for (int i = 0; i < httpContext.Request.Files.Count; i++)
+                {
+                    var uploadedFile = httpContext.Request.Files[i];
+                    var img = new Image()
+                    {
+                        FileName = $"{Guid.NewGuid().ToString()}.png",
+                        Guid = Guid.NewGuid().ToString()
+                    };
+                    uploadedFile.SaveAs($"{screenShootsPath}{img.Guid}{img.FileName}");
+                    projectModel.Images.Add(img);
+                }
+            }
+
             bool sqlResult;
             if (projectTechnologiesIds?.Count > 0) projectModel.Technologies = await _technologyLogic.GetTechnologiesByIds(projectTechnologiesIds);
             projectModel.AuthorId = User.Identity.GetUserId();
