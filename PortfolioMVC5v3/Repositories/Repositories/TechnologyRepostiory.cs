@@ -334,7 +334,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.ExecuteAsync(query.ToString(), new { projectId });
+                    await connection.ExecuteAsync(query.ToString(), new { projectId });
                     return true;
                 }
             }

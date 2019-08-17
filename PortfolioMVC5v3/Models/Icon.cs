@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PortfolioMVC5v3.Models
+﻿namespace PortfolioMVC5v3.Models
 {
     public class Icon
     {

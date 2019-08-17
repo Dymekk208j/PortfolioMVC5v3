@@ -67,7 +67,7 @@ $(function() {
     // Perfact scrollbar
     // ============================================================== 
     $('.message-center, .customizer-body, .scrollable').perfectScrollbar({
-        wheelPropagation: !0
+        wheelPropagation: true
     });
 
     /*var ps = new PerfectScrollbar('.message-body');
@@ -106,10 +106,10 @@ $(function() {
     $('.sidebartoggler').on("click", function() {
         $("#main-wrapper").toggleClass("mini-sidebar");
         if ($("#main-wrapper").hasClass("mini-sidebar")) {
-            $(".sidebartoggler").prop("checked", !0);
+            $(".sidebartoggler").prop("checked", true);
             $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
         } else {
-            $(".sidebartoggler").prop("checked", !1);
+            $(".sidebartoggler").prop("checked", false);
             $("#main-wrapper").attr("data-sidebartype", "full");
         }
     });
