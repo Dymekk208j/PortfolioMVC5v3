@@ -63,10 +63,10 @@
                             </div>
                             <div class="col text-right">
                                 @*@Model.PersonalDataViewModel.Address<br />
-                                @($"{Model.PersonalDataViewModel.PostCode} {Model.PersonalDataViewModel.City}")<br />
-                                @($"{Model.ContactDataViewModel.PhoneNumber} | {Model.ContactDataViewModel.HomePageLink}")<br />
-                                @Model.ContactDataViewModel.EmailAddress<br />
-                                @Model.ContactDataViewModel.GitHubLink<br />*@
+                @($"{Model.PersonalDataViewModel.PostCode} {Model.PersonalDataViewModel.City}")<br />
+                @($"{Model.ContactDataViewModel.PhoneNumber} | {Model.ContactDataViewModel.HomePageLink}")<br />
+                @Model.ContactDataViewModel.EmailAddress<br />
+                @Model.ContactDataViewModel.GitHubLink<br />*@
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -81,7 +81,8 @@
                             <div class="col-12 text-left bg-primary">
                             </div>
                         </div>
-                        
+
+                        @Html.Partial("_NotCommercialProjectsManagementPartialView")
 
                         @*@Html.Partial("_NotCommercialProjectsPartialView", Model.Projects.Where(p => p.Commercial == false))*@
 
@@ -141,4 +142,5 @@
     </script>
 
     <script src="~/Scripts/admin/Cv/CommercialProjectsPartialViewScripts.js"></script>
+    <script src="~/Scripts/admin/Cv/NotCommercialProjectsPartialViewScripts.js"></script>
 }

@@ -2,9 +2,9 @@
     initGrid();
     initDropDownList();
 
-    $("#AddCommercialProjectToCv").on("click",
+    $("#AddNotCommercialProjectToCv").on("click",
         function () {
-            const projectId = parseInt($("#AddCommercialProjectToCvDropDownList").data("kendoDropDownList").value());
+            const projectId = parseInt($("#AddNotCommercialProjectToCvDropDownList").data("kendoDropDownList").value());
             addProjectToCv(projectId);
         });
 
@@ -83,11 +83,11 @@
     }
 
     function initGrid() {
-        var grid = $("#CommercialProjectList").kendoGrid({
+        var grid = $("#NotCommercialProjectList").kendoGrid({
             dataSource: {
                 transport: {
                     read: {
-                        url: "/Project/GetCommercialProjectsToShowInCv",
+                        url: "/Project/GetNotCommercialProjectsToShowInCv",
                         dataType: "json"
                     }
                 },
@@ -105,7 +105,7 @@
                 initRemoveFromCvButtons();
             },
             scrollable: false,
-            rowTemplate: window.kendo.template($("#CommercialProjectRowTemplate").html()),
+            rowTemplate: window.kendo.template($("#NotCommercialProjectRowTemplate").html()),
             columns: [
                 "Projekty komercyjne"
             ]
@@ -118,7 +118,7 @@
             placeholder: function (element) {
                 return element.clone().addClass("k-state-hover").css("opacity", 0.65);
             },
-            container: "#CommercialProjectList tbody",
+            container: "#NotCommercialProjectList tbody",
             change: function (e) {
                 var skip = grid.dataSource.skip(),
                     oldIndex = e.oldIndex + skip,
@@ -126,8 +126,8 @@
                     dataItem = grid.dataSource.getByUid(e.item.data("uid"));
 
 
-                const oldPositionProjectId = $("#CommercialProjectList").data().kendoGrid.dataSource.data()[oldIndex].ProjectId;
-                const newPositionProjectId = $("#CommercialProjectList").data().kendoGrid.dataSource.data()[newIndex].ProjectId;
+                const oldPositionProjectId = $("#NotCommercialProjectList").data().kendoGrid.dataSource.data()[oldIndex].ProjectId;
+                const newPositionProjectId = $("#NotCommercialProjectList").data().kendoGrid.dataSource.data()[newIndex].ProjectId;
 
 
                 grid.dataSource.remove(dataItem);
@@ -155,18 +155,18 @@
     }
 
     function reloadGridData() {
-        $("#CommercialProjectList").data("kendoGrid").dataSource.read();
-        $("#CommercialProjectList").data("kendoGrid").refresh();
+        $("#NotCommercialProjectList").data("kendoGrid").dataSource.read();
+        $("#NotCommercialProjectList").data("kendoGrid").refresh();
         initRemoveFromCvButtons();
     }
 
     function reloadDropDownListData() {
-        $("#AddCommercialProjectToCvDropDownList").data("kendoDropDownList").dataSource.read();
-        $("#AddCommercialProjectToCvDropDownList").data("kendoDropDownList").refresh();
+        $("#AddNotCommercialProjectToCvDropDownList").data("kendoDropDownList").dataSource.read();
+        $("#AddNotCommercialProjectToCvDropDownList").data("kendoDropDownList").refresh();
     }
 
     function initDropDownList() {
-        $("#AddCommercialProjectToCvDropDownList").kendoDropDownList({
+        $("#AddNotCommercialProjectToCvDropDownList").kendoDropDownList({
             optionLabel: "Wybierz projekt do dodania...",
             noDataTemplate: "Brak projektów do dodania",
             dataTextField: "Title",
@@ -175,7 +175,7 @@
                 transport: {
                     read: {
                         dataType: "json",
-                        url: "/Project/GetCommercialProjectsNotShownInCv"
+                        url: "/Project/GetNotCommercialProjectsNotShownInCv"
                     }
                 }
             }
@@ -183,7 +183,7 @@
     }
 
     function initRemoveFromCvButtons() {
-        $(".removeFromCvCommercialProject").on("click",
+        $(".removeFromCvNotCommercialProject").on("click",
             function() {
                 const projectId = $(this).data("id");
                 removeProjectFromCv(projectId);

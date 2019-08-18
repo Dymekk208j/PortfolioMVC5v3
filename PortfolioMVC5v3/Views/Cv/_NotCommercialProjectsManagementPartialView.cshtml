@@ -2,26 +2,26 @@
     <div class="col-3 text-left">
         <div class="row">
             <div class="col-12">
-                <h6>Projekty komercyjne</h6>
+                <h6>Projekty niekomercyjne</h6>
             </div>
             <div class="col-12">
-                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#AddCommercialProjectToCvModal">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#AddNotCommercialProjectToCvModal">
                     <i class="far fa-plus-square mr-2"></i> Dodaj
                 </button>
             </div>
         </div>
     </div>
     <div class="col-9 text-left">
-        <div id="CommercialProjectList"></div>
+        <div id="NotCommercialProjectList"></div>
     </div>
 </div>
 
 
-<script id="CommercialProjectRowTemplate" type="text/x-kendo-template">
+<script id="NotCommercialProjectRowTemplate" type="text/x-kendo-template">
 
     <tr data-uid="#= uid #">
         <td colspan="2">
-            <button class="btn btn-outline-danger float-right p-0 m-0 outlineRemoveBtn removeFromCvCommercialProject" data-id="#:ProjectId#"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-outline-danger float-right p-0 m-0 outlineRemoveBtn removeFromCvNotCommercialProject" data-id="#:ProjectId#"><i class="fas fa-trash-alt"></i></button>
 
             <strong>[#: ProjectId#]: #: Title #</strong>
             <br />
@@ -33,24 +33,24 @@
 </script>
 
 
-<div class="modal" id="AddCommercialProjectToCvModal">
+<div class="modal" id="AddNotCommercialProjectToCvModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Dodaj projekt komercyjny do CV</h4>
+                <h4 class="modal-title">Dodaj projekt niekomercyjny do CV</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <input id="AddCommercialProjectToCvDropDownList" style="width: 100%;"/>
+                <input id="AddNotCommercialProjectToCvDropDownList" style="width: 100%;" />
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Zamknij</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" id="AddCommercialProjectToCv">Dodaj</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="AddNotCommercialProjectToCv">Dodaj</button>
             </div>
 
         </div>

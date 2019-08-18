@@ -97,6 +97,22 @@ namespace PortfolioMVC5v3.Controllers
             return JsonConvert.SerializeObject(projects);
         }
 
+        public async Task<string> GetNotCommercialProjectsToShowInCv()
+        {
+            var projects = await _projectLogic.GetProjectsList(true, false);
+            projects = projects.Where(t => t.Commercial == false).ToList();
+
+            return JsonConvert.SerializeObject(projects);
+        }
+
+        public async Task<string> GetNotCommercialProjectsNotShownInCv()
+        {
+            var projects = await _projectLogic.GetProjectsList(false, false);
+            projects = projects.Where(t => t.Commercial == false).ToList();
+
+            return JsonConvert.SerializeObject(projects);
+        }
+
         public async Task<ActionResult> AddProjectToCv(int projectId)
         {
             var result = await _projectLogic.AddProjectToCv(projectId);
