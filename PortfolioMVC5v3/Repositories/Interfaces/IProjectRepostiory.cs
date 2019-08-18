@@ -14,5 +14,7 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<bool> RemoveScreenShoots(int projectId);
         Task<bool> AddScreenShoot(Image screenShoot);
         Task<List<Image>> GetProjectScreenShoots(int projectId);
+        Task<bool> ReorderProjectsPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
+        Task<bool> SetProjectShowInCvState(bool state, int projectId);
     }
 }

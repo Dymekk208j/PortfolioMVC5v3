@@ -13,5 +13,8 @@ namespace PortfolioMVC5v3.Logic.Interfaces
         Task<bool> UpdateProject(ProjectViewModel projectModel);
         Task<bool> CreateProject(ProjectViewModel projectModel);
         Task<bool> RemoveProject(int projectId);
+        Task<bool> ReorderProjectsPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
+        Task<bool> AddProjectToCv(int projectId);
+        Task<bool> RemoveProjectFromCv(int projectId);
     }
 }

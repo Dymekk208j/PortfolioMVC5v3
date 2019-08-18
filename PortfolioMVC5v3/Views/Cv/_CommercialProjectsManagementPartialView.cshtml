@@ -1,0 +1,59 @@
+﻿<div class="row mt-3">
+    <div class="col-3 text-left">
+        <div class="row">
+            <div class="col-12">
+                <h6>Projekty komercyjne</h6>
+            </div>
+            <div class="col-12">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#AddCommercialProjectToCvModal">
+                    <i class="far fa-plus-square mr-2"></i> Dodaj
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-9 text-left">
+        <div id="CommercialProjectList"></div>
+    </div>
+</div>
+
+
+<script id="CommercialProjectRowTemplate" type="text/x-kendo-template">
+
+    <tr data-uid="#= uid #">
+        <td colspan="2">
+            <button class="btn btn-outline-danger float-right p-0 m-0 outlineRemoveBtn" data-id="#:ProjectId#"><i class="fas fa-trash-alt"></i></button>
+
+            <strong>[#: ProjectId#]: #: Title #</strong>
+            <br />
+            <p>#: ShortDescription #</p>
+        </td>
+    </tr>
+
+
+</script>
+
+
+<div class="modal" id="AddCommercialProjectToCvModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Dodaj projekt komercyjny do CV</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <input id="AddCommercialProjectToCvDropDownList" style="width: 100%;"/>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Zamknij</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="AddCommercialProjectToCv">Dodaj</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -26,5 +26,11 @@ namespace PortfolioMVC5v3.Controllers
 
             return View(cvViewModel);
         }
+
+        public ActionResult Management()
+        {
+
+            return View();
+        }
     }
 }

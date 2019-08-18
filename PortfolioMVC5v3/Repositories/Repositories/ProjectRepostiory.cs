@@ -44,6 +44,8 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 query.Append("tempProject = @tempProjects ");
             }
 
+            query.Append("ORDER BY [PositionInCv] ");
+
             try
             {
 
@@ -166,13 +168,19 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append("@GitHubLink ");
             query.Append(")");
 
+
             try
             {
+                int projectId;
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(query.ToString(), project);
-                    return result;
+                    projectId = await connection.QueryFirstAsync<int>(query.ToString(), project);
+
+                    string updateQuery = $"UPDATE {TableName} SET [PositionInCv] = {projectId} WHERE [ProjectId] = {projectId}";
+                    await connection.ExecuteAsync(updateQuery);
                 }
+
+                return projectId;
             }
             catch (Exception e)
             {
@@ -228,7 +236,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 {
                     using (IDbConnection connection = _manager.GetSqlConnection())
                     {
-                        var result = await connection.ExecuteAsync(query.ToString(), new { projectId });
+                        await connection.ExecuteAsync(query.ToString(), new { projectId });
                         return true;
                     }
                 }
@@ -298,6 +306,62 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
                     var result = await connection.QueryFirstAsync<int>(query.ToString(), screenShoot);
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ReorderProjectsPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            StringBuilder query = new StringBuilder();
+
+            query.Append("DECLARE @oldPosition int ");
+            query.Append("DECLARE @newPosition int ");
+            query.Append($"SELECT @oldPosition = [PositionInCv] FROM Projects WHERE ProjectId = {oldPositionProjectId} ");
+            query.Append($"SELECT @newPosition = [PositionInCv] FROM Projects WHERE ProjectId = {newPositionProjectId} ");
+            query.Append("UPDATE Projects SET [PositionInCv] = [PositionInCv] + 1 WHERE [PositionInCv] >= @newPosition ");
+            query.Append($"UPDATE Projects SET [PositionInCV] = @newPosition WHERE ProjectId = {oldPositionProjectId} ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString());
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> SetProjectShowInCvState(bool state, int projectId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE ");
+            query.Append($"{TableName} ");
+
+            query.Append("SET ");
+            query.Append("[ShowInCv] = @state ");
+
+            query.Append("WHERE ");
+            query.Append("[ProjectId] = @ProjectId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { state, projectId });
                     return result > 0;
                 }
             }

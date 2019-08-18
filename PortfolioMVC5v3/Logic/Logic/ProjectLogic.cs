@@ -138,5 +138,20 @@ namespace PortfolioMVC5v3.Logic.Logic
 
             return removeProjectResult && removeBindingsBetweenProjectAndTechnologiesResult;
         }
+
+        public Task<bool> ReorderProjectsPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            return _projectRepository.ReorderProjectsPositionsInCv(oldPositionProjectId, newPositionProjectId);
+        }
+
+        public Task<bool> AddProjectToCv(int projectId)
+        {
+            return _projectRepository.SetProjectShowInCvState(true, projectId);
+        }
+
+        public Task<bool> RemoveProjectFromCv(int projectId)
+        {
+            return _projectRepository.SetProjectShowInCvState(false, projectId);
+        }
     }
 }

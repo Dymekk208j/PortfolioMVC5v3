@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "Zarządzanie wyglądem cv";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section AdditionalCss
+{
+    <style>
+        .card-body {
+            overflow-y: auto;
+        }
+
+        .photo {
+            width: 120px;
+            height: 120px;
+        }
+
+        .bg-primary {
+            background-color: #27a9e3 !important;
+            min-height: 2px;
+        }
+
+        h6 {
+            color: #27a2d9;
+        }
+        .k-grid tbody tr {
+            cursor: move;
+        }
+
+        thead {
+            display: none;
+        }
+
+        tbody p {
+            margin: 0;
+        }
+
+        .outlineRemoveBtn {
+            border: none;
+        }
+
+        .btn-outline-danger:hover {
+            border: none;
+            background-color: transparent;
+            color: #ed957b;
+        }
+    </style>
+}
+
+<div class="row h-100">
+    <div class="col-12">
+        <div class="card" style="height: 90%">
+            <div class="card-body d-flex flex-column">
+                <h2 class="card-title">Zarządzanie wyglądem cv</h2>
+
+
+                <div class="container-fluid py-5">
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col text-left">
+                                <img src="~/Assets/img/author_image.png" class="photo" alt="" />
+                            </div>
+                            <div class="col text-right">
+                                @*@Model.PersonalDataViewModel.Address<br />
+                                @($"{Model.PersonalDataViewModel.PostCode} {Model.PersonalDataViewModel.City}")<br />
+                                @($"{Model.ContactDataViewModel.PhoneNumber} | {Model.ContactDataViewModel.HomePageLink}")<br />
+                                @Model.ContactDataViewModel.EmailAddress<br />
+                                @Model.ContactDataViewModel.GitHubLink<br />*@
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 text-left bg-primary text-white">
+                                <h3 class="pt-1">Damian Dziura</h3>
+                            </div>
+                        </div>
+
+                        @Html.Partial("_CommercialProjectsManagementPartialView")
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-left bg-primary">
+                            </div>
+                        </div>
+                        
+
+                        @*@Html.Partial("_NotCommercialProjectsPartialView", Model.Projects.Where(p => p.Commercial == false))*@
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-left bg-primary">
+                            </div>
+                        </div>
+
+                        @*@Html.Partial("_TechnologiesPartialView", Model.Technologies)*@
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-left bg-primary">
+                            </div>
+                        </div>
+
+                        @*@Html.Partial("_AchievementsPartialView", Model.Achievements)*@
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-left bg-primary">
+                            </div>
+                        </div>
+
+                        @*@Html.Partial("_EmploymentHistoriesPartialview", Model.EmploymentHistories)*@
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-left bg-primary">
+                            </div>
+                        </div>
+
+                        @*@Html.Partial("_EducationsPartialView", Model.Educations)*@
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-left bg-primary">
+                            </div>
+                        </div>
+
+                        @*@Html.Partial("_ExtraInformationPartialView", Model.ExtraInformation)*@
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.material.mobile.min.css" />
+
+    <script>
+        var showInCv = @Html.Raw(Json.Encode("false"));
+    </script>
+
+    <script src="~/Scripts/admin/Cv/CommercialProjectsPartialViewScripts.js"></script>
+}

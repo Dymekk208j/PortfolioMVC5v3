@@ -5,6 +5,7 @@ using PortfolioMVC5v3.Models;
 using PortfolioMVC5v3.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -80,6 +81,36 @@ namespace PortfolioMVC5v3.Controllers
             return JsonConvert.SerializeObject(technologies);
         }
 
+        public async Task<string> GetCommercialProjectsToShowInCv()
+        {
+            var projects = await _projectLogic.GetProjectsList(true, false);
+            projects = projects.Where(t => t.Commercial).ToList();
+
+            return JsonConvert.SerializeObject(projects);
+        }
+
+        public async Task<string> GetCommercialProjectsNotShownInCv()
+        {
+            var projects = await _projectLogic.GetProjectsList(false, false);
+            projects = projects.Where(t => t.Commercial).ToList();
+
+            return JsonConvert.SerializeObject(projects);
+        }
+
+        public async Task<ActionResult> AddProjectToCv(int projectId)
+        {
+            var result = await _projectLogic.AddProjectToCv(projectId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> RemoveProjectFromCv(int projectId)
+        {
+            var result = await _projectLogic.RemoveProjectFromCv(projectId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
         public async Task<string> CreateOrUpdateProject(ProjectViewModel projectModel)
         {
             var httpContext = System.Web.HttpContext.Current;
@@ -132,5 +163,13 @@ namespace PortfolioMVC5v3.Controllers
 
             return new HttpStatusCodeResult(result ? 200 : 500);
         }
+        
+        public async Task<ActionResult> ReorderProjectsPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            var result = await _projectLogic.ReorderProjectsPositionsInCv(oldPositionProjectId, newPositionProjectId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
     }
 }
