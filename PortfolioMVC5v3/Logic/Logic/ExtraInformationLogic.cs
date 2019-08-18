@@ -44,5 +44,25 @@ namespace PortfolioMVC5v3.Logic.Logic
         {
             return _repository.GetExtraInformationToShowInCvAsync();
         }
+
+        public Task<List<ExtraInformation>> GetExtraInformationNotShownInCvAsync()
+        {
+            return _repository.GetExtraInformationNotShownInCvAsync();
+        }
+
+        public Task<bool> ReorderExtraInformationPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            return _repository.ReorderExtraInformationPositionsInCv(oldPositionProjectId, newPositionProjectId);
+        }
+
+        public Task<bool> AddExtraInformationToCv(int extraInformationId)
+        {
+            return _repository.SetExtraInformationShowInCvState(true, extraInformationId);
+        }
+
+        public Task<bool> RemoveExtraInformationFromCv(int extraInformationId)
+        {
+            return _repository.SetExtraInformationShowInCvState(false, extraInformationId);
+        }
     }
 }

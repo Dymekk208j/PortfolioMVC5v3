@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
 
@@ -52,5 +54,58 @@ namespace PortfolioMVC5v3.Controllers
 
             return new HttpStatusCodeResult(result ? 200 : 500);
         }
+
+        public async Task<string> GetExtraInformationNotShownInCv()
+        {
+            var extraInformation = await _extraInformationLogic.GetExtraInformationNotShownInCvAsync();
+
+            return JsonConvert.SerializeObject(extraInformation);
+        }
+
+        public async Task<string> GetForeignLanguages()
+        {
+            var extraInformation = await _extraInformationLogic.GetExtraInformationToShowInCvAsync();
+            extraInformation = extraInformation.Where(t => t.Type == 2).ToList();
+
+            return JsonConvert.SerializeObject(extraInformation);
+        }
+
+        public async Task<string> GetInterests()
+        {
+            var extraInformation = await _extraInformationLogic.GetExtraInformationToShowInCvAsync();
+            extraInformation = extraInformation.Where(t => t.Type == 0).ToList();
+
+            return JsonConvert.SerializeObject(extraInformation);
+        }
+
+        public async Task<string> GetAdditionalSkills()
+        {
+            var extraInformation = await _extraInformationLogic.GetExtraInformationToShowInCvAsync();
+            extraInformation = extraInformation.Where(t => t.Type == 1).ToList();
+
+            return JsonConvert.SerializeObject(extraInformation);
+        }
+        
+        public async Task<ActionResult> ReorderExtraInformationPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            var result = await _extraInformationLogic.ReorderExtraInformationPositionsInCv(oldPositionProjectId, newPositionProjectId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> AddExtraInformationToCv(int extraInformationId)
+        {
+            var result = await _extraInformationLogic.AddExtraInformationToCv(extraInformationId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> RemoveExtraInformationFromCv(int extraInformationId)
+        {
+            var result = await _extraInformationLogic.RemoveExtraInformationFromCv(extraInformationId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
     }
 }

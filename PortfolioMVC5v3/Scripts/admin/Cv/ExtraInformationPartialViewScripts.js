@@ -1,21 +1,20 @@
-﻿
-$(function () {
-    initVeryWellKnowTechnologiesGrid();
-    initWellKnowTechnologiesGrid();
-    initKnowTechnologiesGrid();
+﻿$(function () {
+    initForeignLanguagesGrid();
+    initInterestsGrid();
+    initAdditionalSkillsGrid();
     initDropDownList();
 
-    $("#AddTechnologyToCvBtn").on("click",
+    $("#AddExtraInformationToCvBtn").on("click",
         function () {
-            const technologyId = parseInt($("#AddTechnologyToCvDropDownList").data("kendoDropDownList").value());
-            addTechnologyToCv(technologyId);
+            const extraInformationId = parseInt($("#AddExtraInformationToCvDropDownList").data("kendoDropDownList").value());
+            addExtraInformationToCv(extraInformationId);
         });
 
-    function addTechnologyToCv(technologyId) {
-        if (isNaN(technologyId)) {
+    function addExtraInformationToCv(extraInformationId) {
+        if (isNaN(extraInformationId)) {
             window.Swal.fire({
                 title: "Błąd!",
-                text: "Musisz wybrać technologie do dodania!",
+                text: "Musisz informacje do dodania!",
                 type: "error",
                 heightAuto: false
             });
@@ -25,9 +24,9 @@ $(function () {
 
         $.ajax({
             type: "GET",
-            url: `/Technologies/AddTechnologyToCv/`,
+            url: `/ExtraInformations/AddExtraInformationToCv/`,
             data: {
-                technologyId: technologyId
+                extraInformationId: extraInformationId
             },
             success: function () {
                 reloadGrids();
@@ -36,7 +35,7 @@ $(function () {
             error: function () {
                 window.Swal.fire({
                     title: "Błąd!",
-                    text: "Dodawanie technologi nie powiodło się!",
+                    text: "Dodawanie informacji nie powiodło się!",
                     type: "error",
                     heightAuto: false
                 });
@@ -48,11 +47,11 @@ $(function () {
         return true;
     }
 
-    function removeTechnologyFromCv(technologyId) {
-        if (isNaN(technologyId)) {
+    function removeExtraInformationFromCv(extraInformationId) {
+        if (isNaN(extraInformationId)) {
             window.Swal.fire({
                 title: "Błąd!",
-                text: "Musisz wybrać technologie do dodania!",
+                text: "Musisz wybrać informacje do dodania!",
                 type: "error",
                 heightAuto: false
             });
@@ -62,9 +61,9 @@ $(function () {
 
         $.ajax({
             type: "GET",
-            url: `/Technologies/RemoveTechnologyFromCv/`,
+            url: `/ExtraInformations/RemoveExtraInformationFromCv/`,
             data: {
-                technologyId: technologyId
+                extraInformationId: extraInformationId
             },
             success: function () {
                 reloadGrids();
@@ -73,7 +72,7 @@ $(function () {
             error: function () {
                 window.Swal.fire({
                     title: "Błąd!",
-                    text: "Usuwanie technologi nie powiodło się!",
+                    text: "Usuwanie informacji nie powiodło się!",
                     type: "error",
                     heightAuto: false
                 });
@@ -85,19 +84,19 @@ $(function () {
         return true;
     }
 
-    function initVeryWellKnowTechnologiesGrid() {
-        var grid = $("#VeryWellKnowTechnologiesGrid").kendoGrid({
+    function initForeignLanguagesGrid() {
+        var grid = $("#ForeignLanguagesGrid").kendoGrid({
             dataSource: {
                 transport: {
                     read: {
-                        url: "/Technologies/GetVeryWellKnowTechnologies",
+                        url: "/ExtraInformations/GetForeignLanguages",
                         dataType: "json"
                     }
                 },
                 schema: {
                     model: {
                         fields: {
-                            Name: { type: "string" }
+                            Title: { type: "string" }
                         }
                     }
                 },
@@ -107,9 +106,9 @@ $(function () {
                 initRemoveFromCvButtons();
             },
             scrollable: false,
-            rowTemplate: window.kendo.template($("#TechnologiesRowTemplate").html()),
+            rowTemplate: window.kendo.template($("#ExtraInformationRowTemplate").html()),
             columns: [
-                "Technologie"
+                "Dodatkowe informacje"
             ]
         }).data("kendoGrid");
 
@@ -120,7 +119,7 @@ $(function () {
             placeholder: function (element) {
                 return element.clone().addClass("k-state-hover").css("opacity", 0.65);
             },
-            container: "#VeryWellKnowTechnologiesGrid tbody",
+            container: "#ForeignLanguagesGrid tbody",
             change: function (e) {
                 var skip = grid.dataSource.skip(),
                     oldIndex = e.oldIndex + skip,
@@ -128,8 +127,8 @@ $(function () {
                     dataItem = grid.dataSource.getByUid(e.item.data("uid"));
 
 
-                const oldPositionProjectId = $("#VeryWellKnowTechnologiesGrid").data().kendoGrid.dataSource.data()[oldIndex].TechnologyId;
-                const newPositionProjectId = $("#VeryWellKnowTechnologiesGrid").data().kendoGrid.dataSource.data()[newIndex].TechnologyId;
+                const oldPositionProjectId = $("#ForeignLanguagesGrid").data().kendoGrid.dataSource.data()[oldIndex].ExtraInformationId;
+                const newPositionProjectId = $("#ForeignLanguagesGrid").data().kendoGrid.dataSource.data()[newIndex].ExtraInformationId;
 
 
                 grid.dataSource.remove(dataItem);
@@ -137,7 +136,7 @@ $(function () {
 
                 $.ajax({
                     type: "GET",
-                    url: `/Technologies/ReorderTechnologiesPositionsInCv/`,
+                    url: `/ExtraInformations/ReorderExtraInformationPositionsInCv/`,
                     data: {
                         oldPositionProjectId: oldPositionProjectId,
                         newPositionProjectId: newPositionProjectId
@@ -156,19 +155,19 @@ $(function () {
 
     }
 
-    function initWellKnowTechnologiesGrid() {
-        var grid = $("#WellKnowTechnologiesGrid").kendoGrid({
+    function initInterestsGrid() {
+        var grid = $("#InterestsGrid").kendoGrid({
             dataSource: {
                 transport: {
                     read: {
-                        url: "/Technologies/GetWellKnowTechnologies",
+                        url: "/ExtraInformations/GetInterests",
                         dataType: "json"
                     }
                 },
                 schema: {
                     model: {
                         fields: {
-                            Name: { type: "string" }
+                            Title: { type: "string" }
                         }
                     }
                 },
@@ -178,9 +177,9 @@ $(function () {
                 initRemoveFromCvButtons();
             },
             scrollable: false,
-            rowTemplate: window.kendo.template($("#TechnologiesRowTemplate").html()),
+            rowTemplate: window.kendo.template($("#ExtraInformationRowTemplate").html()),
             columns: [
-                "Technologie"
+                "Dodatkowe informacje"
             ]
         }).data("kendoGrid");
 
@@ -191,7 +190,7 @@ $(function () {
             placeholder: function (element) {
                 return element.clone().addClass("k-state-hover").css("opacity", 0.65);
             },
-            container: "#WellKnowTechnologiesGrid tbody",
+            container: "#InterestsGrid tbody",
             change: function (e) {
                 var skip = grid.dataSource.skip(),
                     oldIndex = e.oldIndex + skip,
@@ -199,8 +198,8 @@ $(function () {
                     dataItem = grid.dataSource.getByUid(e.item.data("uid"));
 
 
-                const oldPositionProjectId = $("#WellKnowTechnologiesGrid").data().kendoGrid.dataSource.data()[oldIndex].TechnologyId;
-                const newPositionProjectId = $("#WellKnowTechnologiesGrid").data().kendoGrid.dataSource.data()[newIndex].TechnologyId;
+                const oldPositionProjectId = $("#InterestsGrid").data().kendoGrid.dataSource.data()[oldIndex].ExtraInformationId;
+                const newPositionProjectId = $("#InterestsGrid").data().kendoGrid.dataSource.data()[newIndex].ExtraInformationId;
 
 
                 grid.dataSource.remove(dataItem);
@@ -208,7 +207,7 @@ $(function () {
 
                 $.ajax({
                     type: "GET",
-                    url: `/Technologies/ReorderTechnologiesPositionsInCv/`,
+                    url: `/ExtraInformations/ReorderExtraInformationPositionsInCv/`,
                     data: {
                         oldPositionProjectId: oldPositionProjectId,
                         newPositionProjectId: newPositionProjectId
@@ -227,19 +226,19 @@ $(function () {
 
     }
 
-    function initKnowTechnologiesGrid() {
-        var grid = $("#KnowTechnologiesGrid").kendoGrid({
+    function initAdditionalSkillsGrid() {
+        var grid = $("#AdditionalSkillsGrid").kendoGrid({
             dataSource: {
                 transport: {
                     read: {
-                        url: "/Technologies/GetKnowTechnologies",
+                        url: "/ExtraInformations/GetAdditionalSkills",
                         dataType: "json"
                     }
                 },
                 schema: {
                     model: {
                         fields: {
-                            Name: { type: "string" }
+                            Title: { type: "string" }
                         }
                     }
                 },
@@ -249,9 +248,9 @@ $(function () {
                 initRemoveFromCvButtons();
             },
             scrollable: false,
-            rowTemplate: window.kendo.template($("#TechnologiesRowTemplate").html()),
+            rowTemplate: window.kendo.template($("#ExtraInformationRowTemplate").html()),
             columns: [
-                "Technologie"
+                "Dodatkowe informacje"
             ]
         }).data("kendoGrid");
 
@@ -262,7 +261,7 @@ $(function () {
             placeholder: function (element) {
                 return element.clone().addClass("k-state-hover").css("opacity", 0.65);
             },
-            container: "#KnowTechnologiesGrid tbody",
+            container: "#AdditionalSkillsGrid tbody",
             change: function (e) {
                 var skip = grid.dataSource.skip(),
                     oldIndex = e.oldIndex + skip,
@@ -270,8 +269,8 @@ $(function () {
                     dataItem = grid.dataSource.getByUid(e.item.data("uid"));
 
 
-                const oldPositionProjectId = $("#KnowTechnologiesGrid").data().kendoGrid.dataSource.data()[oldIndex].TechnologyId;
-                const newPositionProjectId = $("#KnowTechnologiesGrid").data().kendoGrid.dataSource.data()[newIndex].TechnologyId;
+                const oldPositionProjectId = $("#AdditionalSkillsGrid").data().kendoGrid.dataSource.data()[oldIndex].ExtraInformationId;
+                const newPositionProjectId = $("#AdditionalSkillsGrid").data().kendoGrid.dataSource.data()[newIndex].ExtraInformationId;
 
 
                 grid.dataSource.remove(dataItem);
@@ -279,7 +278,7 @@ $(function () {
 
                 $.ajax({
                     type: "GET",
-                    url: `/Technologies/ReorderTechnologiesPositionsInCv/`,
+                    url: `/ExtraInformations/ReorderExtraInformationPositionsInCv/`,
                     data: {
                         oldPositionProjectId: oldPositionProjectId,
                         newPositionProjectId: newPositionProjectId
@@ -299,31 +298,31 @@ $(function () {
     }
 
     function reloadGrids() {
-        $("#VeryWellKnowTechnologiesGrid").data("kendoGrid").dataSource.read();
-        $("#VeryWellKnowTechnologiesGrid").data("kendoGrid").refresh();
-        $("#WellKnowTechnologiesGrid").data("kendoGrid").dataSource.read();
-        $("#WellKnowTechnologiesGrid").data("kendoGrid").refresh();
-        $("#KnowTechnologiesGrid").data("kendoGrid").dataSource.read();
-        $("#KnowTechnologiesGrid").data("kendoGrid").refresh();
+        $("#ForeignLanguagesGrid").data("kendoGrid").dataSource.read();
+        $("#ForeignLanguagesGrid").data("kendoGrid").refresh();
+        $("#InterestsGrid").data("kendoGrid").dataSource.read();
+        $("#InterestsGrid").data("kendoGrid").refresh();
+        $("#AdditionalSkillsGrid").data("kendoGrid").dataSource.read();
+        $("#AdditionalSkillsGrid").data("kendoGrid").refresh();
         initRemoveFromCvButtons();
     }
 
     function reloadDropDownListData() {
-        $("#AddTechnologyToCvDropDownList").data("kendoDropDownList").dataSource.read();
-        $("#AddTechnologyToCvDropDownList").data("kendoDropDownList").refresh();
+        $("#AddExtraInformationToCvDropDownList").data("kendoDropDownList").dataSource.read();
+        $("#AddExtraInformationToCvDropDownList").data("kendoDropDownList").refresh();
     }
 
     function initDropDownList() {
-        $("#AddTechnologyToCvDropDownList").kendoDropDownList({
-            optionLabel: "Wybierz technologie do dodania...",
-            noDataTemplate: "Brak technologi do dodania",
-            dataTextField: "Name",
-            dataValueField: "TechnologyId",
+        $("#AddExtraInformationToCvDropDownList").kendoDropDownList({
+            optionLabel: "Wybierz informacje do dodania...",
+            noDataTemplate: "Brak informacji do dodania",
+            dataTextField: "Title",
+            dataValueField: "ExtraInformationId",
             dataSource: {
                 transport: {
                     read: {
                         dataType: "json",
-                        url: "/Technologies/GetTechnologiesNotShownInCv"
+                        url: "/ExtraInformations/GetExtraInformationNotShownInCv"
                     }
                 }
             }
@@ -331,10 +330,10 @@ $(function () {
     }
 
     function initRemoveFromCvButtons() {
-        $(".removeFromCvTechnology").on("click",
+        $(".removeFromCvExtraInformation").on("click",
             function () {
-                const technologyId = $(this).data("id");
-                removeTechnologyFromCv(technologyId);
+                const extraInformationId = $(this).data("id");
+                removeExtraInformationFromCv(extraInformationId);
             });
     }
 
