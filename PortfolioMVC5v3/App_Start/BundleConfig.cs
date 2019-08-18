@@ -62,6 +62,14 @@ namespace PortfolioMVC5v3
                 "~/Scripts/admin/Cv/ExtraInformationPartialViewScripts.js"
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/amChart").Include(
+                "~/Scripts/AmChart/core.js",
+                "~/Scripts/AmChart/charts.js",
+                "~/Scripts/AmChart/material.js",
+                "~/Scripts/AmChart/animated.js"
+
+            ));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-{version}.js"));

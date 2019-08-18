@@ -442,6 +442,10 @@
     <Content Include="Scripts\admin\ProjectManagement\List.js" />
     <Content Include="Scripts\admin\Technologies\Card.js" />
     <Content Include="Scripts\admin\Technologies\List.js" />
+    <Content Include="Scripts\AmChart\animated.js" />
+    <Content Include="Scripts\AmChart\charts.js" />
+    <Content Include="Scripts\AmChart\core.js" />
+    <Content Include="Scripts\AmChart\material.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

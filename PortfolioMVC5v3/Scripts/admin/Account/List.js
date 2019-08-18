@@ -12,11 +12,6 @@
             const id = $(this).data("id");
             editUser(id);
         });
-
-    //$("#AddTechnologyBtn").on("click",
-    //    function () {
-    //        editTechnology(0);
-    //    });
 });
 
 function blockUser(id) {
@@ -84,9 +79,8 @@ function initGrid() {
             title: "Akcje",
             template: '<button name="EditUserBtn" class="btn btn-sm btn-primary mr-2" data-id="#=Id#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
                 '<button name="#= Blocked ? "UnlockUserBtn" : "BlockUserBtn" #" class="btn btn-sm #= Blocked ? "btn-success" : "btn-danger" #" data-id="#=Id#"><i class="#= Blocked ? "far fa-check-circle" : "fas fa-ban" # mr-2"></i>Zablokuj</button>'
-            , width: 200
+            , width: 220
         }
         ]
     });
-    //#= Blocked ? "UnlockUserBtn" : "BlockUserBtn" #
 }

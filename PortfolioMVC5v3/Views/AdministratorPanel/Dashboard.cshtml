@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-6">
         <div class="card">
             <div class="card-body" style="min-height: 500px">
@@ -30,10 +30,7 @@
 
 @section scripts
 {
-    <script src="https://www.amcharts.com/lib/4/core.js"></script>
-    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
-    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+    @Scripts.Render("~/bundles/amChart")
 
     <script>
         am4core.ready(function () {
@@ -74,7 +71,7 @@
             projectsTypeChartPieSeries.hiddenState.properties.endAngle = -90;
             projectsTypeChartPieSeries.hiddenState.properties.startAngle = -90;
 
-        }); 
+        });
     </script>
 
 }

@@ -121,7 +121,7 @@ function initGrid() {
             title: "Akcje",
             template: '<button name="EditProjectBtn" class="btn btn-sm btn-primary mr-2" data-id="#=ProjectId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
                 '<button name="RemoveProjectBtn" class="btn btn-sm btn-danger" data-id="#=ProjectId#" data-project-title="#=Title#"><i class="fas fa-trash-alt mr-2"></i>Usuń</button>',
-            width: 180
+            width: 200
 
         }]
     });
