@@ -18,7 +18,7 @@ namespace PortfolioMVC5v3.Logic.Interfaces
         Task<List<Technology>> GetTechnologiesByIds(IEnumerable<int> projectTechnologiesIds);
         Task<bool> RemoveBindingsBetweenProjectAndTechnologies(int projectModelProjectId);
         Task<bool> SetBindingBetweenProjectAndTechnologiesResult(int projectId, IEnumerable<Technology> projectTechnologies);
-        Task<bool> ReorderProjectsPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
+        Task<bool> ReorderTechnologiesPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
         Task<bool> AddTechnologyToCv(int projectId);
         Task<bool> RemoveTechnologyFromCv(int projectId);
     }

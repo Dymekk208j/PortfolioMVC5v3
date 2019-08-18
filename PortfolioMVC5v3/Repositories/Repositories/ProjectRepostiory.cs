@@ -350,7 +350,6 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             }
 
             return false;
-
         }
 
         public async Task<bool> SetProjectShowInCvState(bool state, int projectId)

@@ -89,7 +89,7 @@ namespace PortfolioMVC5v3.Controllers
 
         public async Task<ActionResult> ReorderTechnologiesPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
         {
-            var result = await _technologyLogic.ReorderProjectsPositionsInCv(oldPositionProjectId, newPositionProjectId);
+            var result = await _technologyLogic.ReorderTechnologiesPositionsInCv(oldPositionProjectId, newPositionProjectId);
 
             return new HttpStatusCodeResult(result ? 200 : 500);
         }

@@ -3,7 +3,7 @@
     <tr data-uid="#= uid #">
         <td colspan="2">
             <button class="btn btn-outline-danger float-right p-0 m-0 outlineRemoveBtn removeFromCvTechnology" data-id="#:TechnologyId#"><i class="fas fa-trash-alt"></i></button>
-            <strong>[#: TechnologyId#]: #: Name #</strong>
+            <strong>#: Name #</strong>
         </td>
     </tr>
 </script>
@@ -35,13 +35,6 @@
                 <h6>Znajomość podstaw:</h6>
                 <div id="KnowTechnologiesGrid"></div>
             </div>
-            @*
-            <div class="col-12">
-                @if (Model?.Count(t => t.KnowledgeLevel == 2 || t.KnowledgeLevel == 1) > 0)
-                {
-                    @: <b>Znajomość podstaw:</b> <i>@string.Join(", ", Model.Where(t => t.KnowledgeLevel == 2 || t.KnowledgeLevel == 1).Select(a => a.Name))</i>
-                }
-            </div>*@
         </div>
     </div>
 </div>

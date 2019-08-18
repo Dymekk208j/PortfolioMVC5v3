@@ -31,7 +31,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append("FROM ");
             query.Append($"{TableName} ");
 
-            query.Append("ORDER BY [Date] DESC");
+            query.Append("ORDER BY [PositionInCv], [Date] DESC");
 
             try
             {
@@ -106,7 +106,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(query.ToString(),
+                    var achievementId = await connection.QueryFirstAsync<int>(query.ToString(),
                         new
                         {
                             achievement.Title,
@@ -115,7 +115,10 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                             achievement.ShowInCv
                         });
 
-                    return result;
+                    string updateQuery = $"UPDATE {TableName} SET [PositionInCv] = {achievementId} WHERE [AchievementId] = {achievementId}";
+                    await connection.ExecuteAsync(updateQuery);
+
+                    return achievementId;
                 }
             }
             catch (Exception e)
@@ -209,7 +212,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append("WHERE ");
             query.Append("[ShowInCv] = 1 ");
 
-            query.Append("ORDER BY [Date] DESC");
+            query.Append("ORDER BY [PositionInCv], [Date] DESC");
 
             try
             {
@@ -227,6 +230,102 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             }
 
             return null;
+        }
+
+        public async Task<bool> ReorderAchievementsPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            StringBuilder query = new StringBuilder();
+
+            query.Append($"DECLARE @oldPositionId int = {oldPositionProjectId} ");
+            query.Append($"DECLARE @newPositionId int = {newPositionProjectId} ");
+            query.Append("DECLARE @oldPosition int ");
+            query.Append("DECLARE @newPosition int ");
+            query.Append($"SELECT @oldPosition = [PositionInCv] FROM {TableName} WHERE AchievementId = @oldPositionId ");
+            query.Append($"SELECT @newPosition = [PositionInCv] FROM {TableName} WHERE AchievementId = @newPositionId ");
+            query.Append("IF @oldPosition < @newPosition ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] - 1 WHERE [PositionInCv] <= @newPosition ");
+            query.Append("END ELSE ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] + 1 WHERE [PositionInCv] >= @newPosition ");
+            query.Append("END ");
+            query.Append($"UPDATE {TableName} SET [PositionInCV] = @newPosition WHERE AchievementId = @oldPositionId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString());
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+
+        }
+
+        public async Task<List<Achievement>> GetAchievementsNotShowInCvAsync()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append(" *  ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 0 ");
+
+            query.Append("ORDER BY [PositionInCv], [Date] DESC");
+
+            try
+            {
+
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<Achievement>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return null;
+        }
+
+        public async Task<bool> SetAchievementShowInCvState(bool state, int achievementId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE ");
+            query.Append($"{TableName} ");
+
+            query.Append("SET ");
+            query.Append("[ShowInCv] = @state ");
+
+            query.Append("WHERE ");
+            query.Append("[AchievementId] = @achievementId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { state, achievementId });
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
 
@@ -53,5 +54,39 @@ namespace PortfolioMVC5v3.Controllers
             return new HttpStatusCodeResult(result ? 200 : 500);
         }
 
+        public async Task<ActionResult> ReorderAchievementsPositionsInCv(int oldPositionAchievementId, int newPositionAchievementId)
+        {
+            var result = await _achievementLogic.ReorderAchievementsPositionsInCv(oldPositionAchievementId, newPositionAchievementId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> AddAchievementToCv(int achievementId)
+        {
+            var result = await _achievementLogic.AddAchievementToCv(achievementId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> RemoveAchievementFromCv(int achievementId)
+        {
+            var result = await _achievementLogic.RemoveAchievementFromCv(achievementId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<string> GetAchievementsToShowInCv()
+        {
+            var achievements = await _achievementLogic.GetAchievementsToShowInCvAsync();
+
+            return JsonConvert.SerializeObject(achievements);
+        }
+
+        public async Task<string> GetAchievementsNotShownInCv()
+        {
+            var achievements = await _achievementLogic.GetAchievementsNotShowInCvAsync();
+
+            return JsonConvert.SerializeObject(achievements);
+        }
     }
 }

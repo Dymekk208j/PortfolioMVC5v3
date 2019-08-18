@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using PortfolioMVC5v3.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using PortfolioMVC5v3.Models;
 
 namespace PortfolioMVC5v3.Logic.Interfaces
 {
@@ -8,9 +8,13 @@ namespace PortfolioMVC5v3.Logic.Interfaces
     {
         Task<List<Achievement>> GetAllAchievementsAsync();
         Task<List<Achievement>> GetAchievementsToShowInCvAsync();
+        Task<List<Achievement>> GetAchievementsNotShowInCvAsync();
         Task<Achievement> GetAchievement(int achievementId);
         Task<int> InsertAchievement(Achievement achievement);
         Task<bool> UpdateAchievement(Achievement achievement);
         Task<bool> RemoveAchievement(int achievementId);
+        Task<bool> ReorderAchievementsPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
+        Task<bool> AddAchievementToCv(int achievementId);
+        Task<bool> RemoveAchievementFromCv(int achievementId);
     }
 }

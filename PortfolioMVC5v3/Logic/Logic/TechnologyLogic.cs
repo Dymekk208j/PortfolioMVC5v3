@@ -108,7 +108,7 @@ namespace PortfolioMVC5v3.Logic.Logic
             return true;
         }
 
-        public Task<bool> ReorderProjectsPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        public Task<bool> ReorderTechnologiesPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
         {
             return _repository.ReorderTechnologiesPositionsInCv(oldPositionProjectId, newPositionProjectId);
         }

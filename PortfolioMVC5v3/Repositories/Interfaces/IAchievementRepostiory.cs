@@ -12,5 +12,8 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<bool> UpdateAchievement(Achievement achievement);
         Task<bool> RemoveAchievement(int achievementId);
         Task<List<Achievement>> GetAchievementsToShowInCvAsync();
+        Task<bool> SetAchievementShowInCvState(bool state, int achievementId);
+        Task<bool> ReorderAchievementsPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
+        Task<List<Achievement>> GetAchievementsNotShowInCvAsync();
     }
 }

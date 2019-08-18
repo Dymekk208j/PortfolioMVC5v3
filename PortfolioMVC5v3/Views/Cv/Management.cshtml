@@ -9,6 +9,7 @@
         .page-wrapper {
             overflow-y: auto !important;
         }
+
         .photo {
             width: 120px;
             height: 120px;
@@ -22,6 +23,7 @@
         h6 {
             color: #27a2d9;
         }
+
         .k-grid tbody tr {
             cursor: move;
         }
@@ -62,10 +64,10 @@
                             </div>
                             <div class="col text-right">
                                 @*@Model.PersonalDataViewModel.Address<br />
-                @($"{Model.PersonalDataViewModel.PostCode} {Model.PersonalDataViewModel.City}")<br />
-                @($"{Model.ContactDataViewModel.PhoneNumber} | {Model.ContactDataViewModel.HomePageLink}")<br />
-                @Model.ContactDataViewModel.EmailAddress<br />
-                @Model.ContactDataViewModel.GitHubLink<br />*@
+                                    @($"{Model.PersonalDataViewModel.PostCode} {Model.PersonalDataViewModel.City}")<br />
+                                    @($"{Model.ContactDataViewModel.PhoneNumber} | {Model.ContactDataViewModel.HomePageLink}")<br />
+                                    @Model.ContactDataViewModel.EmailAddress<br />
+                                    @Model.ContactDataViewModel.GitHubLink<br />*@
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -90,14 +92,12 @@
 
                         @Html.Partial("_TechnologiesManagementPartialView")
 
-                        @*@Html.Partial("_TechnologiesPartialView", Model.Technologies)*@
-
                         <div class="row mt-3">
                             <div class="col-12 text-left bg-primary">
                             </div>
                         </div>
 
-                        @*@Html.Partial("_AchievementsPartialView", Model.Achievements)*@
+                        @Html.Partial("_AchievementsManagementPartialView")
 
                         <div class="row mt-3">
                             <div class="col-12 text-left bg-primary">
@@ -136,11 +136,8 @@
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.material.mobile.min.css" />
 
-    <script>
-        var showInCv = @Html.Raw(Json.Encode("false"));
-    </script>
-
     <script src="~/Scripts/admin/Cv/CommercialProjectsPartialViewScripts.js"></script>
     <script src="~/Scripts/admin/Cv/NotCommercialProjectsPartialViewScripts.js"></script>
     <script src="~/Scripts/admin/Cv/TechnologiesPartialViewScripts.js"></script>
+    <script src="~/Scripts/admin/Cv/AchievementsPartialViewScripts.js"></script>
 }
