@@ -21,5 +21,6 @@ namespace PortfolioMVC5v3.Logic.Interfaces
         Task<bool> ReorderTechnologiesPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
         Task<bool> AddTechnologyToCv(int projectId);
         Task<bool> RemoveTechnologyFromCv(int projectId);
+        Task<Dictionary<string, int>> GetTechnologiesStatistic();
     }
 }

@@ -122,5 +122,19 @@ namespace PortfolioMVC5v3.Logic.Logic
         {
             return _repository.SetTechnologyShowInCvState(false, projectId);
         }
+
+        public async Task<Dictionary<string, int>> GetTechnologiesStatistic()
+        {
+            var result = new Dictionary<string, int>();
+
+            var technologies = await GetAllTechnologiesListAsync();
+            foreach (var technology in technologies)
+            {
+                int technologyUsageAmount = await _repository.GetTechnologyUsagesStatistic(technology.TechnologyId);
+                if(technologyUsageAmount > 0) result.Add(technology.Name, technologyUsageAmount);
+            }
+
+            return result;
+        }
     }
 }

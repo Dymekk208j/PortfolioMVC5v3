@@ -475,5 +475,35 @@ namespace PortfolioMVC5v3.Repositories.Repositories
 
             return false;
         }
+
+        public async Task<int> GetTechnologyUsagesStatistic(int technologyId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append("COUNT(Project_ProjectId) ");
+
+            query.Append("FROM ");
+            query.Append("[TechnologyProjects] ");
+
+            query.Append("WHERE ");
+            query.Append("Technology_TechnologyId = @technologyId ");
+
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.QueryFirstAsync<int>(query.ToString(), new { technologyId });
+
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return 0;
+        }
     }
 }

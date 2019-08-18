@@ -20,5 +20,6 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<bool> CreateBindingBetweenProjectAndTechnology(int projectId, int technologyId);
         Task<bool> ReorderTechnologiesPositionsInCv(int oldPositionProjectId, int newPositionProjectId);
         Task<bool> SetTechnologyShowInCvState(bool state, int technologyId);
+        Task<int> GetTechnologyUsagesStatistic(int technologyId);
     }
 }

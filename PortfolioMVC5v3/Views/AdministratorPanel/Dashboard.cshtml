@@ -3,25 +3,80 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>title</h2>
 
-<input id="test" />
 
-<li>Send notifications <input id="mail-switch" aria-label="Mail Switch" /></li>
+<div class="row h-100">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body" style="min-height: 500px">
+                <h2 class="card-title">Używane technologie w projektach</h2>
+
+                <div id="technologiesChart" style="min-height: 500px"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body" style="min-height: 500px">
+                <h2 class="card-title">Typy projektów</h2>
+
+                <div id="projectsTypeChart" style="min-height: 500px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section scripts
 {
-    
-    <script>
-        $(function () {
-        
-            $("#mail-switch").kendoSwitch({
-                messages: {
-                    checked: "YES",
-                    unchecked: "NO"
-                }
-            });
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 
-        });
+    <script>
+        am4core.ready(function () {
+            window.am4core.useTheme(window.am4themes_material);
+            window.am4core.useTheme(window.am4themes_animated);
+
+            const technologiesChart = window.am4core.create("technologiesChart", window.am4charts.PieChart);
+
+            technologiesChart.dataSource.url = "/AdministratorPanel/GetTechnologiesStatistic";
+            technologiesChart.dataSource.parser = new window.am4core.JSONParser();
+            technologiesChart.dataSource.parser.options.emptyAs = 0;
+
+            const technologiesChartPieSeries = technologiesChart.series.push(new window.am4charts.PieSeries());
+            technologiesChartPieSeries.dataFields.value = "Amount";
+            technologiesChartPieSeries.dataFields.category = "Name";
+            technologiesChartPieSeries.slices.template.stroke = window.am4core.color("#fff");
+            technologiesChartPieSeries.slices.template.strokeWidth = 2;
+            technologiesChartPieSeries.slices.template.strokeOpacity = 1;
+
+            technologiesChartPieSeries.hiddenState.properties.opacity = 1;
+            technologiesChartPieSeries.hiddenState.properties.endAngle = -90;
+            technologiesChartPieSeries.hiddenState.properties.startAngle = -90;
+
+            const projectsTypeChart = window.am4core.create("projectsTypeChart", window.am4charts.PieChart);
+
+            projectsTypeChart.dataSource.url = "/AdministratorPanel/GetProjectCommercialStatistic";
+            projectsTypeChart.dataSource.parser = new window.am4core.JSONParser();
+            projectsTypeChart.dataSource.parser.options.emptyAs = 0;
+
+            const projectsTypeChartPieSeries = projectsTypeChart.series.push(new window.am4charts.PieSeries());
+            projectsTypeChartPieSeries.dataFields.value = "amount";
+            projectsTypeChartPieSeries.dataFields.category = "type";
+            projectsTypeChartPieSeries.slices.template.stroke = window.am4core.color("#fff");
+            projectsTypeChartPieSeries.slices.template.strokeWidth = 2;
+            projectsTypeChartPieSeries.slices.template.strokeOpacity = 1;
+
+            projectsTypeChartPieSeries.hiddenState.properties.opacity = 1;
+            projectsTypeChartPieSeries.hiddenState.properties.endAngle = -90;
+            projectsTypeChartPieSeries.hiddenState.properties.startAngle = -90;
+
+        }); 
     </script>
+
 }
+
+
