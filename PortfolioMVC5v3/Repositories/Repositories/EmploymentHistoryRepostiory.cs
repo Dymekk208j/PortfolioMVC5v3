@@ -312,7 +312,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             return false;
         }
 
-        public async Task<object> GetEmploymentHistoriesNotShowInCvAsync()
+        public async Task<List<EmploymentHistory>> GetEmploymentHistoriesNotShowInCvAsync()
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT ");

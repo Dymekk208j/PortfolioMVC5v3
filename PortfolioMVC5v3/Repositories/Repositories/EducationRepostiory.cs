@@ -31,7 +31,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append("FROM ");
             query.Append($"{TableName} ");
 
-            query.Append("ORDER BY [StartDate] DESC");
+            query.Append("ORDER BY PositionInCv, [StartDate] DESC");
 
             try
             {
@@ -112,7 +112,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(query.ToString(),
+                    var educationId = await connection.QueryFirstAsync<int>(query.ToString(),
                         new
                         {
                             education.SchoolName,
@@ -124,7 +124,11 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                             education.ShowInCv
                         });
 
-                    return result;
+
+                    string updateQuery = $"UPDATE {TableName} SET [PositionInCv] = {educationId} WHERE [EducationId] = {educationId}";
+                    await connection.ExecuteAsync(updateQuery);
+
+                    return educationId;
                 }
             }
             catch (Exception e)
@@ -224,7 +228,102 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append("WHERE ");
             query.Append("[ShowInCv] = 1 ");
 
-            query.Append("ORDER BY [StartDate] DESC");
+            query.Append("ORDER BY PositionInCv, [StartDate] DESC");
+
+            try
+            {
+
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<Education>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return new List<Education>();
+        }
+
+        public async Task<bool> ReorderEducationsPositionsInCv(int oldPositionEducationId, int newPositionEducationId)
+        {
+            StringBuilder query = new StringBuilder();
+
+            query.Append($"DECLARE @oldPositionId int = {oldPositionEducationId} ");
+            query.Append($"DECLARE @newPositionId int = {newPositionEducationId} ");
+            query.Append("DECLARE @oldPosition int ");
+            query.Append("DECLARE @newPosition int ");
+            query.Append($"SELECT @oldPosition = [PositionInCv] FROM {TableName} WHERE EducationId = @oldPositionId ");
+            query.Append($"SELECT @newPosition = [PositionInCv] FROM {TableName} WHERE EducationId = @newPositionId ");
+            query.Append("IF @oldPosition < @newPosition ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] - 1 WHERE [PositionInCv] <= @newPosition ");
+            query.Append("END ELSE ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] + 1 WHERE [PositionInCv] >= @newPosition ");
+            query.Append("END ");
+            query.Append($"UPDATE {TableName} SET [PositionInCV] = @newPosition WHERE EducationId = @oldPositionId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString());
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<bool> SetEducationShowInCvState(bool state, int educationId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE ");
+            query.Append($"{TableName} ");
+
+            query.Append("SET ");
+            query.Append("[ShowInCv] = @state ");
+
+            query.Append("WHERE ");
+            query.Append("[EducationId] = @educationId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { state, educationId });
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<List<Education>> GetEducationsNotShowInCvAsync()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append(" *  ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 0 ");
+
+            query.Append("ORDER BY PositionInCv, [StartDate] DESC");
 
             try
             {

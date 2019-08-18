@@ -12,5 +12,9 @@ namespace PortfolioMVC5v3.Logic.Interfaces
         Task<bool> UpdateEducation(Education education);
         Task<bool> RemoveEducation(int educationId);
         Task<List<Education>> GetEducationsToShowInCvAsync();
+        Task<bool> AddEducationToCv(int educationId);
+        Task<bool> RemoveEducationFromCv(int educationId);
+        Task<List<Education>> GetEducationsNotShowInCvAsync();
+        Task<bool> ReorderEducationsPositionsInCv(int oldPositionEducationId, int newPositionEducationId);
     }
 }

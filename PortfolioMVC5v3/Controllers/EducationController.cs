@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
 
@@ -57,5 +58,41 @@ namespace PortfolioMVC5v3.Controllers
 
             return new HttpStatusCodeResult(result ? 200 : 500);
         }
+
+        public async Task<ActionResult> ReorderEducationsPositionsInCv(int oldPositionEducationId, int newPositionEducationId)
+        {
+            var result = await _educationLogic.ReorderEducationsPositionsInCv(oldPositionEducationId, newPositionEducationId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> AddEducationToCv(int educationId)
+        {
+            var result = await _educationLogic.AddEducationToCv(educationId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> RemoveEducationFromCv(int educationId)
+        {
+            var result = await _educationLogic.RemoveEducationFromCv(educationId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<string> GetEducationsToShowInCv()
+        {
+            var educations = await _educationLogic.GetEducationsToShowInCvAsync();
+
+            return JsonConvert.SerializeObject(educations);
+        }
+
+        public async Task<string> GetEducationsNotShownInCv()
+        {
+            var educations = await _educationLogic.GetEducationsNotShowInCvAsync();
+
+            return JsonConvert.SerializeObject(educations);
+        }
+
     }
 }

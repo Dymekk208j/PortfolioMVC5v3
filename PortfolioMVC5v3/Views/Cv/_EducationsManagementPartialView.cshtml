@@ -1,1 +1,61 @@
-﻿
+﻿<div class="row mt-3">
+    <div class="col-3 text-left">
+        <div class="row">
+            <div class="col-12">
+                <h6>Wykształcenie</h6>
+            </div>
+            <div class="col-12">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#AddEducationToCvModal">
+                    <i class="far fa-plus-square mr-2"></i> Dodaj
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-9 text-left">
+        <div id="EducationList"></div>
+    </div>
+</div>
+
+
+<script id="EducationRowTemplate" type="text/x-kendo-template">
+    <tr data-uid="#= uid #">
+        <td colspan="2">
+            <button class="btn btn-outline-danger float-right p-0 m-0 outlineRemoveBtn removeFromCvEducation" data-id="#:EducationId#"><i class="fas fa-trash-alt"></i></button>
+            <b>#: SchoolName #, #: Department #, #: Specialization # </b>
+            <br />
+            <i>
+                #: kendo.toString(StartDate, "dd/MM/yyyy")# -
+                #if(CurrentPlaceOfEducation){#
+                Obecnie
+                #}else{#
+                #: kendo.toString(EndDate, "dd/MM/yyyy")#
+                #}#
+            </i>
+        </td>
+    </tr>
+</script>
+
+
+<div class="modal" id="AddEducationToCvModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Dodaj wykształcenie do CV</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <input id="AddEducationToCvDropDownList" style="width: 100%;" />
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Zamknij</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="AddEducationToCv">Dodaj</button>
+            </div>
+
+        </div>
+    </div>
+</div>

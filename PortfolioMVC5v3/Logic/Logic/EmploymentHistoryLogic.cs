@@ -60,7 +60,7 @@ namespace PortfolioMVC5v3.Logic.Logic
             return _repository.SetEmploymentHistoryShowInCvState(false, employmentHistoryId);
         }
 
-        public Task<object> GetEmploymentHistoriesNotShowInCvAsync()
+        public Task<List<EmploymentHistory>> GetEmploymentHistoriesNotShowInCvAsync()
         {
             return _repository.GetEmploymentHistoriesNotShowInCvAsync();
         }

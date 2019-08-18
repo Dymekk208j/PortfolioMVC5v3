@@ -14,6 +14,6 @@ namespace PortfolioMVC5v3.Repositories.Interfaces
         Task<List<EmploymentHistory>> GetEmploymentHistoriesToShowInCvAsync();
         Task<bool> ReorderEmploymentHistoriesPositionsInCv(int oldPositionEmploymentHistoryId, int newPositionEmploymentHistoryId);
         Task<bool> SetEmploymentHistoryShowInCvState(bool state, int employmentHistoryId);
-        Task<object> GetEmploymentHistoriesNotShowInCvAsync();
+        Task<List<EmploymentHistory>> GetEmploymentHistoriesNotShowInCvAsync();
     }
 }

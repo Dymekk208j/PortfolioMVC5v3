@@ -2,14 +2,14 @@
     initGrid();
     initDropDownList();
 
-    $("#AddEmploymentHistoryToCv").on("click",
+    $("#AddEducationToCv").on("click",
         function () {
-            const employmentHistoryId = parseInt($("#AddEmploymentHistoryToCvDropDownList").data("kendoDropDownList").value());
-            addEmploymentHistoryToCv(employmentHistoryId);
+            const educationId = parseInt($("#AddEducationToCvDropDownList").data("kendoDropDownList").value());
+            addEducationToCv(educationId);
         });
 
-    function addEmploymentHistoryToCv(employmentHistoryId) {
-        if (isNaN(employmentHistoryId)) {
+    function addEducationToCv(educationId) {
+        if (isNaN(educationId)) {
             window.Swal.fire({
                 title: "Błąd!",
                 text: "Musisz wybrać wykształcenie do dodania!",
@@ -22,9 +22,9 @@
 
         $.ajax({
             type: "GET",
-            url: `/EmploymentHistory/AddEmploymentHistoryToCv/`,
+            url: `/Education/AddEducationToCv/`,
             data: {
-                employmentHistoryId: employmentHistoryId
+                educationId: educationId
             },
             success: function () {
                 reloadGridData();
@@ -45,8 +45,8 @@
         return true;
     }
 
-    function removeEmploymentHistoryFromCv(employmentHistoryId) {
-        if (isNaN(employmentHistoryId)) {
+    function removeEducationFromCv(educationId) {
+        if (isNaN(educationId)) {
             window.Swal.fire({
                 title: "Błąd!",
                 text: "Musisz wybrać wykształcenie do dodania!",
@@ -59,9 +59,9 @@
 
         $.ajax({
             type: "GET",
-            url: `/EmploymentHistory/RemoveEmploymentHistoryFromCv/`,
+            url: `/Education/RemoveEducationFromCv/`,
             data: {
-                employmentHistoryId: employmentHistoryId
+                educationId: educationId
             },
             success: function () {
                 reloadGridData();
@@ -83,11 +83,11 @@
     }
 
     function initGrid() {
-        var grid = $("#EmploymentHistoryList").kendoGrid({
+        var grid = $("#EducationList").kendoGrid({
             dataSource: {
                 transport: {
                     read: {
-                        url: "/EmploymentHistory/GetEmploymentHistoriesToShowInCv",
+                        url: "/Education/GetEducationsToShowInCv",
                         dataType: "json"
                     }
                 },
@@ -109,7 +109,7 @@
                 initRemoveFromCvButtons();
             },
             scrollable: false,
-            rowTemplate: window.kendo.template($("#EmploymentHistoryRowTemplate").html()),
+            rowTemplate: window.kendo.template($("#EducationRowTemplate").html()),
             columns: [
                 "Osiągnięcia"
             ]
@@ -122,7 +122,7 @@
             placeholder: function (element) {
                 return element.clone().addClass("k-state-hover").css("opacity", 0.65);
             },
-            container: "#EmploymentHistoryList tbody",
+            container: "#EducationList tbody",
             change: function (e) {
                 var skip = grid.dataSource.skip(),
                     oldIndex = e.oldIndex + skip,
@@ -130,8 +130,8 @@
                     dataItem = grid.dataSource.getByUid(e.item.data("uid"));
 
 
-                const oldPositionEmploymentHistoryId = $("#EmploymentHistoryList").data().kendoGrid.dataSource.data()[oldIndex].EmploymentHistoryId;
-                const newPositionEmploymentHistoryId = $("#EmploymentHistoryList").data().kendoGrid.dataSource.data()[newIndex].EmploymentHistoryId;
+                const oldPositionEducationId = $("#EducationList").data().kendoGrid.dataSource.data()[oldIndex].EducationId;
+                const newPositionEducationId = $("#EducationList").data().kendoGrid.dataSource.data()[newIndex].EducationId;
 
 
                 grid.dataSource.remove(dataItem);
@@ -139,10 +139,10 @@
 
                 $.ajax({
                     type: "GET",
-                    url: `/EmploymentHistory/ReorderEmploymentHistoriesPositionsInCv/`,
+                    url: `/Education/ReorderEducationsPositionsInCv/`,
                     data: {
-                        oldPositionEmploymentHistoryId: oldPositionEmploymentHistoryId,
-                        newPositionEmploymentHistoryId: newPositionEmploymentHistoryId
+                        oldPositionEducationId: oldPositionEducationId,
+                        newPositionEducationId: newPositionEducationId
                     },
                     success: function () {
                         reloadGridData();
@@ -159,27 +159,27 @@
     }
 
     function reloadGridData() {
-        $("#EmploymentHistoryList").data("kendoGrid").dataSource.read();
-        $("#EmploymentHistoryList").data("kendoGrid").refresh();
+        $("#EducationList").data("kendoGrid").dataSource.read();
+        $("#EducationList").data("kendoGrid").refresh();
         initRemoveFromCvButtons();
     }
 
     function reloadDropDownListData() {
-        $("#AddEmploymentHistoryToCvDropDownList").data("kendoDropDownList").dataSource.read();
-        $("#AddEmploymentHistoryToCvDropDownList").data("kendoDropDownList").refresh();
+        $("#AddEducationToCvDropDownList").data("kendoDropDownList").dataSource.read();
+        $("#AddEducationToCvDropDownList").data("kendoDropDownList").refresh();
     }
 
     function initDropDownList() {
-        $("#AddEmploymentHistoryToCvDropDownList").kendoDropDownList({
+        $("#AddEducationToCvDropDownList").kendoDropDownList({
             optionLabel: "Wybierz wykształcenie do dodania...",
             noDataTemplate: "Brak wykształcenia do dodania",
-            dataTextField: "CompanyName",
-            dataValueField: "EmploymentHistoryId",
+            dataTextField: "SchoolName",
+            dataValueField: "EducationId",
             dataSource: {
                 transport: {
                     read: {
                         dataType: "json",
-                        url: "/EmploymentHistory/GetEmploymentHistoriesNotShownInCv"
+                        url: "/Education/GetEducationsNotShownInCv"
                     }
                 }
             }
@@ -187,10 +187,10 @@
     }
 
     function initRemoveFromCvButtons() {
-        $(".removeFromCvEmploymentHistory").on("click",
+        $(".removeFromCvEducation").on("click",
             function() {
-                const employmentHistoryId = $(this).data("id");
-                removeEmploymentHistoryFromCv(employmentHistoryId);
+                const educationId = $(this).data("id");
+                removeEducationFromCv(educationId);
             });
     }
 

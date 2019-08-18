@@ -12,7 +12,7 @@
         if (isNaN(employmentHistoryId)) {
             window.Swal.fire({
                 title: "Błąd!",
-                text: "Musisz wybrać wykształcenie do dodania!",
+                text: "Musisz wybrać doświadczenie do dodania!",
                 type: "error",
                 heightAuto: false
             });
@@ -33,7 +33,7 @@
             error: function () {
                 window.Swal.fire({
                     title: "Błąd!",
-                    text: "Dodawanie wykształcenia nie powiodło się!",
+                    text: "Dodawanie doświadczenia nie powiodło się!",
                     type: "error",
                     heightAuto: false
                 });
@@ -49,7 +49,7 @@
         if (isNaN(employmentHistoryId)) {
             window.Swal.fire({
                 title: "Błąd!",
-                text: "Musisz wybrać wykształcenie do dodania!",
+                text: "Musisz wybrać doświadczenie do dodania!",
                 type: "error",
                 heightAuto: false
             });
@@ -70,7 +70,7 @@
             error: function () {
                 window.Swal.fire({
                     title: "Błąd!",
-                    text: "Usuwanie wykształcenia nie powiodło się!",
+                    text: "Usuwanie doświadczenia nie powiodło się!",
                     type: "error",
                     heightAuto: false
                 });
@@ -171,8 +171,8 @@
 
     function initDropDownList() {
         $("#AddEmploymentHistoryToCvDropDownList").kendoDropDownList({
-            optionLabel: "Wybierz wykształcenie do dodania...",
-            noDataTemplate: "Brak wykształcenia do dodania",
+            optionLabel: "Wybierz doświadczenie do dodania...",
+            noDataTemplate: "Brak doświadczenia do dodania",
             dataTextField: "CompanyName",
             dataValueField: "EmploymentHistoryId",
             dataSource: {
