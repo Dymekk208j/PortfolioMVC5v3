@@ -76,7 +76,8 @@ function initGrid() {
         {
             field: "Blocked",
             title: "Zablokowany",
-            template: '<input type="checkbox" #= Blocked ? "checked=checked" : "" # disabled="disabled" ></input>'
+            template: '<input class="k-checkbox" id="checkbox#:UserName#" type="checkbox" #= Blocked ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkbox#:UserName#"></label>'
         },
         {
             field: "Id",

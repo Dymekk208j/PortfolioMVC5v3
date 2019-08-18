@@ -86,7 +86,8 @@ function initGrid() {
         {
             field: "ShowInCv",
             title: "Pokazuj w CV",
-            template: '<input type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>',
+            template: '<input class="k-checkbox" id="checkbox#:ExtraInformationId#" type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkbox#:ExtraInformationId#"></label>',
             width: 150
         },
         {

@@ -12,9 +12,9 @@ namespace PortfolioMVC5v3
                 "~/Content/regular.css",
                 "~/Content/solid.css",
                 "~/Content/brands.css",
-                "~/Content/admin/kendo.common.min.css",
-                "~/Content/admin/kendo.moonlight.mobile.min.css",
-                "~/Content/admin/kendo.moonlight.min.css"
+                "~/Content/kendo.common-material.min.css",
+                "~/Content/kendo.material.min.css",
+                "~/Content/kendo.material.mobile.min.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -51,6 +51,17 @@ namespace PortfolioMVC5v3
               "~/Scripts/Kendo/kendo.messages.pl-PL.min.js",
               "~/Scripts/sweetalert2@8.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/cvManagementScripts").Include(
+                "~/Scripts/admin/Cv/CommercialProjectsPartialViewScripts.js",
+                "~/Scripts/admin/Cv/NotCommercialProjectsPartialViewScripts.js",
+                "~/Scripts/admin/Cv/TechnologiesPartialViewScripts.js",
+                "~/Scripts/admin/Cv/AchievementsPartialViewScripts.js",
+                "~/Scripts/admin/Cv/EmploymentHistoriesPartialViewScripts.js",
+                "~/Scripts/admin/Cv/EducationsPartialViewScripts.js",
+                "~/Scripts/admin/Cv/ExtraInformationPartialViewScripts.js"
+            ));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-{version}.js"));

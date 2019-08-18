@@ -89,13 +89,15 @@ function initGrid() {
         {
             field: "CurrentPlaceOfEmployment",
             title: "Aktualne miejsce pracy",
-            template: '<input type="checkbox" #= CurrentPlaceOfEmployment ? "checked=checked" : "" # disabled="disabled" ></input>',
+            template: '<input class="k-checkbox" id="checkbox#:EmploymentHistoryId#" type="checkbox" #= CurrentPlaceOfEmployment ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkbox#:EmploymentHistoryId#"></label>',
             width: 150
         },
         {
             field: "ShowInCv",
             title: "Pokazuj w CV",
-            template: '<input type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>',
+            template: '<input class="k-checkbox" id="checkboxB#:EmploymentHistoryId#" type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkboxB#:EmploymentHistoryId#"></label>',
             width: 150
         },
         {

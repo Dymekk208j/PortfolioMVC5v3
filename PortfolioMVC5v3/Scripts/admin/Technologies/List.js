@@ -89,14 +89,16 @@ function initGrid() {
         }, {
             field: "ShowInAboutMePage",
             title: "Pokazuj w o mnie",
-            template: '<input type="checkbox" #= ShowInAboutMePage ? "checked=checked" : "" # disabled="disabled" ></input>',
+                template: '<input class="k-checkbox" id="checkbox#:TechnologyId#" type="checkbox" #= ShowInAboutMePage ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkbox#:TechnologyId#"></label>',
             width: 130
 
         },
         {
             field: "ShowInCv",
             title: "Pokazuj w CV",
-            template: '<input type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>',
+            template: '<input class="k-checkbox" id="checkboxB#:TechnologyId#" type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkboxB#:TechnologyId#"></label>',
             width: 130
         },
         {

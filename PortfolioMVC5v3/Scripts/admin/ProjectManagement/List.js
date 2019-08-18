@@ -105,13 +105,15 @@ function initGrid() {
         {
             field: "Commercial",
             title: "Projekt komercyjny",
-            template: '<input type="checkbox" #= Commercial ? "checked=checked" : "" # disabled="disabled" ></input>',
+            template: '<input class="k-checkbox" id="checkbox#:ProjectId#" type="checkbox" #= Commercial ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkbox#:ProjectId#"></label>',
             width: 170
         },
         {
             field: "ShowInCv",
             title: "Pokazuj w CV",
-            template: '<input type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>',
+            template: '<input class="k-checkbox" id="checkboxB#:ProjectId#" type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkboxB#:ProjectId#"></label>',
             width: 150
         },
         {

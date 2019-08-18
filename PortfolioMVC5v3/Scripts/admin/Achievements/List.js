@@ -83,9 +83,13 @@ function initGrid() {
         {
             field: "ShowInCv",
             title: "Pokazuj w CV",
-            template: '<input type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>',
+            template: '<input class="k-checkbox" id="checkbox#:AchievementId#" type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>' +
+            '<label class="k-checkbox-label" for="checkbox#:AchievementId#"></label>',
             width: 150
-        },
+            },
+
+        //    <input type="checkbox" id="eq1" class="k-checkbox" checked="checked">
+        //<label class="k-checkbox-label" for="eq1">Rear side airbags</label>
         {
             field: "AchievementId",
             title: "Akcje",

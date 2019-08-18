@@ -93,21 +93,20 @@ function initGrid() {
         {
             field: "CurrentPlaceOfEducation",
             title: "Aktualne miejsce nauki",
-            template: '<input type="checkbox" #= CurrentPlaceOfEducation ? "checked=checked" : "" # disabled="disabled" ></input>',
-            width: 150
+            template: '<input class="k-checkbox" id="checkbox#:EducationId#" type="checkbox" #= CurrentPlaceOfEducation ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkbox#:EducationId#"></label>'
         },
         {
             field: "ShowInCv",
             title: "Pokazuj w CV",
-            template: '<input type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>',
-            width: 150
+            template: '<input class="k-checkbox" id="checkboxB#:EducationId#" type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>' +
+                '<label class="k-checkbox-label" for="checkboxB#:EducationId#"></label>'
         },
         {
             field: "EducationId",
             title: "Akcje",
             template: '<button name="EditEducationBtn" class="btn btn-sm btn-primary mr-2" data-id="#=EducationId#"><i class="far fa-edit mr-2"></i>Edytuj</button> ' +
                 '<button name="RemoveEducationBtn" class="btn btn-sm btn-danger" data-id="#=EducationId#"><i class="fas fa-trash-alt mr-2"></i>Usuń</button>',
-            width: 200
         }]
     });
 }

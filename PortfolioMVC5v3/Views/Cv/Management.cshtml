@@ -132,15 +132,5 @@
 
 @section scripts
 {
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.common-material.min.css" />
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.material.min.css" />
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.619/styles/kendo.material.mobile.min.css" />
-
-    <script src="~/Scripts/admin/Cv/CommercialProjectsPartialViewScripts.js"></script>
-    <script src="~/Scripts/admin/Cv/NotCommercialProjectsPartialViewScripts.js"></script>
-    <script src="~/Scripts/admin/Cv/TechnologiesPartialViewScripts.js"></script>
-    <script src="~/Scripts/admin/Cv/AchievementsPartialViewScripts.js"></script>
-    <script src="~/Scripts/admin/Cv/EmploymentHistoriesPartialViewScripts.js"></script>
-    <script src="~/Scripts/admin/Cv/EducationsPartialViewScripts.js"></script>
-    <script src="~/Scripts/admin/Cv/ExtraInformationPartialViewScripts.js"></script>
+    @Scripts.Render("~/bundles/cvManagementScripts")
 }
