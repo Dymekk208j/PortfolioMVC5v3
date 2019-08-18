@@ -71,7 +71,7 @@ body { background: #e8e8e8; }
 	text-align: center;
 }
 .pages li {
-	display: inline-block;
+    display: inline-block;
 	width: 14px;
 	height: 14px;
 	margin: 0 4px;
@@ -80,8 +80,10 @@ body { background: #e8e8e8; }
 	cursor: pointer;
 	overflow: hidden;
 	background: #fff;
-	box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+    box-shadow: inset 0 0 0 1px #000000;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
 }
+
 .pages li:hover {
 	background: #aaa;
 }

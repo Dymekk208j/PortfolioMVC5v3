@@ -14,7 +14,7 @@
     <div class="content contact-content">
         <div class="container-fluid">
             <div class="col-md-12">
-                <form id="contact" action="" method="post">
+                <form id="contact" action="@Url.Action("SendEmail")" method="post">
                     <div class="row">
                         <div class="col-md-12">
                             <fieldset>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-12">
                             <fieldset>
-                                <button type="submit" id="form-submit" class="btn">Wyślij</button>
+                                <button type="button" id="form-submit" class="btn" onclick="sent()">Wyślij</button>
                             </fieldset>
                         </div>
                     </div>
@@ -67,3 +67,28 @@
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    <script src="~/Scripts/sweetalert2@8.js"></script>
+    <script>
+        function sent() {
+            $.ajax({
+                type: "POST",
+                url: `/Contact/SendEmail/`,
+                data: {
+                    name: $("#name").val(),
+                    email: $("#email").val(),
+                    subject: $("#subject").val(),
+                    message: $("#message").val()
+                },
+                success: function () {
+                    Swal.fire("Wiadomość wysłana!", "Dziękujemy za kontakt", "success").then(() => {
+                        location.reload();
+                    });
+
+                }
+            });
+        }
+    </script>
+}

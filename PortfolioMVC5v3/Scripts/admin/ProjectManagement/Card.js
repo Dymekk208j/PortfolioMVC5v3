@@ -166,7 +166,7 @@ function createOrUpdateProject() {
 
         // Add the uploaded file to the form data collection  
         if (files.length > 0) {
-            for (f = 0; f < files.length; f++) {
+            for (var f = 0; f < files.length; f++) {
                 data.append("UploadedImage", files[f]);
             }
         }

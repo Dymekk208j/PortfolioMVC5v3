@@ -3,10 +3,10 @@
  *  License - http://zavoloklom.github.io/material-design-iconic-font/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 @font-face {
-  font-family: 'Material-Design-Iconic-Font';
-  src: url('..//fonts/Material-Design-Iconic-Font.woff2?v=2.2.0') format('woff2'), url('..//fonts/Material-Design-Iconic-Font.woff?v=2.2.0') format('woff'), url('..//fonts/Material-Design-Iconic-Font.ttf?v=2.2.0') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Material-Design-Iconic-Font';
+    src: url('../fonts/Material-Design-Iconic-Font.woff2') format('woff2'), url('../fonts/Material-Design-Iconic-Font.woff?v=2.2.0') format('woff'), url('../fonts/Material-Design-Iconic-Font.ttf?v=2.2.0') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 .zmdi {
   display: inline-block;
@@ -82,10 +82,10 @@
           animation: zmdi-spin-reverse 1.5s infinite linear;
 }
 @-webkit-keyframes zmdi-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
   100% {
     -webkit-transform: rotate(359deg);
             transform: rotate(359deg);
@@ -93,8 +93,8 @@
 }
 @keyframes zmdi-spin {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
   }
   100% {
     -webkit-transform: rotate(359deg);
@@ -103,8 +103,8 @@
 }
 @-webkit-keyframes zmdi-spin-reverse {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
   }
   100% {
     -webkit-transform: rotate(-359deg);
@@ -113,8 +113,8 @@
 }
 @keyframes zmdi-spin-reverse {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
   }
   100% {
     -webkit-transform: rotate(-359deg);

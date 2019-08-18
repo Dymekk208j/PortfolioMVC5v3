@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'weathericons';
-  src: url('..//fonts/weathericons-regular-webfont.eot');
-  src: url('..//fonts/weathericons-regular-webfont.eot?#iefix') format('embedded-opentype'), url('..//fonts/weathericons-regular-webfont.woff2') format('woff2'), url('..//fonts/weathericons-regular-webfont.woff') format('woff'), url('..//fonts/weathericons-regular-webfont.ttf') format('truetype'), url('..//fonts/weathericons-regular-webfont.svg#weather_iconsregular') format('svg');
+  src: url('../fonts/weathericons-regular-webfont.eot');
+  src: url('../fonts/weathericons-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/weathericons-regular-webfont.woff2') format('woff2'), url('../fonts/weathericons-regular-webfont.woff') format('woff'), url('../fonts/weathericons-regular-webfont.ttf') format('truetype'), url('../fonts/weathericons-regular-webfont.svg#weather_iconsregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -52,11 +52,11 @@
   content: "\f0b1";
 }
 .wi-wind.towards-0-deg {
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -ms-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
+  -webkit-transform: rotate(0);
+  -moz-transform: rotate(0);
+  -ms-transform: rotate(0);
+  -o-transform: rotate(0);
+  transform: rotate(0);
 }
 .wi-wind.towards-1-deg {
   -webkit-transform: rotate(1deg);
@@ -2572,11 +2572,11 @@
   transform: rotate(359deg);
 }
 .wi-wind.towards-360-deg {
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -ms-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
+  -webkit-transform: rotate(0);
+  -moz-transform: rotate(0);
+  -ms-transform: rotate(0);
+  -o-transform: rotate(0);
+  transform: rotate(0);
 }
 .wi-wind.from-0-deg {
   -webkit-transform: rotate(180deg);
@@ -3839,11 +3839,11 @@
   transform: rotate(359deg);
 }
 .wi-wind.from-180-deg {
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -ms-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
+  -webkit-transform: rotate(0);
+  -moz-transform: rotate(0);
+  -ms-transform: rotate(0);
+  -o-transform: rotate(0);
+  transform: rotate(0);
 }
 .wi-wind.from-181-deg {
   -webkit-transform: rotate(1deg);
@@ -5106,11 +5106,11 @@
   transform: rotate(180deg);
 }
 .wi-towards-n {
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -ms-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
+  -webkit-transform: rotate(0);
+  -moz-transform: rotate(0);
+  -ms-transform: rotate(0);
+  -o-transform: rotate(0);
+  transform: rotate(0);
 }
 .wi-towards-nne {
   -webkit-transform: rotate(23deg);
@@ -5274,11 +5274,11 @@
   transform: rotate(338deg);
 }
 .wi-from-s {
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -ms-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
+  -webkit-transform: rotate(0);
+  -moz-transform: rotate(0);
+  -ms-transform: rotate(0);
+  -o-transform: rotate(0);
+  transform: rotate(0);
 }
 .wi-from-ssw {
   -webkit-transform: rotate(23deg);

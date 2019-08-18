@@ -44,7 +44,7 @@
                                 <div class="col-md-10">
                                     <div class="left-content @(i%2 == 0 ? "right-content" : "left-content")">
                                         <h2 class="mb-1">@project.Title</h2>
-                                        @if (project?.Technologies?.Count > 0)
+                                        @if (project.Technologies?.Count > 0)
                                         {
                                             <div style="color:white" class="mb-1">
                                                 <b class="mr-2">Technologie:</b> <em>@string.Join(", ", project.Technologies.Take(3).Select(a => a.Name))...</em>
