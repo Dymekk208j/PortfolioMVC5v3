@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
 
@@ -56,6 +57,41 @@ namespace PortfolioMVC5v3.Controllers
             else result = await _employmentHistoryLogic.InsertEmploymentHistory(employmentHistory) > 0;
 
             return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+        
+        public async Task<ActionResult> ReorderEmploymentHistoriesPositionsInCv(int oldPositionEmploymentHistoryId, int newPositionEmploymentHistoryId)
+        {
+            var result = await _employmentHistoryLogic.ReorderEmploymentHistoriesPositionsInCv(oldPositionEmploymentHistoryId, newPositionEmploymentHistoryId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> AddEmploymentHistoryToCv(int employmentHistoryId)
+        {
+            var result = await _employmentHistoryLogic.AddEmploymentHistoryToCv(employmentHistoryId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> RemoveEmploymentHistoryFromCv(int employmentHistoryId)
+        {
+            var result = await _employmentHistoryLogic.RemoveEmploymentHistoryFromCv(employmentHistoryId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<string> GetEmploymentHistoriesToShowInCv()
+        {
+            var employmentHistories = await _employmentHistoryLogic.GetEmploymentHistoriesToShowInCvAsync();
+
+            return JsonConvert.SerializeObject(employmentHistories);
+        }
+
+        public async Task<string> GetEmploymentHistoriesNotShownInCv()
+        {
+            var employmentHistories = await _employmentHistoryLogic.GetEmploymentHistoriesNotShowInCvAsync();
+
+            return JsonConvert.SerializeObject(employmentHistories);
         }
     }
 }

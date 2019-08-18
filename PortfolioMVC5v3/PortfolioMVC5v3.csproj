@@ -420,6 +420,8 @@
     <Content Include="Scripts\admin\Account\List.js" />
     <Content Include="Scripts\admin\Achievements\Card.js" />
     <Content Include="Scripts\admin\Achievements\List.js" />
+    <Content Include="Scripts\admin\Cv\EducationsPartialViewScripts.js" />
+    <Content Include="Scripts\admin\Cv\EmploymentHistoriesPartialViewScripts.js" />
     <Content Include="Scripts\admin\Cv\AchievementsPartialViewScripts.js" />
     <Content Include="Scripts\admin\Cv\TechnologiesPartialViewScripts.js" />
     <Content Include="Scripts\admin\Cv\NotCommercialProjectsPartialViewScripts.js" />
@@ -743,6 +745,8 @@
     <Content Include="Views\Cv\_NotCommercialProjectsManagementPartialView.cshtml" />
     <Content Include="Views\Cv\_TechnologiesManagementPartialView.cshtml" />
     <Content Include="Views\Cv\_AchievementsManagementPartialView.cshtml" />
+    <Content Include="Views\Cv\_EmploymentHistoriesManagementPartialView.cshtml" />
+    <Content Include="Views\Cv\_EducationsManagementPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

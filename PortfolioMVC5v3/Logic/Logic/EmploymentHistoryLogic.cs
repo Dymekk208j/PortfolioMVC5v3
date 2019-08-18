@@ -44,5 +44,25 @@ namespace PortfolioMVC5v3.Logic.Logic
         {
             return _repository.GetEmploymentHistoriesToShowInCvAsync();
         }
+
+        public Task<bool> ReorderEmploymentHistoriesPositionsInCv(int oldPositionEmploymentHistoryId, int newPositionEmploymentHistoryId)
+        {
+            return _repository.ReorderEmploymentHistoriesPositionsInCv(oldPositionEmploymentHistoryId, newPositionEmploymentHistoryId);
+        }
+
+        public Task<bool> AddEmploymentHistoryToCv(int employmentHistoryId)
+        {
+            return _repository.SetEmploymentHistoryShowInCvState(true, employmentHistoryId);
+        }
+
+        public Task<bool> RemoveEmploymentHistoryFromCv(int employmentHistoryId)
+        {
+            return _repository.SetEmploymentHistoryShowInCvState(false, employmentHistoryId);
+        }
+
+        public Task<object> GetEmploymentHistoriesNotShowInCvAsync()
+        {
+            return _repository.GetEmploymentHistoriesNotShowInCvAsync();
+        }
     }
 }

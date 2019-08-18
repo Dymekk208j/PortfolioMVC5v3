@@ -32,7 +32,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append("FROM ");
             query.Append($"{TableName} ");
 
-            query.Append("ORDER BY [StartDate] DESC");
+            query.Append("ORDER BY PositionInCv, [StartDate] DESC");
 
             try
             {
@@ -114,7 +114,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(query.ToString(),
+                    var employmentHistoryId = await connection.QueryFirstAsync<int>(query.ToString(),
                         new
                         {
                             employmentHistory.CompanyName,
@@ -126,7 +126,10 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                             employmentHistory.ShowInCv
                         });
 
-                    return result;
+                    string updateQuery = $"UPDATE {TableName} SET [PositionInCv] = {employmentHistoryId} WHERE [EmploymentHistoryId] = {employmentHistoryId}";
+                    await connection.ExecuteAsync(updateQuery);
+
+                    return employmentHistoryId;
                 }
             }
             catch (Exception e)
@@ -226,7 +229,102 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append("WHERE ");
             query.Append("[ShowInCv] = 1 ");
 
-            query.Append("ORDER BY [StartDate] DESC");
+            query.Append("ORDER BY PositionInCv, [StartDate] DESC");
+
+            try
+            {
+
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var resultEnumerable = await connection.QueryAsync<EmploymentHistory>(query.ToString());
+
+                    return resultEnumerable.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return new List<EmploymentHistory>();
+        }
+
+        public async Task<bool> ReorderEmploymentHistoriesPositionsInCv(int oldPositionEmploymentHistoryId, int newPositionEmploymentHistoryId)
+        {
+            StringBuilder query = new StringBuilder();
+
+            query.Append($"DECLARE @oldPositionId int = {oldPositionEmploymentHistoryId} ");
+            query.Append($"DECLARE @newPositionId int = {newPositionEmploymentHistoryId} ");
+            query.Append("DECLARE @oldPosition int ");
+            query.Append("DECLARE @newPosition int ");
+            query.Append($"SELECT @oldPosition = [PositionInCv] FROM {TableName} WHERE EmploymentHistoryId = @oldPositionId ");
+            query.Append($"SELECT @newPosition = [PositionInCv] FROM {TableName} WHERE EmploymentHistoryId = @newPositionId ");
+            query.Append("IF @oldPosition < @newPosition ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] - 1 WHERE [PositionInCv] <= @newPosition ");
+            query.Append("END ELSE ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] + 1 WHERE [PositionInCv] >= @newPosition ");
+            query.Append("END ");
+            query.Append($"UPDATE {TableName} SET [PositionInCV] = @newPosition WHERE EmploymentHistoryId = @oldPositionId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString());
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<bool> SetEmploymentHistoryShowInCvState(bool state, int employmentHistoryId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE ");
+            query.Append($"{TableName} ");
+
+            query.Append("SET ");
+            query.Append("[ShowInCv] = @state ");
+
+            query.Append("WHERE ");
+            query.Append("[EmploymentHistoryId] = @employmentHistoryId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { state, employmentHistoryId });
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<object> GetEmploymentHistoriesNotShowInCvAsync()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT ");
+            query.Append(" *  ");
+
+            query.Append("FROM ");
+            query.Append($"{TableName} ");
+
+            query.Append("WHERE ");
+            query.Append("[ShowInCv] = 0 ");
+
+            query.Append("ORDER BY PositionInCv, [StartDate] DESC");
 
             try
             {

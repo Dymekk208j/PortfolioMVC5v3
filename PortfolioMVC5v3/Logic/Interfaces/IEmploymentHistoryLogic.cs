@@ -12,5 +12,9 @@ namespace PortfolioMVC5v3.Logic.Interfaces
         Task<bool> UpdateEmploymentHistory(EmploymentHistory employmentHistory);
         Task<bool> RemoveEmploymentHistory(int employmentHistoryId);
         Task<List<EmploymentHistory>> GetEmploymentHistoriesToShowInCvAsync();
+        Task<bool> ReorderEmploymentHistoriesPositionsInCv(int oldPositionEmploymentHistoryId, int newPositionEmploymentHistoryId);
+        Task<bool> AddEmploymentHistoryToCv(int employmentHistoryId);
+        Task<bool> RemoveEmploymentHistoryFromCv(int employmentHistoryId);
+        Task<object> GetEmploymentHistoriesNotShowInCvAsync();
     }
 }

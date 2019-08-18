@@ -265,7 +265,6 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             }
 
             return false;
-
         }
 
         public async Task<List<Achievement>> GetAchievementsNotShowInCvAsync()
