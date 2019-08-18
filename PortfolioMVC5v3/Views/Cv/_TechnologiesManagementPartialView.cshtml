@@ -1,0 +1,71 @@
+﻿<script id="TechnologiesRowTemplate" type="text/x-kendo-template">
+
+    <tr data-uid="#= uid #">
+        <td colspan="2">
+            <button class="btn btn-outline-danger float-right p-0 m-0 outlineRemoveBtn removeFromCvTechnology" data-id="#:TechnologyId#"><i class="fas fa-trash-alt"></i></button>
+            <strong>[#: TechnologyId#]: #: Name #</strong>
+        </td>
+    </tr>
+</script>
+
+<div class="row mt-3">
+    <div class="col-3 text-left">
+        <div class="row">
+            <div class="col-12">
+                <h6>Technologie</h6>
+            </div>
+            <div class="col-12">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#AddTechnologyToCvModal">
+                    <i class="far fa-plus-square mr-2"></i> Dodaj
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-9 text-left">
+        <div class="row">
+            <div class="col-12">
+                <h6>Bardzo dobra znajomość:</h6>
+                <div id="VeryWellKnowTechnologiesGrid"></div>
+            </div>
+            <div class="col-12 mt-2">
+                <h6>Dobra znajomość:</h6>
+                <div id="WellKnowTechnologiesGrid"></div>
+            </div>
+            <div class="col-12 mt-2">
+                <h6>Znajomość podstaw:</h6>
+                <div id="KnowTechnologiesGrid"></div>
+            </div>
+            @*
+            <div class="col-12">
+                @if (Model?.Count(t => t.KnowledgeLevel == 2 || t.KnowledgeLevel == 1) > 0)
+                {
+                    @: <b>Znajomość podstaw:</b> <i>@string.Join(", ", Model.Where(t => t.KnowledgeLevel == 2 || t.KnowledgeLevel == 1).Select(a => a.Name))</i>
+                }
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="AddTechnologyToCvModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Dodaj technologie do CV</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <input id="AddTechnologyToCvDropDownList" style="width: 100%;" />
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Zamknij</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="AddTechnologyToCvBtn">Dodaj</button>
+            </div>
+
+        </div>
+    </div>
+</div>

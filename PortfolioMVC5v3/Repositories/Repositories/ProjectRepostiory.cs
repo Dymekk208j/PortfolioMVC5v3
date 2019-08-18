@@ -321,12 +321,20 @@ namespace PortfolioMVC5v3.Repositories.Repositories
         {
             StringBuilder query = new StringBuilder();
 
+            query.Append($"DECLARE @oldPositionId int = {oldPositionProjectId} ");
+            query.Append($"DECLARE @newPositionId int = {newPositionProjectId} ");
             query.Append("DECLARE @oldPosition int ");
             query.Append("DECLARE @newPosition int ");
-            query.Append($"SELECT @oldPosition = [PositionInCv] FROM Projects WHERE ProjectId = {oldPositionProjectId} ");
-            query.Append($"SELECT @newPosition = [PositionInCv] FROM Projects WHERE ProjectId = {newPositionProjectId} ");
-            query.Append("UPDATE Projects SET [PositionInCv] = [PositionInCv] + 1 WHERE [PositionInCv] >= @newPosition ");
-            query.Append($"UPDATE Projects SET [PositionInCV] = @newPosition WHERE ProjectId = {oldPositionProjectId} ");
+            query.Append($"SELECT @oldPosition = [PositionInCv] FROM {TableName} WHERE ProjectId = @oldPositionId ");
+            query.Append($"SELECT @newPosition = [PositionInCv] FROM {TableName} WHERE ProjectId = @newPositionId ");
+            query.Append("IF @oldPosition < @newPosition ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] - 1 WHERE [PositionInCv] <= @newPosition ");
+            query.Append("END ELSE ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] + 1 WHERE [PositionInCv] >= @newPosition ");
+            query.Append("END ");
+            query.Append($"UPDATE {TableName} SET [PositionInCV] = @newPosition WHERE ProjectId = @oldPositionId ");
 
             try
             {

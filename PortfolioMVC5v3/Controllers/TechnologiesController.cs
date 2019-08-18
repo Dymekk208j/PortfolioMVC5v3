@@ -1,7 +1,9 @@
-﻿using PortfolioMVC5v3.Logic.Interfaces;
+﻿using System.Linq;
+using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace PortfolioMVC5v3.Controllers
 {
@@ -53,5 +55,57 @@ namespace PortfolioMVC5v3.Controllers
             return new HttpStatusCodeResult(result ? 200 : 500);
         }
 
+        public async Task<string> GetTechnologiesNotShownInCv()
+        {
+            var technologies = await _technologyLogic.GetAllTechnologiesListAsync();
+            technologies = technologies.Where(t => t.ShowInCv == false).ToList();
+
+            return JsonConvert.SerializeObject(technologies);
+        }
+
+        public async Task<string> GetVeryWellKnowTechnologies()
+        {
+            var technologies = await _technologyLogic.GetTechnologiesToShowInCv();
+            technologies = technologies.Where(t => t.KnowledgeLevel == 5 || t.KnowledgeLevel == 4).ToList();
+
+            return JsonConvert.SerializeObject(technologies);
+        }
+
+        public async Task<string> GetWellKnowTechnologies()
+        {
+            var technologies = await _technologyLogic.GetTechnologiesToShowInCv();
+            technologies = technologies.Where(t => t.KnowledgeLevel == 3).ToList();
+
+            return JsonConvert.SerializeObject(technologies);
+        }
+
+        public async Task<string> GetKnowTechnologies()
+        {
+            var technologies = await _technologyLogic.GetTechnologiesToShowInCv();
+            technologies = technologies.Where(t => t.KnowledgeLevel == 2 || t.KnowledgeLevel == 1).ToList();
+
+            return JsonConvert.SerializeObject(technologies);
+        }
+
+        public async Task<ActionResult> ReorderTechnologiesPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            var result = await _technologyLogic.ReorderProjectsPositionsInCv(oldPositionProjectId, newPositionProjectId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> AddTechnologyToCv(int technologyId)
+        {
+            var result = await _technologyLogic.AddTechnologyToCv(technologyId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<ActionResult> RemoveTechnologyFromCv(int technologyId)
+        {
+            var result = await _technologyLogic.RemoveTechnologyFromCv(technologyId);
+
+            return new HttpStatusCodeResult(result ? 200 : 500);
+        }
     }
 }

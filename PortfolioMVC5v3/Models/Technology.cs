@@ -10,5 +10,6 @@
 
         public bool ShowInCv { get; set; }
         public bool ShowInAboutMePage { get; set; }
+        public int PositionInCv { get; set; }
     }
 }

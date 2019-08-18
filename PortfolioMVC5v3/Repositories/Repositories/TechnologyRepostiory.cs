@@ -119,7 +119,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             return null;
         }
 
-        public async Task<List<Technology>> GetTechnologiesToShowInCv()
+        public async Task<List<Technology>> GetTechnologiesToShowInCv(bool show = true)
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT ");
@@ -129,17 +129,17 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             query.Append($"{TableName} ");
 
             query.Append("WHERE ");
-            query.Append("[ShowInCv] = 1 ");
+            query.Append("[ShowInCv] = @show ");
             
-            query.Append(" ORDER BY ");
-            query.Append("KnowledgeLevel DESC ");
+            query.Append("ORDER BY ");
+            query.Append("PositionInCV, KnowledgeLevel DESC ");
 
 
             try
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var resultEnumerable = await connection.QueryAsync<Technology>(query.ToString());
+                    var resultEnumerable = await connection.QueryAsync<Technology>(query.ToString(), new { show });
 
                     return resultEnumerable.ToList();
                 }
@@ -210,7 +210,7 @@ namespace PortfolioMVC5v3.Repositories.Repositories
             {
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(query.ToString(),
+                    var technologyId = await connection.QueryFirstAsync<int>(query.ToString(),
                         new
                         {
                             technology.KnowledgeLevel,
@@ -218,8 +218,10 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                             technology.ShowInCv,
                             technology.ShowInAboutMePage
                         });
+                    string updateQuery = $"UPDATE {TableName} SET [PositionInCv] = {technologyId} WHERE [TechnologyId] = {technologyId}";
+                    await connection.ExecuteAsync(updateQuery);
 
-                    return result;
+                    return technologyId;
                 }
             }
             catch (Exception e)
@@ -399,6 +401,70 @@ namespace PortfolioMVC5v3.Repositories.Repositories
                 using (IDbConnection connection = _manager.GetSqlConnection())
                 {
                     var result = await connection.ExecuteAsync(query.ToString(), new { technologyId, projectId });
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ReorderTechnologiesPositionsInCv(int oldPositionProjectId, int newPositionProjectId)
+        {
+            StringBuilder query = new StringBuilder();
+
+            query.Append($"DECLARE @oldPositionId int = {oldPositionProjectId} ");
+            query.Append($"DECLARE @newPositionId int = {newPositionProjectId} ");
+            query.Append("DECLARE @oldPosition int ");
+            query.Append("DECLARE @newPosition int ");
+            query.Append($"SELECT @oldPosition = [PositionInCv] FROM {TableName} WHERE TechnologyId = @oldPositionId ");
+            query.Append($"SELECT @newPosition = [PositionInCv] FROM {TableName} WHERE TechnologyId = @newPositionId ");
+            query.Append("IF @oldPosition < @newPosition ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] - 1 WHERE [PositionInCv] <= @newPosition ");
+            query.Append("END ELSE ");
+            query.Append("BEGIN ");
+            query.Append($"UPDATE {TableName} SET [PositionInCv] = [PositionInCv] + 1 WHERE [PositionInCv] >= @newPosition ");
+            query.Append("END ");
+            query.Append($"UPDATE {TableName} SET [PositionInCV] = @newPosition WHERE TechnologyId = @oldPositionId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString());
+                    return result > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> SetTechnologyShowInCvState(bool state, int technologyId)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE ");
+            query.Append($"{TableName} ");
+
+            query.Append("SET ");
+            query.Append("[ShowInCv] = @state ");
+
+            query.Append("WHERE ");
+            query.Append("[TechnologyId] = @technologyId ");
+
+            try
+            {
+                using (IDbConnection connection = _manager.GetSqlConnection())
+                {
+                    var result = await connection.ExecuteAsync(query.ToString(), new { state, technologyId });
                     return result > 0;
                 }
             }
