@@ -1,4 +1,5 @@
-﻿using PortfolioMVC5v3.Logic.Interfaces;
+﻿using Newtonsoft.Json;
+using PortfolioMVC5v3.Logic.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -38,6 +39,12 @@ namespace PortfolioMVC5v3.Controllers
             var result = await _iconLogic.RemoveIconAsync(id);
 
             return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<string> GetIcons()
+        {
+            var icons = await _iconLogic.GetAllIcons();
+            return JsonConvert.SerializeObject(icons);
         }
 
     }

@@ -12,14 +12,16 @@ namespace PortfolioMVC5v3.Logic.Logic
     {
         private readonly IProjectRepository _projectRepository;
         private readonly ITechnologyLogic _technologyLogic;
+        private readonly IIconLogic _iconLogic;
         private readonly IMapper _mapper;
 
 
-        public ProjectLogic(IProjectRepository projectRepository, ITechnologyLogic technologyLogic, IMapper mapper)
+        public ProjectLogic(IProjectRepository projectRepository, ITechnologyLogic technologyLogic, IMapper mapper, IIconLogic iconLogic)
         {
             _projectRepository = projectRepository;
             _technologyLogic = technologyLogic;
             _mapper = mapper;
+            _iconLogic = iconLogic;
         }
 
         public async Task<List<Project>> GetProjectsList(bool? showInCvProjects = null, bool? tempProjects = null)
@@ -29,6 +31,26 @@ namespace PortfolioMVC5v3.Logic.Logic
             return projects;
         }
 
+        public async Task<List<ProjectViewModel>> GetProjectsViewModelList(bool? showInCvProjects = null, bool? tempProjects = null)
+        {
+            var result = new List<ProjectViewModel>();
+            var projects = await _projectRepository.GetProjectsList(showInCvProjects, tempProjects);
+            foreach (var project in projects)
+            {
+                var projectViewModel = _mapper.Map<Project, ProjectViewModel>(project);
+                projectViewModel.Technologies = await _technologyLogic.GetProjectTechnologiesListAsync(project.ProjectId);
+                projectViewModel.Images = await _projectRepository.GetProjectScreenShoots(project.ProjectId);
+                if (project.IconId > 0)
+                {
+                    projectViewModel.Icon = await _iconLogic.GetIconAsync(project.IconId);
+                }
+                else projectViewModel.Icon = new Icon();
+
+                result.Add(projectViewModel);
+            }
+            return result;
+        }
+
         public async Task<ProjectViewModel> GetProject(int projectId)
         {
             var project = await _projectRepository.GetProject(projectId);
@@ -36,6 +58,8 @@ namespace PortfolioMVC5v3.Logic.Logic
 
             projectViewModel.Technologies = await _technologyLogic.GetProjectTechnologiesListAsync(project.ProjectId);
             projectViewModel.Images = await _projectRepository.GetProjectScreenShoots(projectId);
+            if (project.IconId > 0) projectViewModel.Icon = await _iconLogic.GetIconAsync(project.IconId);
+
             return projectViewModel;
         }
 

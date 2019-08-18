@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Project>
+﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.ViewModels.ProjectViewModel>
 
 @{
     ViewBag.Title = "Projekty";
@@ -22,20 +22,34 @@
                     int i = 0;
                     foreach (var project in Model)
                     {
+
+                        var iconSrc = "/Assets/img/Icons/Placeholder.png";
+                        if (project.Icon?.IconId > 0)
+                        {
+                            iconSrc = $"/Assets/Icons/{project.Icon.Guid}{project.Icon.FileName}";
+                        }
+
+
                         <div>
                             <div class="row mb-5">
                                 @if (i % 2 == 0)
                                 {
                                     <div class="col-md-2">
                                         <div class="left-image">
-                                            <img src="../../Assets\img\technologies\Csharp.png" alt="csharp" />
+                                            <img src="@iconSrc" alt="projectIcon" />
                                         </div>
                                     </div>
                                 }
 
                                 <div class="col-md-10">
                                     <div class="left-content @(i%2 == 0 ? "right-content" : "left-content")">
-                                        <h2>@project.Title</h2>
+                                        <h2 class="mb-1">@project.Title</h2>
+                                        @if (project?.Technologies?.Count > 0)
+                                        {
+                                            <div style="color:white" class="mb-1">
+                                                <b class="mr-2">Technologie:</b> <em>@string.Join(", ", project.Technologies.Take(3).Select(a => a.Name))...</em>
+                                            </div>
+                                        }
                                         <p>
                                             @project.ShortDescription
                                         </p>
@@ -49,7 +63,7 @@
                                 {
                                     <div class="col-md-2">
                                         <div class="right-image">
-                                            <img src="../../Assets\img\technologies\Cpp.png" alt="Cpp" />
+                                            <img src="@iconSrc" alt="ProjectIcon" />
                                         </div>
                                     </div>
                                 }

@@ -8,9 +8,71 @@
 @section AdditionalCss
 {
     <link href="~/Content/file-upload-with-preview.min.css" rel="stylesheet" />
+    <style>
+        #listView {
+            padding: 10px 5px;
+            margin-bottom: -1px;
+            min-height: 510px;
+            font: inherit;
+        }
+        .projectIcon {
+            float: left;
+            position: relative;
+            width: 111px;
+            height: 170px;
+            margin: 0 5px;
+            padding: 0;
+        }
+        .projectIcon img {
+            width: 110px;
+            height: 110px;
+        }
+        .projectIcon h3 {
+            margin: 0;
+            padding: 3px 5px 0 0;
+            max-width: 96px;
+            overflow: hidden;
+            line-height: 1.1em;
+            font-size: .9em;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: #999;
+        }
+        .projectIcon p {
+            visibility: hidden;
+        }
+        .projectIcon:hover p {
+            visibility: visible;
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            line-height: 110px;
+            vertical-align: middle;
+            text-align: center;
+            color: #fff;
+            background-color: #000000;
+            background-color: rgba(0,0,0,0.75);
+            -moz-transition: background .2s linear, color .2s linear;
+            -webkit-transition: background .2s linear, color .2s linear;
+            -o-transition: background .2s linear, color .2s linear;
+            transition: background .2s linear, color .2s linear;
+        }
+
+        .k-listview:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+    </style>
 }
 
 @Html.HiddenFor(m => m.ProjectId)
+@Html.HiddenFor(m => m.IconId)
 @Html.HiddenFor(m => m.AuthorId)
 
 <div class="row h-100">
@@ -60,31 +122,62 @@
 
                 <div class="row mt-2">
                     <div class="col-6">
-                        <div class="form-group">
-                            <label for="ShortDescription">Krótki opis</label>
-                            <textarea id="ShortDescription" name="ShortDescription" class="k-textbox w-100 p-2" rows="6">@Model.ShortDescription</textarea>
-                            <small id="ShortDescriptionHint" class="form-text text-muted">Skrócony opis projektu wyświetlany na podsumowaniu oraz w cv</small>
+                        <div class="row p-0 m-0">
+                            <div class="col-12 p-0 m-0">
+                                <div class="form-group">
+                                    <label for="ShortDescription">Krótki opis</label>
+                                    <textarea id="ShortDescription" name="ShortDescription" class="k-textbox w-100 p-2" rows="6">@Model.ShortDescription</textarea>
+                                    <small id="ShortDescriptionHint" class="form-text text-muted">Skrócony opis projektu wyświetlany na podsumowaniu oraz w cv</small>
+                                </div>
+                            </div>
                         </div>
-                        <h5>Opcje dodatkowe:</h5>
+                        <div class="row p-0 m-0">
+                            <div class="col-6 p-0 m-0">
+                                <h5>Opcje dodatkowe:</h5>
 
-                        <table>
-                            <tr>
-                                <th class="py-2">
-                                    <button type="button" id="AddScreenShots" class="btn btn-primary" data-toggle="modal" data-target="#ScreenShotsModal">
-                                        <i class="far fa-window-restore mr-2"></i>Otwórz
-                                    </button>
-                                </th>
-                                <th class="py-2"><label for="AddScreenShots" class="ml-3 pt-2">Dodaj zrzuty ekranu</label></th>
-                            </tr>
-                            <tr>
-                                <th class="py-2"><input id="ShowInCv" /></th>
-                                <th class="py-2"><label for="ShowInCv" class="ml-3 pt-2">Pokazuj w CV</label></th>
-                            </tr>
-                            <tr>
-                                <th class="py-2"><input id="Commercial" /></th>
-                                <th class="py-2"><label for="Commercial" class="ml-3 pt-2">Projekt komercyjny</label></th>
-                            </tr>
-                        </table>
+
+                                <table>
+                                    <tr>
+                                        <th class="py-2">
+                                            <button type="button" id="SelectIcon" class="btn btn-primary" data-toggle="modal" data-target="#SelectIconModal">
+                                                <i class="far fa-window-restore mr-2" style="width: 30px"></i>Wybierz
+                                            </button>
+                                        </th>
+                                        <th class="py-2"><label for="AddScreenShots" class="ml-3 pt-2">Ikona projektu</label></th>
+                                    </tr>
+                                    <tr>
+                                        <th class="py-2">
+                                            <button type="button" id="AddScreenShots" class="btn btn-primary" data-toggle="modal" data-target="#ScreenShotsModal">
+                                                <i class="far fa-window-restore mr-2" style="width: 35px"></i>Otwórz
+                                            </button>
+                                        </th>
+                                        <th class="py-2"><label for="AddScreenShots" class="ml-3 pt-2">Dodaj zrzuty ekranu</label></th>
+                                    </tr>
+                                    <tr>
+                                        <th class="py-2"><input id="ShowInCv" /></th>
+                                        <th class="py-2"><label for="ShowInCv" class="ml-3 pt-2">Pokazuj w CV</label></th>
+                                    </tr>
+                                    <tr>
+                                        <th class="py-2"><input id="Commercial" /></th>
+                                        <th class="py-2"><label for="Commercial" class="ml-3 pt-2">Projekt komercyjny</label></th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6 p-0 m-0">
+                                <h5>Ikona projektu:</h5>
+
+                                <div id="ProjectIcon">
+                                    @{
+                                        var iconSrc = "/Assets/img/Icons/Placeholder.png";
+                                        if (Model.Icon?.IconId > 0)
+                                        {
+                                            iconSrc = $"/Assets/Icons/{Model.Icon.Guid}{Model.Icon.FileName}";
+                                        }
+                                    }
+                                    <img id="ProjectIconPreview" src="@iconSrc" height="200" width="200" data-toggle="modal" data-target="#SelectIconModal" alt="ProjectIconPreview"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-6">
@@ -174,6 +267,41 @@
     </div>
 </div>
 
+<script type="text/x-kendo-template" id="template">
+    <div class="projectIcon">
+        <img src="/Assets/Icons/#= Guid ##= FileName #" alt="icon" />
+        <p class="projectIconP" data-id="#=IconId#" data-src="/Assets/Icons/#= Guid ##= FileName #"> Wybierz</p>
+    </div>
+</script>
+
+<div class="modal" id="SelectIconModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="min-height: 500px">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Wybierz ikone projektu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="demo-section k-content wide">
+                    <div id="listView"></div>
+                    <div id="pager" class="k-pager-wrap"></div>
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Zamknij</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @section scripts
 {
     <script src="~/Scripts/file-upload-with-preview.min.js"></script>
@@ -187,9 +315,12 @@
 
         var images = @Html.Raw(Json.Encode(@Model.Images));
         var imagesArray = [];
-        images.forEach((i) => {
-            window.imagesArray.push(`\\Assets\\ScreenShoots\\${i.Guid}${i.FileName}`);
-        });
+
+        if (images !== null && images.length > 0) {
+            images.forEach((i) => {
+                window.imagesArray.push(`\\Assets\\ScreenShoots\\${i.Guid}${i.FileName}`);
+            });
+        }
     </script>
 
     <script>

@@ -2,6 +2,7 @@
     initSwitches();
     initDatePicker();
     initMultiSelect();
+    initIconSelectionModal();
 
     $("#SaveBtn").on("click",
         function () {
@@ -20,6 +21,37 @@
         });
 });
 
+function initIconSelectionModal() {
+    var dataSource = new window.kendo.data.DataSource({
+        pageSize: 28,
+        transport: {
+            read: {
+                url: "/Icon/GetIcons",
+                dataType: "json"
+            }
+        }
+    });
+
+    $("#pager").kendoPager({
+        dataSource: dataSource
+    });
+
+    $("#listView").kendoListView({
+        dataSource: dataSource,
+        template: window.kendo.template($("#template").html()),
+        dataBound: function () {
+            $(".projectIconP").on("click",
+                function () {
+                    const id = parseInt($(this).data("id"));
+                    $("#IconId").val(id);
+                    $("#ProjectIconPreview").attr("src", $(this).data("src"));
+                    $("#SelectIconModal").modal("hide");
+
+                });
+        }
+    });
+
+}
 function initMultiSelect() {
     $.ajax({
         type: "GET",
@@ -60,6 +92,17 @@ function initSwitches() {
 }
 
 function checkValidation() {
+    const iconId = parseInt($("#IconId").val());
+    if (isNaN(iconId) || iconId === 0) {
+        window.Swal.fire({
+            title: 'Błąd!',
+            text: 'Musisz wybrać ikonę dla projektu!',
+            type: 'error',
+            heightAuto: false
+        });
+
+        return false;
+    }
     const title = $("#Title").val();
     if (title.length <= 0) {
         window.Swal.fire({
@@ -105,6 +148,7 @@ function createOrUpdateProject() {
         const model = {
             ProjectId: $("#ProjectId").val(),
             AuthorId: $("#AuthorId").val(),
+            IconId: $("#IconId").val(),
             Title: $("#Title").val(),
             GitHubLink: $("#GitHubLink").val(),
             DateTimeCreated: $("#DateTimeCreated").data("kendoDatePicker").value().toJSON(),
@@ -116,7 +160,7 @@ function createOrUpdateProject() {
         };
 
         const selectedTechnologiesIds = $("#Technologies").data("kendoMultiSelect").value();
-       
+
         var files = upload.cachedFileArray;
         var data = new FormData();
 
@@ -125,7 +169,7 @@ function createOrUpdateProject() {
             for (f = 0; f < files.length; f++) {
                 data.append("UploadedImage", files[f]);
             }
-        }  
+        }
 
         data.append("ProjectId", model.ProjectId);
         data.append("AuthorId", model.AuthorId);
@@ -137,6 +181,7 @@ function createOrUpdateProject() {
         data.append("Commercial", model.Commercial);
         data.append("ShowInCv", model.ShowInCv);
         data.append("TempProject", model.TempProject);
+        data.append("IconId", model.IconId);
 
         data.append("projectTechnologiesIds", JSON.stringify(selectedTechnologiesIds));
 
@@ -145,7 +190,7 @@ function createOrUpdateProject() {
             type: "POST",
             enctype: 'multipart/form-data',
             url: `/Project/CreateOrUpdateProject/`,
-            processData: false,  // Important!
+            processData: false, 
             contentType: false,
             data: data,
             success: function (e) {
@@ -173,9 +218,6 @@ function createOrUpdateProject() {
                         location.reload();
                     });
                 }
-
-            },
-            error: function () {
 
             }
         });

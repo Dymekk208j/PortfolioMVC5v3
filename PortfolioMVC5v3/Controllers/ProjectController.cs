@@ -25,7 +25,8 @@ namespace PortfolioMVC5v3.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var projects = await _projectLogic.GetProjectsList(showInCvProjects: true, tempProjects: false);
+            
+            var projects = await _projectLogic.GetProjectsViewModelList(showInCvProjects: true, tempProjects: false);
 
             return View(projects);
         }
@@ -47,6 +48,7 @@ namespace PortfolioMVC5v3.Controllers
             else project = new ProjectViewModel()
             {
                 ProjectId = 0,
+                Icon = new Icon(),
                 AuthorId = "id",
                 Commercial = false,
                 DateTimeCreated = DateTime.Now,
