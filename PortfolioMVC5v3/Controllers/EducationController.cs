@@ -7,6 +7,8 @@ using PortfolioMVC5v3.Models;
 
 namespace PortfolioMVC5v3.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class EducationController : Controller
     {
         private readonly IEducationLogic _educationLogic;

@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 
 namespace PortfolioMVC5v3.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class TechnologiesController : Controller
     {
         private readonly ITechnologyLogic _technologyLogic;

@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 namespace PortfolioMVC5v3.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdministratorPanelController : Controller
     {
         private readonly IProjectLogic _projectLogic;

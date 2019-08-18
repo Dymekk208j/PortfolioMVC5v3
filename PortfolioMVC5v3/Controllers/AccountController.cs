@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 namespace PortfolioMVC5v3.Controllers
 {
     [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private UserManager<AppUser> UserManager { get; set; }

@@ -27,6 +27,8 @@ namespace PortfolioMVC5v3.Controllers
             return View(cvViewModel);
         }
 
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Management()
         {
 

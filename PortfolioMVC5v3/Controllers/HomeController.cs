@@ -19,6 +19,8 @@ namespace PortfolioMVC5v3.Controllers
             return View(model);
         }
 
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Management()
         {
             var homePageModel = await _logic.GetMainPageAsync();
@@ -27,6 +29,8 @@ namespace PortfolioMVC5v3.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Update(MainPage mainPage)
         {
             var result = await _logic.UpdateMainPage(mainPage);

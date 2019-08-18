@@ -13,6 +13,8 @@ using System.Web.Mvc;
 
 namespace PortfolioMVC5v3.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ProjectController : Controller
     {
         private readonly IProjectLogic _projectLogic;
@@ -24,14 +26,15 @@ namespace PortfolioMVC5v3.Controllers
             _technologyLogic = technologyLogic;
         }
 
+        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
-            
             var projects = await _projectLogic.GetProjectsViewModelList(showInCvProjects: true, tempProjects: false);
 
             return View(projects);
         }
 
+        [AllowAnonymous]
         public async Task<ActionResult> Card(int id)
         {
             var project = await _projectLogic.GetProject(id);
