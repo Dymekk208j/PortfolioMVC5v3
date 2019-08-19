@@ -62,8 +62,8 @@
                         </div>
                         <div class="col text-right">
                             @Model.PersonalDataViewModel.Address<br />
-                            @($"{Model.PersonalDataViewModel.PostCode} {Model.PersonalDataViewModel.City}")<br />
-                            @($"{Model.ContactDataViewModel.PhoneNumber} | {Model.ContactDataViewModel.HomePageLink}")<br />
+                            @string.Format("{0} {1}", Model.PersonalDataViewModel.PostCode, Model.PersonalDataViewModel.City)<br />
+                            @string.Format("{0} | {1}", Model.ContactDataViewModel.PhoneNumber, Model.ContactDataViewModel.HomePageLink)<br />
                             @Model.ContactDataViewModel.EmailAddress<br />
                             @Model.ContactDataViewModel.GitHubLink<br />
                         </div>

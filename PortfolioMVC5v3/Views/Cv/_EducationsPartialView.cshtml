@@ -15,14 +15,14 @@
                 @foreach (var education in Model)
                 {
                     <div class="col-12">
-                        <b>@($"{education.SchoolName}, {education.Department}, {education.Specialization}")</b>
+                        <b>@string.Format("{0}, {1}, {2}", education.SchoolName, education.Department, education.Specialization)</b>
                     </div>
                     <div class="col-12">
                         <p>
                             @{
                                 var endDateStr = education.CurrentPlaceOfEducation ? "Obecnie" : education.EndDate.ToShortDateString();
                             }
-                            <i>@($"{education.StartDate.ToShortDateString()} - {endDateStr}")</i>
+                            <i>@string.Format("{0} - {1}", education.StartDate.ToShortDateString(), endDateStr)</i>
                         </p>
                     </div>
                 }

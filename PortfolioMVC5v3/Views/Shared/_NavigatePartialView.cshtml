@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
 <nav>
     <div class="logo">
-        <img src="../../Assets/img/logo.png" alt=""/>
+        <img src="../../Assets/img/logo.png" alt="" />
     </div>
     <div class="mini-logo">
-        <img src="../../Assets/img/mini_logo.png" alt=""/>
+        <img src="../../Assets/img/mini_logo.png" alt="" />
     </div>
 
     <ul>
@@ -25,11 +25,13 @@
         </li>
         @if (Request.IsAuthenticated)
         {
-         
-            <li>
-                <a href="@Url.Action("Dashboard", "AdministratorPanel")"><i class="fas fa-tools"></i><em>Panel administratora</em></a>
-            </li>
-            
+            if (User.IsInRole("Admin"))
+            {
+                <li>
+                    <a href="@Url.Action("Dashboard", "AdministratorPanel")"><i class="fas fa-tools"></i><em>Panel administratora</em></a>
+                </li>
+            }
+
             using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
             {
                 @Html.AntiForgeryToken()

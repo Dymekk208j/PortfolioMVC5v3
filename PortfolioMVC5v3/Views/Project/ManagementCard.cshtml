@@ -169,9 +169,9 @@
                                 <div id="ProjectIcon">
                                     @{
                                         var iconSrc = "/Assets/img/Icons/Placeholder.png";
-                                        if (Model.Icon?.IconId > 0)
+                                        if (Model.Icon != null && Model.Icon.IconId > 0)
                                         {
-                                            iconSrc = $"/Assets/Icons/{Model.Icon.Guid}{Model.Icon.FileName}";
+                                            iconSrc = string.Format(@"/Assets/Icons/{0}{1}", Model.Icon.Guid, Model.Icon.FileName);
                                         }
                                     }
                                     <img id="ProjectIconPreview" src="@iconSrc" height="200" width="200" data-toggle="modal" data-target="#SelectIconModal" alt="ProjectIconPreview"/>

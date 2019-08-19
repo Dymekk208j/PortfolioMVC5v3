@@ -18,7 +18,7 @@
                         <b>@project.Title</b>
                     </div>
                     <div class="col-12">
-                        @if (project.Technologies?.Count > 0)
+                        @if (project.Technologies != null && project.Technologies.Count > 0)
                         {
                             @:<i>@string.Join(", ", project.Technologies.Select(a => a.Name))</i>
                         }

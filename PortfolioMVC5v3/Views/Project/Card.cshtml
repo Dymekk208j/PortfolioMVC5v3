@@ -29,7 +29,7 @@
 
                             <div class="col-12">
                                 <h3>
-                                    @if (Model?.Technologies?.Count > 0)
+                                    @if (Model.Technologies.Count > 0)
                                     {
                                         @: Technologie: <em>@string.Join(", ", Model.Technologies.Select(a => a.Name))</em>
                                     }
@@ -70,8 +70,8 @@
                                             @foreach (var img in Model.Images ?? new List<Image>())
                                             {
                                                 <li>
-                                                    <a href="~/Assets/ScreenShoots/@($"{img.Guid}{img.FileName}")" data-lightbox="screenShoots">
-                                                        <img src="~/Assets/ScreenShoots/@($"{img.Guid}{img.FileName}")" alt="" class="img-fluid" />
+                                                    <a href="~/Assets/ScreenShoots/@string.Format("{0}{1}", img.Guid, img.FileName)" data-lightbox="screenShoots">
+                                                        <img src="~/Assets/ScreenShoots/@string.Format("{0}{1}", img.Guid, img.FileName)" alt="" class="img-fluid" />
                                                     </a>
                                                 </li>
                                             }

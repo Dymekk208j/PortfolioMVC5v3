@@ -15,14 +15,14 @@
                 @foreach (var employmentHistory in Model)
                 {
                     <div class="col-12">
-                        <b>@($"{employmentHistory.Position}, {employmentHistory.CompanyName}, {employmentHistory.CityOfEmployment}")</b>
+                        <b>@string.Format("{0}, {1}, {2}", employmentHistory.Position, employmentHistory.CompanyName, employmentHistory.CityOfEmployment)</b>
                     </div>
                     <div class="col-12">
                         <p>
                             @{
                                 var endDateStr = employmentHistory.CurrentPlaceOfEmployment ? "Obecnie" : employmentHistory.EndDate.ToShortDateString();
                             }
-                            <i>@($"{employmentHistory.StartDate.ToShortDateString()} - {endDateStr}")</i>
+                            <i>@string.Format("{0} - {1}", employmentHistory.StartDate.ToShortDateString(), endDateStr)</i>
                         </p>
                     </div>
                 }

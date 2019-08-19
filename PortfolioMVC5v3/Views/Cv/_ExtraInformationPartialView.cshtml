@@ -13,19 +13,19 @@
         <div class="col-9 text-left">
             <div class="row">
                 <div class="col-12">
-                    @if (Model?.Count(t => t.Type == 2) > 0)
+                    @if (Model.Count(t => t.Type == 2) > 0)
                     {
                         @: <b>Języki obce:</b> <i>@string.Join(", ", Model.Where(t => t.Type == 2).Select(a => a.Title))</i>
                     }
                 </div>
                 <div class="col-12">
-                    @if (Model?.Count(t => t.Type == 1) > 0)
+                    @if (Model.Count(t => t.Type == 1) > 0)
                     {
                         @: <b>Dodatkowe umiejętności:</b> <i>@string.Join(", ", Model.Where(t => t.Type == 1).Select(a => a.Title))</i>
                     }
                 </div>
                 <div class="col-12">
-                    @if (Model?.Count(t => t.Type == 0) > 0)
+                    @if (Model.Count(t => t.Type == 0) > 0)
                     {
                         @: <b>Zainteresowania:</b> <i>@string.Join(", ", Model.Where(t => t.Type == 0).Select(a => a.Title))</i>
                     }

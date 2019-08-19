@@ -24,9 +24,9 @@
                     {
 
                         var iconSrc = "/Assets/img/Icons/Placeholder.png";
-                        if (project.Icon?.IconId > 0)
+                        if (project.Icon != null && project.Icon.IconId > 0)
                         {
-                            iconSrc = $"/Assets/Icons/{project.Icon.Guid}{project.Icon.FileName}";
+                            iconSrc = string.Format("/Assets/Icons/{0}{1}", project.Icon.Guid, project.Icon.FileName);
                         }
 
 
@@ -44,7 +44,7 @@
                                 <div class="col-md-10">
                                     <div class="left-content @(i%2 == 0 ? "right-content" : "left-content")">
                                         <h2 class="mb-1">@project.Title</h2>
-                                        @if (project.Technologies?.Count > 0)
+                                        @if (project.Technologies != null && project.Technologies.Count > 0)
                                         {
                                             <div style="color:white" class="mb-1">
                                                 <b class="mr-2">Technologie:</b> <em>@string.Join(", ", project.Technologies.Take(3).Select(a => a.Name))...</em>
