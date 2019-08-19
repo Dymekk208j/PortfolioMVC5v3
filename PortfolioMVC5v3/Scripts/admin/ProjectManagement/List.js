@@ -1,6 +1,14 @@
 ﻿$(function () {
     initGrid();
 
+    $("#AddProjectBtn").on("click",
+        function () {
+            editProject(0);
+        });
+});
+
+function initButtons()
+{
     $("button[name='EditProjectBtn']").on("click",
         function () {
             const id = parseInt($(this).data("id"));
@@ -33,13 +41,7 @@
 
 
         });
-
-    $("#AddProjectBtn").on("click",
-        function () {
-            editProject(0);
-        });
-});
-
+}
 
 function RemoveProjectBtn(id) {
     $.ajax({
@@ -51,7 +53,8 @@ function RemoveProjectBtn(id) {
                 text: 'Poprawnie usunięto!',
                 type: 'success'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         },
         error: function () {
@@ -60,7 +63,8 @@ function RemoveProjectBtn(id) {
                 text: 'Usuwanie nie powiodło się!',
                 type: 'error'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         }
     });
@@ -71,8 +75,28 @@ function editProject(id) {
 }
 
 function initGrid() {
+    const url = window.isTempProjectPage ? "/Project/GetTempProjectsList" : "/Project/GetProjectsList";
+
     $("#grid").kendoGrid({
-        dataSource: window.model,
+        dataSource: {
+            transport: {
+                read: {
+                    url: url,
+                    dataType: "json"
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            pageSize: 16
+        },
+        dataBound: function () {
+            initButtons();
+        },
         height: "94%",
         sortable: true,
         filterable: true,
@@ -83,11 +107,6 @@ function initGrid() {
             pageSize: 20
         },
         columns: [{
-            field: "ProjectId",
-            title: "Id",
-            width: 50
-        },
-        {
             field: "Title",
             title: "Tytuł"
         },

@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.Project>
+﻿@model bool
 
 @{
     ViewBag.Title = "Projekty";
@@ -43,7 +43,7 @@
 @section scripts
 {
     <script>
-        var model = @Html.Raw(Json.Encode(@Model));
+        var isTempProjectPage = @Html.Raw(Json.Encode(@Model));
     </script>
 
     <script src="~/Scripts/admin/ProjectManagement/List.js"></script>

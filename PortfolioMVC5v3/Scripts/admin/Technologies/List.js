@@ -72,24 +72,20 @@ function initGrid() {
             refresh: true,
             pageSizes: true,
             buttonCount: 5,
-            pageSize: 20
+            pageSize: 12
         },
         columns: [{
-            field: "TechnologyId",
-            title: "Id",
-            width: 50
+            field: "Name",
+            title: "Nazwa"
         }, {
             field: "KnowledgeLevel",
             title: "Poziom znajomości",
             template: '#=window.getTypeText(KnowledgeLevel)#',
             width: 250
         }, {
-            field: "Name",
-            title: "Nazwa"
-        }, {
             field: "ShowInAboutMePage",
             title: "Pokazuj w o mnie",
-                template: '<input class="k-checkbox" id="checkbox#:TechnologyId#" type="checkbox" #= ShowInAboutMePage ? "checked=checked" : "" # disabled="disabled" ></input>' +
+            template: '<input class="k-checkbox" id="checkbox#:TechnologyId#" type="checkbox" #= ShowInAboutMePage ? "checked=checked" : "" # disabled="disabled" ></input>' +
                 '<label class="k-checkbox-label" for="checkbox#:TechnologyId#"></label>',
             width: 130
 

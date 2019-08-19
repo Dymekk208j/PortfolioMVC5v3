@@ -63,18 +63,29 @@ namespace PortfolioMVC5v3.Controllers
             return View(project);
         }
 
-        public async Task<ActionResult> ProjectManagement()
+        public ActionResult ProjectManagement()
+        {
+            return View(false);
+        }
+
+        public async Task<string> GetProjectsList()
         {
             var projects = await _projectLogic.GetProjectsList(showInCvProjects: null, tempProjects: false);
 
-            return View(projects);
+            return JsonConvert.SerializeObject(projects);
         }
 
-        public async Task<ActionResult> TempProjectManagement()
+        public async Task<string> GetTempProjectsList()
         {
             var projects = await _projectLogic.GetProjectsList(showInCvProjects: null, tempProjects: true);
 
-            return View("ProjectManagement", projects);
+            return JsonConvert.SerializeObject(projects);
+        }
+
+
+        public ActionResult TempProjectManagement()
+        {
+            return View("ProjectManagement", true);
         }
 
         public async Task<string> GetAllTechnologies()
