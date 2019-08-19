@@ -1,6 +1,13 @@
 ﻿$(function () {
     initGrid();
 
+    $("#AddAchievementBtn").on("click",
+        function () {
+            editAchievement(0);
+        });
+});
+
+function initButtons() {
     $("button[name='RemoveAchievementBtn']").on("click",
         function () {
             const id = parseInt($(this).data("id"));
@@ -12,12 +19,7 @@
             const id = parseInt($(this).data("id"));
             editAchievement(id);
         });
-
-    $("#AddAchievementBtn").on("click",
-        function () {
-            editAchievement(0);
-        });
-});
+}
 
 function removeAchievement(id) {
     $.ajax({
@@ -29,7 +31,8 @@ function removeAchievement(id) {
                 text: 'Poprawnie usunięto!',
                 type: 'success'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         },
         error: function () {
@@ -38,7 +41,8 @@ function removeAchievement(id) {
                 text: 'Usuwanie nie powiodło się!',
                 type: 'error'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         }
     });
@@ -50,7 +54,17 @@ function editAchievement(id) {
 
 function initGrid() {
     $("#grid").kendoGrid({
-        dataSource: window.model,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/Achievements/GetAllAchievements",
+                    dataType: "json"
+                }
+            }
+        },
+        dataBound: function () {
+            initButtons();
+        },
         height: "94%",
         sortable: true,
         filterable: true,
@@ -61,11 +75,6 @@ function initGrid() {
             pageSize: 20
         },
         columns: [{
-            field: "AchievementId",
-            title: "Id",
-            width: 50
-        },
-        {
             field: "Title",
             title: "Nazwa"
         },
@@ -84,12 +93,9 @@ function initGrid() {
             field: "ShowInCv",
             title: "Pokazuj w CV",
             template: '<input class="k-checkbox" id="checkbox#:AchievementId#" type="checkbox" #= ShowInCv ? "checked=checked" : "" # disabled="disabled" ></input>' +
-            '<label class="k-checkbox-label" for="checkbox#:AchievementId#"></label>',
+                '<label class="k-checkbox-label" for="checkbox#:AchievementId#"></label>',
             width: 150
-            },
-
-        //    <input type="checkbox" id="eq1" class="k-checkbox" checked="checked">
-        //<label class="k-checkbox-label" for="eq1">Rear side airbags</label>
+        },
         {
             field: "AchievementId",
             title: "Akcje",

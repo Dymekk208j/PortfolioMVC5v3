@@ -1,6 +1,13 @@
 ﻿$(function () {
     initGrid();
 
+    $("#AddEmploymentHistoryBtn").on("click",
+        function () {
+            editEmploymentHistory(0);
+        });
+});
+
+function initButtons() {
     $("button[name='RemoveEmploymentHistoryBtn']").on("click",
         function () {
             const id = parseInt($(this).data("id"));
@@ -12,12 +19,7 @@
             const id = parseInt($(this).data("id"));
             editEmploymentHistory(id);
         });
-
-    $("#AddEmploymentHistoryBtn").on("click",
-        function () {
-            editEmploymentHistory(0);
-        });
-});
+}
 
 function removeEmploymentHistory(id) {
     $.ajax({
@@ -29,7 +31,8 @@ function removeEmploymentHistory(id) {
                 text: 'Poprawnie usunięto!',
                 type: 'success'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         },
         error: function () {
@@ -38,7 +41,8 @@ function removeEmploymentHistory(id) {
                 text: 'Usuwanie nie powiodło się!',
                 type: 'error'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         }
     });
@@ -50,7 +54,17 @@ function editEmploymentHistory(id) {
 
 function initGrid() {
     $("#grid").kendoGrid({
-        dataSource: window.model,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/EmploymentHistory/GetAllEmploymentHistories",
+                    dataType: "json"
+                }
+            }
+        },
+        dataBound: function () {
+            initButtons();
+        },
         height: "94%",
         sortable: true,
         filterable: true,
@@ -61,11 +75,6 @@ function initGrid() {
             pageSize: 20
         },
         columns: [{
-            field: "EmploymentHistoryId",
-            title: "Id",
-            width: 50
-        },
-        {
             field: "CompanyName",
             title: "Nazwa firmy"
         },

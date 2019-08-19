@@ -1,6 +1,13 @@
 ﻿$(function () {
     initGrid();
 
+    $("#AddEducationBtn").on("click",
+        function () {
+            editEducation(0);
+        });
+});
+
+function initButtons() {
     $("button[name='RemoveEducationBtn']").on("click",
         function () {
             const id = parseInt($(this).data("id"));
@@ -12,12 +19,7 @@
             const id = parseInt($(this).data("id"));
             editEducation(id);
         });
-
-    $("#AddEducationBtn").on("click",
-        function () {
-            editEducation(0);
-        });
-});
+}
 
 function removeEducation(id) {
     $.ajax({
@@ -29,7 +31,8 @@ function removeEducation(id) {
                 text: 'Poprawnie usunięto!',
                 type: 'success'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         },
         error: function () {
@@ -38,7 +41,8 @@ function removeEducation(id) {
                 text: 'Usuwanie nie powiodło się!',
                 type: 'error'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         }
     });
@@ -50,7 +54,17 @@ function editEducation(id) {
 
 function initGrid() {
     $("#grid").kendoGrid({
-        dataSource: window.model,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/Education/GetAllEducations",
+                    dataType: "json"
+                }
+            }
+        },
+        dataBound: function () {
+            initButtons();
+        },
         height: "94%",
         sortable: true,
         filterable: true,
@@ -60,11 +74,7 @@ function initGrid() {
             buttonCount: 5,
             pageSize: 20
         },
-        columns: [{
-            field: "EducationId",
-            title: "Id",
-            width: 50
-        },
+        columns: [
         {
             field: "SchoolName",
             title: "Nazwa szkoły"

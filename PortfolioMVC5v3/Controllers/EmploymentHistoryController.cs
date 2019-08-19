@@ -18,11 +18,9 @@ namespace PortfolioMVC5v3.Controllers
             _employmentHistoryLogic = employmentHistoryLogic;
         }
 
-        public async Task<ActionResult> List()
+        public ActionResult List()
         {
-            var employmentHistory = await _employmentHistoryLogic.GetAllEmploymentsHistories();
-
-            return View(employmentHistory);
+            return View();
         }
 
         public async Task<ActionResult> RemoveEmploymentHistory(int id)
@@ -95,5 +93,12 @@ namespace PortfolioMVC5v3.Controllers
 
             return JsonConvert.SerializeObject(employmentHistories);
         }
+        public async Task<string> GetAllEmploymentHistories()
+        {
+            var employmentHistories = await _employmentHistoryLogic.GetAllEmploymentsHistories();
+
+            return JsonConvert.SerializeObject(employmentHistories);
+        }
+
     }
 }

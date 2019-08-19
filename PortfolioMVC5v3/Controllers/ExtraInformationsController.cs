@@ -18,11 +18,16 @@ namespace PortfolioMVC5v3.Controllers
             _extraInformationLogic = extraInformationLogic;
         }
 
-        public async Task<ActionResult> List()
+        public ActionResult List()
+        {
+            return View();
+        }
+
+        public async Task<string> GetAllExtraInformation()
         {
             var extraInformation = await _extraInformationLogic.GetAllExtraInformation();
 
-            return View(extraInformation);
+            return JsonConvert.SerializeObject(extraInformation);
         }
 
         public async Task<ActionResult> RemoveExtraInformation(int id)

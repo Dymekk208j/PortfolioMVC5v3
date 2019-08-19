@@ -1,18 +1,6 @@
 ﻿$(function () {
     initGrid();
-
-    $("button[name='RemoveExtraInformationBtn']").on("click",
-        function () {
-            const id = parseInt($(this).data("id"));
-            removeExtraInformation(id);
-        });
-
-    $("button[name='EditExtraInformationBtn']").on("click",
-        function () {
-            const id = parseInt($(this).data("id"));
-            editExtraInformation(id);
-        });
-
+    
     $("#AddExtraInformationBtn").on("click",
         function () {
             editExtraInformation(0);
@@ -29,6 +17,20 @@ window.getTypeText = function (id) {
     return data[id].text;
 };
 
+function initButtons() {
+    $("button[name='RemoveExtraInformationBtn']").on("click",
+        function () {
+            const id = parseInt($(this).data("id"));
+            removeExtraInformation(id);
+        });
+
+    $("button[name='EditExtraInformationBtn']").on("click",
+        function () {
+            const id = parseInt($(this).data("id"));
+            editExtraInformation(id);
+        });
+}
+
 function removeExtraInformation(id) {
     $.ajax({
         type: "GET",
@@ -39,7 +41,8 @@ function removeExtraInformation(id) {
                 text: 'Poprawnie usunięto!',
                 type: 'success'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         },
         error: function () {
@@ -48,7 +51,8 @@ function removeExtraInformation(id) {
                 text: 'Usuwanie nie powiodło się!',
                 type: 'error'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         }
     });
@@ -60,7 +64,17 @@ function editExtraInformation(id) {
 
 function initGrid() {
     $("#grid").kendoGrid({
-        dataSource: window.model,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/ExtraInformations/GetAllExtraInformation",
+                    dataType: "json"
+                }
+            }
+        },
+        dataBound: function () {
+            initButtons();
+        },
         height: "94%",
         sortable: true,
         filterable: true,
@@ -71,10 +85,6 @@ function initGrid() {
             pageSize: 20
         },
         columns: [{
-            field: "ExtraInformationId",
-            title: "Id",
-            width: 50
-        }, {
             field: "Type",
             title: "Typ",
             template: '#=window.getTypeText(Type)#',

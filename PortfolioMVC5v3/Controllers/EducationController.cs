@@ -18,11 +18,9 @@ namespace PortfolioMVC5v3.Controllers
             _educationLogic = educationLogic;
         }
 
-        public async Task<ActionResult> List()
+        public ActionResult List()
         {
-            var education = await _educationLogic.GetAllEducations();
-
-            return View(education);
+            return View();
         }
 
         public async Task<ActionResult> RemoveEducation(int id)
@@ -80,6 +78,13 @@ namespace PortfolioMVC5v3.Controllers
             var result = await _educationLogic.RemoveEducationFromCv(educationId);
 
             return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<string> GetAllEducations()
+        {
+            var educations = await _educationLogic.GetAllEducations();
+
+            return JsonConvert.SerializeObject(educations);
         }
 
         public async Task<string> GetEducationsToShowInCv()

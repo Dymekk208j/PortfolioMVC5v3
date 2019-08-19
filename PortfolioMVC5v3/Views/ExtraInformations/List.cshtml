@@ -1,6 +1,4 @@
-﻿@model System.Collections.Generic.List<PortfolioMVC5v3.Models.ExtraInformation>
-
-@{
+﻿@{
     ViewBag.Title = "Dodatkowe informacje";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -45,9 +43,5 @@
 
 @section scripts
 {
-    <script>
-        var model = @Html.Raw(Json.Encode(@Model));
-    </script>
-
     <script src="~/Scripts/admin/ExtraInformation/List.js"></script>
 }

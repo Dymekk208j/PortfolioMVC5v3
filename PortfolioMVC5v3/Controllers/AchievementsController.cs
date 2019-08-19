@@ -17,13 +17,17 @@ namespace PortfolioMVC5v3.Controllers
             _achievementLogic = achievementLogic;
         }
 
-        public async Task<ActionResult> List()
+        public ActionResult List()
+        {
+            return View();
+        }
+
+        public async Task<string> GetAllAchievements()
         {
             var achievements = await _achievementLogic.GetAllAchievementsAsync();
 
-            return View(achievements);
+            return JsonConvert.SerializeObject(achievements);
         }
-
         public async Task<ActionResult> RemoveAchievement(int id)
         {
             var result = await _achievementLogic.RemoveAchievement(id);
