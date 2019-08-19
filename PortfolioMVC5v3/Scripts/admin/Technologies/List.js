@@ -1,6 +1,13 @@
 ﻿$(function () {
     initGrid();
+    
+    $("#AddTechnologyBtn").on("click",
+        function () {
+            editTechnology(0);
+        });
+});
 
+function initButtons() {
     $("button[name='RemoveTechnologyBtn']").on("click",
         function () {
             const id = parseInt($(this).data("id"));
@@ -12,12 +19,7 @@
             const id = parseInt($(this).data("id"));
             editTechnology(id);
         });
-
-    $("#AddTechnologyBtn").on("click",
-        function () {
-            editTechnology(0);
-        });
-});
+}
 
 window.getTypeText = function (id) {
     const data = [
@@ -43,7 +45,8 @@ function removeTechnology(id) {
                 text: 'Poprawnie usunięto!',
                 type: 'success'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         },
         error: function () {
@@ -52,7 +55,8 @@ function removeTechnology(id) {
                 text: 'Usuwanie nie powiodło się!',
                 type: 'error'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         }
     });
@@ -64,7 +68,25 @@ function editTechnology(id) {
 
 function initGrid() {
     $("#grid").kendoGrid({
-        dataSource: window.model,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/Technologies/GetAllTechnologies",
+                    dataType: "json"
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            pageSize: 16
+        },
+        dataBound: function () {
+            initButtons();
+        },
         height: "94%",
         sortable: true,
         filterable: true,

@@ -18,11 +18,9 @@ namespace PortfolioMVC5v3.Controllers
             _technologyLogic = technologyLogic;
         }
 
-        public async Task<ActionResult> List()
+        public ActionResult List()
         {
-            var technologies = await _technologyLogic.GetAllTechnologiesListAsync();
-
-            return View(technologies);
+            return View();
         }
 
         public async Task<ActionResult> RemoveTechnology(int id)
@@ -55,6 +53,13 @@ namespace PortfolioMVC5v3.Controllers
             else result = await _technologyLogic.InsertTechnology(technology) > 0;
 
             return new HttpStatusCodeResult(result ? 200 : 500);
+        }
+
+        public async Task<string> GetAllTechnologies()
+        {
+            var technologies = await _technologyLogic.GetAllTechnologiesListAsync();
+
+            return JsonConvert.SerializeObject(technologies);
         }
 
         public async Task<string> GetTechnologiesNotShownInCv()
