@@ -17,11 +17,16 @@ namespace PortfolioMVC5v3.Controllers
             _iconLogic = iconLogic;
         }
 
-        public async Task<ActionResult> Management()
+        public ActionResult Management()
+        {
+            return View();
+        }
+
+        public async Task<string> GetAllIcons()
         {
             var icons = await _iconLogic.GetAllIcons();
 
-            return View(icons);
+            return JsonConvert.SerializeObject(icons);
         }
 
         public ActionResult AddIcon()

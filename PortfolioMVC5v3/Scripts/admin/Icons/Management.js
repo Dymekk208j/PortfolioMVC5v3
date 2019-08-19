@@ -1,12 +1,6 @@
 ﻿$(function () {
     initGrid();
 
-    $("button[name='RemoveIconBtn']").on("click",
-        function () {
-            const id = parseInt($(this).data("id"));
-            removeIcon(id);
-        });
-
     $("#AddIconBtn").on("click",
         function () {
             addIcon();
@@ -23,7 +17,13 @@ window.getTypeText = function (id) {
     return data[id].text;
 };
 
-
+function initButtons() {
+    $("button[name='RemoveIconBtn']").on("click",
+        function () {
+            const id = parseInt($(this).data("id"));
+            removeIcon(id);
+        });
+}
 
 function removeIcon(id) {
     $.ajax({
@@ -35,7 +35,8 @@ function removeIcon(id) {
                 text: 'Poprawnie usunięto!',
                 type: 'success'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         },
         error: function () {
@@ -44,7 +45,8 @@ function removeIcon(id) {
                 text: 'Usuwanie nie powiodło się!',
                 type: 'error'
             }).then(() => {
-                location.reload();
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").refresh();
             });
         }
     });
@@ -56,7 +58,17 @@ function addIcon() {
 
 function initGrid() {
     $("#grid").kendoGrid({
-        dataSource: window.model,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/Icon/GetAllIcons",
+                    dataType: "json"
+                }
+            }
+        },
+        dataBound: function () {
+            initButtons();
+        },
         height: "94%",
         sortable: true,
         filterable: true,

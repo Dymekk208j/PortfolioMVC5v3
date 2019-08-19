@@ -1,6 +1,4 @@
-﻿@model List<PortfolioMVC5v3.Models.Icon>
-
-@{
+﻿@{
     ViewBag.Title = "Zarządzanie ikonami";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -31,9 +29,5 @@
 
 @section scripts
 {
-    <script>
-        var model = @Html.Raw(Json.Encode(@Model));
-    </script>
-
     <script src="~/Scripts/admin/Icons/Management.js"></script>
 }

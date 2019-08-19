@@ -74,15 +74,7 @@ function initGrid() {
                     url: "/Technologies/GetAllTechnologies",
                     dataType: "json"
                 }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        Name: { type: "string" }
-                    }
-                }
-            },
-            pageSize: 16
+            }
         },
         dataBound: function () {
             initButtons();
