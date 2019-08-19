@@ -33,7 +33,9 @@
                     <p class="mb-5">Witaj, wprowadź swoje dane logowania.</p>
 
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)
+                    <div class="text-left text-danger">
+                        @Html.ValidationSummary(true)
+                    </div>
 
                     <div class="input-group">
                         <label for="UserName" class="pt-1">Login</label>
