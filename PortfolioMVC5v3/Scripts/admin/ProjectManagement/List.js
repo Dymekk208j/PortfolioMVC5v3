@@ -111,10 +111,6 @@ function initGrid() {
             title: "Tytuł"
         },
         {
-            field: "ShortDescription",
-            title: "Krótki opis"
-        },
-        {
 
             field: "DateTimeCreated",
             title: "Data utworzenia",

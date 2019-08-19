@@ -39,8 +39,6 @@ namespace PortfolioMVC5v3.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Update(AboutMe aboutMe, List<int> selectedTechnologies)
         {
             var result = await _aboutMeLogic.UpdateAboutMeAsync(aboutMe) && await _technologyLogic.UpdateShowInAboutMeTechnologiesAsync(selectedTechnologies);

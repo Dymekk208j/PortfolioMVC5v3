@@ -109,7 +109,7 @@ namespace PortfolioMVC5v3.Logic.Logic
             int newProjectId = await _projectRepository.CreateProject(project);
             if (newProjectId == 0) return false;
 
-            if (projectModel.Images.Count > 0)
+            if (projectModel.Images?.Count > 0)
             {
                 bool imagesResult = true;
                 foreach (var projectModelImage in projectModel.Images)
@@ -122,11 +122,14 @@ namespace PortfolioMVC5v3.Logic.Logic
                 if (!imagesResult) return false;
             }
 
-            bool setBetweenProjectAndTechnologiesResult =
+            if (projectModel.Technologies?.Count > 0)
+            {
                 await _technologyLogic.SetBindingBetweenProjectAndTechnologiesResult(newProjectId,
                     projectModel.Technologies);
+            }
 
-            return setBetweenProjectAndTechnologiesResult;
+
+            return true;
         }
 
         public async Task<bool> RemoveProject(int projectId)

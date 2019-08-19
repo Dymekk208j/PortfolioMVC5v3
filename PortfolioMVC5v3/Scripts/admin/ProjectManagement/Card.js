@@ -159,18 +159,26 @@ function createOrUpdateProject() {
             TempProject: window.isTemp
         };
 
-        const selectedTechnologiesIds = $("#Technologies").data("kendoMultiSelect").value();
+        const selectedTechnologies = $("#Technologies").data("kendoMultiSelect").value();
+        const selectedTechnologiesIds = selectedTechnologies.filter(function (value) {
+            return !Number.isNaN(parseInt(value));
+        });
 
-        var files = upload.cachedFileArray;
+        console.log(selectedTechnologiesIds);
+        console.log(JSON.stringify(selectedTechnologiesIds));
+
         var data = new FormData();
+        data.append("UploadedImage", null);
+        if (upload.cachedFileArray.length > 0) {
+            const files = upload.cachedFileArray;
 
-        // Add the uploaded file to the form data collection  
-        if (files.length > 0) {
-            for (var f = 0; f < files.length; f++) {
-                data.append("UploadedImage", files[f]);
+            // Add the uploaded file to the form data collection  
+            if (files.length > 0) {
+                for (let f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
             }
         }
-
         data.append("ProjectId", model.ProjectId);
         data.append("AuthorId", model.AuthorId);
         data.append("Title", model.Title);
@@ -184,16 +192,18 @@ function createOrUpdateProject() {
         data.append("IconId", model.IconId);
 
         data.append("projectTechnologiesIds", JSON.stringify(selectedTechnologiesIds));
-
+  
 
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
             url: `/Project/CreateOrUpdateProject/`,
-            processData: false, 
+            processData: false,
             contentType: false,
             data: data,
             success: function (e) {
+                console.log('b');
+
                 var result = JSON.parse(e);
                 if (result.Success === true) {
                     window.Swal.fire({
@@ -214,8 +224,6 @@ function createOrUpdateProject() {
                         text: 'Zapisywanie nie powiodło się!',
                         type: 'error',
                         heightAuto: false
-                    }).then(() => {
-                        location.reload();
                     });
                 }
 
