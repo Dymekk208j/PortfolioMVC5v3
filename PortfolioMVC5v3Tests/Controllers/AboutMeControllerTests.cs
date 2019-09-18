@@ -7,6 +7,7 @@ using PortfolioMVC5v3.Logic.Interfaces;
 using PortfolioMVC5v3.Models;
 using System.Web.Mvc;
 using KellermanSoftware.CompareNetObjects;
+using Newtonsoft.Json;
 using Xunit.Sdk;
 
 namespace PortfolioMVC5v3Tests.Controllers
@@ -216,8 +217,60 @@ namespace PortfolioMVC5v3Tests.Controllers
 
             Assert.Equal(jsonResultData.success, true);
         }
-        
-        
+
+        [Fact()]
+        public async Task GetAllTechnologiesListAsync()
+        {
+            var modelToReturn = new List<Technology>()
+            {
+                new Technology(),
+                new Technology()
+            };
+
+            //Arrange
+            var technologyLogicMock = new Mock<ITechnologyLogic>();
+            technologyLogicMock.Setup(logic => logic.GetAllTechnologiesListAsync()).ReturnsAsync(modelToReturn);
+
+            var aboutMeLogicMock = new Mock<IAboutMeLogic>();
+
+            AboutMeController controllerUnderTests = new AboutMeController(aboutMeLogicMock.Object, technologyLogicMock.Object);
+
+            //Act
+            var result = await controllerUnderTests.GetAllTechnologiesListAsync();
+
+            //Assert
+            var jsonResult = Assert.IsType<string>(result);
+            var technologies = JsonConvert.DeserializeObject<List<Technology>>(jsonResult);
+
+            Assert.Equal(modelToReturn.Count, technologies.Count);
+        }
+
+        [Fact()]
+        public void GetTechnologiesToShowInAboutMePage()
+        {
+            var modelToReturn = new List<Technology>()
+            {
+                new Technology(),
+                new Technology()
+            };
+
+            //Arrange
+            var technologyLogicMock = new Mock<ITechnologyLogic>();
+            technologyLogicMock.Setup(logic => logic.GetTechnologiesToShowInAboutMePage()).Returns(modelToReturn);
+
+            var aboutMeLogicMock = new Mock<IAboutMeLogic>();
+
+            AboutMeController controllerUnderTests = new AboutMeController(aboutMeLogicMock.Object, technologyLogicMock.Object);
+
+            //Act
+            var result = controllerUnderTests.GetTechnologiesToShowInAboutMePage();
+
+            //Assert
+            var jsonResult = Assert.IsType<string>(result);
+            var technologies = JsonConvert.DeserializeObject<List<Technology>>(jsonResult);
+
+            Assert.Equal(modelToReturn.Count, technologies.Count);
+        }
 
     }
 }
