@@ -22,20 +22,23 @@ namespace PortfolioMVC5v3.Controllers
         public async Task<ActionResult> Index()
         {
             var model = await _aboutMeLogic.GetAboutMeAsync();
-            return View(model);
+
+            return model == null ? View("Error") : View(model);
         }
 
         public ActionResult GetSkillsPartialView()
         {
             var technologies = _technologyLogic.GetTechnologiesToShowInAboutMePage();
-            return PartialView("SkillsPartialView", technologies);
+
+            return PartialView("SkillsPartialView", technologies ?? new List<Technology>());
         }
 
         public async Task<ActionResult> Management()
         {
             var pageData = await _aboutMeLogic.GetAboutMeAsync();
 
-            return View(pageData);
+            return pageData == null ? View("Error") : View(pageData);
+
         }
 
         [HttpPost]
@@ -49,6 +52,7 @@ namespace PortfolioMVC5v3.Controllers
         public async Task<string> GetAllTechnologiesListAsync()
         {
             var technologies = await _technologyLogic.GetAllTechnologiesListAsync();
+
             return JsonConvert.SerializeObject(technologies);
         }
 
