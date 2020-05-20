@@ -50,9 +50,9 @@ namespace PortfolioMVC5v3.Logic.Logic
                 PersonalDataViewModel =
                     new PersonalDataViewModel()
                     {
-                        Address = "1 Maja 1/3",
-                        City = "Koszalin",
-                        PostCode = "75-800",
+                        Address = "Borbowiecka 3A/208",
+                        City = "Waszawa",
+                        PostCode = "00-728",
                         FirstName = "Damian",
                         LastName = "Dziura",
                         PersonalPhotoLink = "/Assets/img/author_image.png"
