@@ -12,7 +12,7 @@
 
         .cv-content {
             height: 100% !important;
-            width: 56% !important;
+            width: 100% !important;
             top: 0 !important;
             bottom: 0 !important;
             color: black;
@@ -34,8 +34,9 @@
 
         html {
             font-family: "DejaVu Sans", "Arial", sans-serif;
-            font-size: .9em;
+            font-size: .68em;
         }
+
     </style>
 </head>
 <body>
@@ -129,22 +130,34 @@
             "WebComponentsIcons": "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
         });
     </script>
-    <script>
-        window.kendo.drawing.drawDOM($(".cv-content"))
-            .then(function (group) {
-                return window.kendo.drawing.exportPDF(group, {
-                    paperSize: "auto",
-                    margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
-                });
-            })
-            .done(function (data) {
-                window.kendo.saveAs({
-                    dataURI: data,
-                    fileName: "Damian Dziura CV.pdf",
-                    proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
-                });
-                location.href = `/Cv/Index`;
-            });
-    </script>
+<script>
+    kendo.drawing.drawDOM(".cv-content",
+        {
+            paperSize: "A4",
+            margin: "0cm",
+            scale: 0.8
+        }).then(function(group) {
+            kendo.drawing.pdf.saveAs(group, "Damian Dziura CV.pdf");
+    }).done(function() {
+        location.href = `/Cv/Index`;
+    });
+    
+    //window.kendo.drawing.drawDOM($(".cv-content"))
+    //    .then(function (group) {
+    //        return window.kendo.drawing.exportPDF(group, {
+    //            paperSize: "A4",
+    //            margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" },
+    //            scale: 0.5,
+    //            multiPage: true
+    //        });
+    //    })
+    //    .done(function (data) {
+    //        window.kendo.saveAs({
+    //            dataURI: data,
+    //            fileName: "Damian Dziura CV.pdf"
+    //        });
+    //        //location.href = `/Cv/Index`;
+    //    });
+</script>
 </body>
 </html>
