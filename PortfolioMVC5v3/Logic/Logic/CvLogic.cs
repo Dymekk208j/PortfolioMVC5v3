@@ -51,7 +51,7 @@ namespace PortfolioMVC5v3.Logic.Logic
                     new PersonalDataViewModel()
                     {
                         Address = "Borbowiecka 3A/208",
-                        City = "Waszawa",
+                        City = "Warszawa",
                         PostCode = "00-728",
                         FirstName = "Damian",
                         LastName = "Dziura",
