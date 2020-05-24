@@ -137,9 +137,8 @@
             margin: "0cm",
             scale: 0.8
         }).then(function(group) {
-            kendo.drawing.pdf.saveAs(group, "Damian Dziura CV.pdf");
-    }).done(function() {
-        location.href = `/Cv/Index`;
+            window.kendo.drawing.pdf.saveAs(group, "Damian Dziura CV.pdf");
+            location.href = `/Cv/Index`;
     });
 </script>
 </body>
